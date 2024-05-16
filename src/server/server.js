@@ -23,6 +23,10 @@ app.use(express.static(path.join(__dirname, '../../dist')));
 
 // establish db connection
 
+// handle adding book
+// handle updating notes for book
+// handle deleting book 
+
 // catch all 
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname, '../../dist', 'index.html'));
