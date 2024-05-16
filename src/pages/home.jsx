@@ -5,6 +5,10 @@ const HomePage = () => {
   return (
     <div>
       <Header title='book buddy' />
+
+      {/* show book cover, option to show book cover + note in card */}
+
+
     </div>
   );
 };
