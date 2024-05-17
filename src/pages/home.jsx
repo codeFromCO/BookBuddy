@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import BookCard from '../components/BookCard';
+import BookCardSearch from '../components/BookCardSearch';
 
 const sampleNotes =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
@@ -10,7 +11,7 @@ const HomePage = () => {
 
   //openlibrary.org/search.json?q=the+lord+of+the+rings
 
-  https: return (
+  return (
     <div>
       <Header title='book buddy' />
 
@@ -24,6 +25,7 @@ const HomePage = () => {
           Add
         </button>
       </div>
+      <BookCardSearch title='Placeholder title' author='Placeholder author' />
 
       <BookCard
         title='Placeholder title'
