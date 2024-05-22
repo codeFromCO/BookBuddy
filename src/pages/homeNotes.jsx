@@ -7,11 +7,6 @@ import BookCardSearch from '../components/BookCardSearch';
 const sampleNotes =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
 
-const samplePost = [
-  { id: 1, title: 'book 1' },
-  { id: 2, title: 'book 2' },
-];
-
 // sample query keys because must be unique
 // e.g. if /posts => ["posts"]
 // /posts/1 => ["posts", post.id]
@@ -19,9 +14,19 @@ const samplePost = [
 // /posts/2/comments => ["posts", post.id, "comments"]
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
+//remove spaces from search string and replace with +
+// let searchString = searchInut.replace(/ /g, '+');
 
-const wait = (duration) => {
-  return new Promise((resolve) => setTimeout(resolve, duration));
+const getBook = async () => {
+  const response = await fetch(
+    'https://openlibrary.org/search.json?q=fantastic+mr+fox'
+  );
+
+  console.log('this was the response', response);
+
+  // need to handle error
+
+  return response.json();
 };
 
 const TestHome = () => {
@@ -31,62 +36,28 @@ const TestHome = () => {
   // can change default options re stale in cache
 
   const postsQuery = useQuery({
-    queryKey: ['posts'], // unique identifier for query,
-    queryFn: () => wait(1000).then(() => [...samplePost]), // what runs to query the data, must return a promise NB can access queryKey in queryFn by simple writing queryKey
-    // refetchInterval: 1000 would refetch every sec
-    // can set enabled to true or false e.g. if have userQuery can write enabled: postQuery?.data?.userId !== null ie only run if have a function
+    queryKey: ['books'], // unique identifier for query,
+    queryFn: getBook,
   });
 
   // const {data, status} = useQuery('cars', fetchCars)
 
-  const newPostMutation = useMutation({
-    mutationFn: (title) => {
-      wait(1000).then(() =>
-        samplePost.push({ id: crypto.randomUUID(), title })
-      );
-    },
+  //   const newPostMutation = useMutation({
+  //     mutationFn: // add function
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries(['posts']);
+  //     },
+  //     // also onError, onSettled, onMutate NB onMutate is called before function so generally this is where you set your context; mutation won't retry
+  //     // when do mutation generally want to invalidate a query, can pass parameter {exact: true} instead of everything starting w/ query key
+  //     // can also setQueryData manually in cache
+  //   });
 
-    onSuccess: () => {
-      queryClient.invalidateQueries(['posts']);
-    },
-    // also onError, onSettled, onMutate NB onMutate is called before function so generally this is where you set your context; mutation won't retry
-    // when do mutation generally want to invalidate a query, can pass parameter {exact: true} instead of everything starting w/ query key
-    // can also setQueryData manually in cache
-  });
-
-  // useQueries hooks allows you to pass array of queries to run 
-  // use placeholder data not initial data because initial will be makred as fresh 
+  // useQueries hooks allows you to pass array of queries to run
+  // use placeholder data not initial data because initial will be makred as fresh
 
   if (postsQuery.isLoading) return <h1>Loading...</h1>;
 
   if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>;
-  // error object from queryFn will show up here
-  // throw errors if using fetch not axios
-
-  // can check if error, loading or success w/ postsQuery.status ===
-
-  // successful if not in loading or error
-  return (
-    <div>
-      {postsQuery.data.map((post) => (
-        <div key={post.id}>{post.title}</div>
-      ))}
-      <button
-        disabled={newPostMutation.isLoading}
-        onClick={() => newPostMutation.mutate('book 3')}
-      >
-        Add new
-      </button>
-    </div>
-  );
-
-  // search for book
-
-  // sample open library search
-  //openlibrary.org/search.json?q=the+lord+of+the+rings
-
-  //remove spaces from search string and replace with +
-  // let searchString = searchInut.replace(/ /g, '+');
 
   return (
     <div>
@@ -102,11 +73,15 @@ const TestHome = () => {
           Add
         </button>
       </div>
-      <BookCardSearch title='Placeholder title' author='Placeholder author' />
-
+      <BookCardSearch
+        title={postsQuery.data.docs[0].title}
+        author={postsQuery.data.docs[0].author_name}
+        src={`https://covers.openlibrary.org/b/id/${postsQuery.data.docs[0].cover_i}-M.jpg`}
+      />
       <BookCard
-        title='Placeholder title'
-        author='Placeholder author'
+        src={`https://covers.openlibrary.org/b/id/${postsQuery.data.docs[0].cover_i}-M.jpg`}
+        title={postsQuery.data.docs[0].title}
+        author={postsQuery.data.docs[0].author_name}
         notes={sampleNotes}
       />
 
@@ -115,6 +90,4 @@ const TestHome = () => {
   );
 };
 
-export default TestHome
-
-
+export default TestHome;

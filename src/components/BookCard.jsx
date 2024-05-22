@@ -5,9 +5,8 @@ const BookCard = (props) => {
   return (
     <div className='bg-red-500 p-3 rounded-md'>
       <div className='flex'>
-        <img src={props.src}></img>
-        <h1>Temporary</h1>
-        <div>
+        <img className='max-h-32' src={props.src}></img>
+        <div className='pl-3'>
           <div className='flex justify-between'>
             <h2 className='font-bold text-lg'>{props.title}</h2>
             <FaRegEdit
