@@ -20,6 +20,7 @@ const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const getBook = async () => {
   const response = await fetch(
     'https://openlibrary.org/search.json?q=fantastic+mr+fox'
+    // 'https://openlibrary.org/search.json?q=dune'
   );
 
   console.log('this was the response', response);
@@ -29,16 +30,41 @@ const getBook = async () => {
   return response.json();
 };
 
+const searchBooks = async (input) => {
+  let searchString = input.replace(/ /g, '+');
+
+  const response = await fetch(
+    `https://openlibrary.org/search.json?q=${searchString}`
+  );
+
+  console.log('this is the search function', response);
+
+  // need to handle error
+
+  return response.json();
+};
+
 const TestHome = () => {
   const [searchInput, setSearchInput] = useState('');
+  const [buttonClicked, setButtonClicked] = useState(false);
 
   const queryClient = useQueryClient();
-  // can change default options re stale in cache
 
-  const postsQuery = useQuery({
+  const booksQuery = useQuery({
     queryKey: ['books'], // unique identifier for query,
     queryFn: getBook,
   });
+
+  const searchQuery = useQuery({
+    queryKey: ['searchBooks', searchInput],
+    queryFn: () => searchBooks(searchInput),
+    enabled: false, // disabled automatically running
+  });
+
+  const clickToSearch = () => {
+    setButtonClicked(true);
+    searchQuery.refetch();
+  };
 
   // const {data, status} = useQuery('cars', fetchCars)
 
@@ -55,33 +81,50 @@ const TestHome = () => {
   // useQueries hooks allows you to pass array of queries to run
   // use placeholder data not initial data because initial will be makred as fresh
 
-  if (postsQuery.isLoading) return <h1>Loading...</h1>;
+  if (booksQuery.isLoading) return <h1>Loading...</h1>;
 
-  if (postsQuery.isError) return <pre>{JSON.stringify(postsQuery.error)}</pre>;
+  if (booksQuery.isError) return <pre>{JSON.stringify(booksQuery.error)}</pre>;
+
+  console.log('books query data', booksQuery.data.docs[0]);
+  console.log('searchResponse data', searchQuery.data?.docs[0]);
 
   return (
     <div>
       <Header title='book buddy' />
 
-      <div className='bg-blue-500 my-5'>
+      <div className='bg-blue-500 my-5 mb-0'>
         <input
-          className='p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-orange-500'
+          className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-orange-500 ${searchQuery.data ? 'rounded-b-none' : ''}`}
           type='text'
           placeholder='Add a new book...'
+          onChange={(e) => setSearchInput(e.target.value)}
         />
-        <button className='bg-yellow-500 border-2 border-yellow-800 rounded-md px-4 py-2'>
-          Add
+        <button
+          className='bg-yellow-500 border-2 border-yellow-800 rounded-md px-4 py-2'
+          onClick={clickToSearch}
+        >
+          Search
         </button>
       </div>
-      <BookCardSearch
-        title={postsQuery.data.docs[0].title}
-        author={postsQuery.data.docs[0].author_name}
-        src={`https://covers.openlibrary.org/b/id/${postsQuery.data.docs[0].cover_i}-M.jpg`}
-      />
+
+      <div>
+        {buttonClicked && !searchQuery.isFetching && searchQuery.data && (
+          // <h1>Success</h1> // even this isn't displaying
+          <BookCardSearch
+            title={searchQuery.data?.docs[0].title}
+            author={searchQuery.data?.docs[0].author_name[0]}
+            src={`https://covers.openlibrary.org/b/id/${searchQuery.data?.docs[0].cover_i}-M.jpg`}
+          />
+        )}
+        {buttonClicked && searchQuery.isError && (
+          <pre>{JSON.stringify(searchQuery.isError)}</pre>
+        )}
+      </div>
+
       <BookCard
-        src={`https://covers.openlibrary.org/b/id/${postsQuery.data.docs[0].cover_i}-M.jpg`}
-        title={postsQuery.data.docs[0].title}
-        author={postsQuery.data.docs[0].author_name}
+        src={`https://covers.openlibrary.org/b/id/${booksQuery.data.docs[0].cover_i}-M.jpg`}
+        title={booksQuery.data.docs[0].title}
+        author={booksQuery.data.docs[0].author_name}
         notes={sampleNotes}
       />
 
