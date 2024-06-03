@@ -1,6 +1,8 @@
 import React from 'react';
 import { IoAddOutline } from 'react-icons/io5';
 
+// TO-DO: 1) check if long title's affect position of + 2) add search / shadow feature
+
 const BookCardSearch = (props) => {
   return (
     <div className='bg-gray-100 p-1 w-inputSearchWidth flex'>
