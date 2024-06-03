@@ -91,51 +91,53 @@ const TestHome = () => {
     <div>
       <Header title='book buddy' />
 
-      <div className='my-5 mb-0'>
-        <input
-          className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-basePeach ${
-            searchQuery.data ? 'rounded-b-none' : ''
-          }`}
-          type='text'
-          placeholder='Add a new book...'
-          onChange={(e) => setSearchInput(e.target.value)}
-        />
-        <button
-          className='bg-basePeach border-2 border-basePeach text-baseMidGray rounded-md px-4 py-2'
-          onClick={clickToSearch}
-        >
-          Search
-        </button>
-      </div>
+      <div className='px-3'>
+        <div className='my-5 mb-0'>
+          <input
+            className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-basePeach ${
+              searchQuery.data ? 'rounded-b-none' : ''
+            }`}
+            type='text'
+            placeholder='Add a new book...'
+            onChange={(e) => setSearchInput(e.target.value)}
+          />
+          <button
+            className='bg-basePeach border-2 border-basePeach text-baseMidGray rounded-md px-4 py-2'
+            onClick={clickToSearch}
+          >
+            Search
+          </button>
+        </div>
 
-      <div>
-        {buttonClicked && !searchQuery.isFetching && searchQuery.data && (
-          // <h1>Success</h1> // even this isn't displaying
-          <BookCardSearch
-            title={searchQuery.data?.docs[0].title}
-            author={searchQuery.data?.docs[0].author_name[0]}
-            src={`https://covers.openlibrary.org/b/id/${searchQuery.data?.docs[0].cover_i}-M.jpg`}
-            onClick={addBookFunction}
+        <div>
+          {buttonClicked && !searchQuery.isFetching && searchQuery.data && (
+            // <h1>Success</h1> // even this isn't displaying
+            <BookCardSearch
+              title={searchQuery.data?.docs[0].title}
+              author={searchQuery.data?.docs[0].author_name[0]}
+              src={`https://covers.openlibrary.org/b/id/${searchQuery.data?.docs[0].cover_i}-M.jpg`}
+              onClick={addBookFunction}
+            />
+          )}
+          {buttonClicked && searchQuery.isError && (
+            <pre>{JSON.stringify(searchQuery.isError)}</pre>
+          )}
+        </div>
+
+        {booksQuery.data && (
+          <BookCard
+            src={`https://covers.openlibrary.org/b/id/${booksQuery.data.docs[0].cover_i}-M.jpg`}
+            title={booksQuery.data.docs[0].title}
+            author={booksQuery.data.docs[0].author_name}
+            notes={sampleNotes}
           />
         )}
-        {buttonClicked && searchQuery.isError && (
-          <pre>{JSON.stringify(searchQuery.isError)}</pre>
-        )}
+
+        {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
+        {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
+
+        {/* show book cover, option to show book cover + note in card */}
       </div>
-
-      {booksQuery.data && (
-        <BookCard
-          src={`https://covers.openlibrary.org/b/id/${booksQuery.data.docs[0].cover_i}-M.jpg`}
-          title={booksQuery.data.docs[0].title}
-          author={booksQuery.data.docs[0].author_name}
-          notes={sampleNotes}
-        />
-      )}
-
-      {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
-      {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
-
-      {/* show book cover, option to show book cover + note in card */}
     </div>
   );
 };
