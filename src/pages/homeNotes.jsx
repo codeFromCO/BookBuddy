@@ -6,7 +6,7 @@ import BookCardSearch from '../components/BookCardSearch';
 import ButtonLoading from '../components/ButtonLoading';
 import Button from '../components/Button';
 
-const sampleNotes =
+const sampleNotes = 
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
 
 // sample query keys because must be unique
@@ -132,7 +132,7 @@ const TestHome = () => {
         />
       )}
 
-      {booksQuery.isFetching && <ButtonLoading />}
+      {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
       {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
 
       {/* show book cover, option to show book cover + note in card */}
