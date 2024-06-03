@@ -3,6 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Header from '../components/Header';
 import BookCard from '../components/BookCard';
 import BookCardSearch from '../components/BookCardSearch';
+import ButtonLoading from '../components/ButtonLoading';
+import Button from '../components/Button';
 
 const sampleNotes =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
@@ -130,7 +132,7 @@ const TestHome = () => {
         />
       )}
 
-      {booksQuery.isLoading && <h1>Loading...</h1>}
+      {booksQuery.isFetching && <ButtonLoading />}
       {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
 
       {/* show book cover, option to show book cover + note in card */}
