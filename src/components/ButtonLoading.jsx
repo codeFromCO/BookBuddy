@@ -2,7 +2,7 @@ import React from 'react';
 
 const ButtonLoading = () => {
   return (
-    <div class='bg-indigo-500 w-32 flex rounded-md p-3 text-white my-3'>
+    <div class='bg-baseDeepBlue w-32 flex rounded-md p-3 text-white my-3'>
       <svg className='animate-spin h-5 w-5 mr-3' viewBox='0 0 24 24'>
         <circle
           className='opacity-25'

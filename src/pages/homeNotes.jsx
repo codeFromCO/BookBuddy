@@ -6,7 +6,7 @@ import BookCardSearch from '../components/BookCardSearch';
 import ButtonLoading from '../components/ButtonLoading';
 import Button from '../components/Button';
 
-const sampleNotes = 
+const sampleNotes =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
 
 // sample query keys because must be unique
@@ -91,9 +91,9 @@ const TestHome = () => {
     <div>
       <Header title='book buddy' />
 
-      <div className='bg-blue-500 my-5 mb-0'>
+      <div className='my-5 mb-0'>
         <input
-          className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-orange-500 ${
+          className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-basePeach ${
             searchQuery.data ? 'rounded-b-none' : ''
           }`}
           type='text'
@@ -101,7 +101,7 @@ const TestHome = () => {
           onChange={(e) => setSearchInput(e.target.value)}
         />
         <button
-          className='bg-yellow-500 border-2 border-yellow-800 rounded-md px-4 py-2'
+          className='bg-basePeach border-2 border-basePeach text-baseMidGray rounded-md px-4 py-2'
           onClick={clickToSearch}
         >
           Search
