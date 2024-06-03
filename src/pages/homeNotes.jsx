@@ -81,12 +81,9 @@ const TestHome = () => {
   // useQueries hooks allows you to pass array of queries to run
   // use placeholder data not initial data because initial will be makred as fresh
 
-  if (booksQuery.isLoading) return <h1>Loading...</h1>;
-
-  if (booksQuery.isError) return <pre>{JSON.stringify(booksQuery.error)}</pre>;
-
-  console.log('books query data', booksQuery.data.docs[0]);
-  console.log('searchResponse data', searchQuery.data?.docs[0]);
+  const addBookFunction = () => {
+    console.log('the + button was clicked˝');
+  };
 
   return (
     <div>
@@ -94,7 +91,9 @@ const TestHome = () => {
 
       <div className='bg-blue-500 my-5 mb-0'>
         <input
-          className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-orange-500 ${searchQuery.data ? 'rounded-b-none' : ''}`}
+          className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-orange-500 ${
+            searchQuery.data ? 'rounded-b-none' : ''
+          }`}
           type='text'
           placeholder='Add a new book...'
           onChange={(e) => setSearchInput(e.target.value)}
@@ -114,6 +113,7 @@ const TestHome = () => {
             title={searchQuery.data?.docs[0].title}
             author={searchQuery.data?.docs[0].author_name[0]}
             src={`https://covers.openlibrary.org/b/id/${searchQuery.data?.docs[0].cover_i}-M.jpg`}
+            onClick={addBookFunction}
           />
         )}
         {buttonClicked && searchQuery.isError && (
@@ -121,12 +121,17 @@ const TestHome = () => {
         )}
       </div>
 
-      <BookCard
-        src={`https://covers.openlibrary.org/b/id/${booksQuery.data.docs[0].cover_i}-M.jpg`}
-        title={booksQuery.data.docs[0].title}
-        author={booksQuery.data.docs[0].author_name}
-        notes={sampleNotes}
-      />
+      {booksQuery.data && (
+        <BookCard
+          src={`https://covers.openlibrary.org/b/id/${booksQuery.data.docs[0].cover_i}-M.jpg`}
+          title={booksQuery.data.docs[0].title}
+          author={booksQuery.data.docs[0].author_name}
+          notes={sampleNotes}
+        />
+      )}
+
+      {booksQuery.isLoading && <h1>Loading...</h1>}
+      {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
 
       {/* show book cover, option to show book cover + note in card */}
     </div>

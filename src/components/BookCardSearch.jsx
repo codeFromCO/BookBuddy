@@ -10,7 +10,7 @@ const BookCardSearch = (props) => {
           <h2 className='font-bold text-sm'>{props.title}</h2>
           <h3 className='text-sm mb-2'>{props.author}</h3>
         </div>
-        <IoAddOutline className='size-5 hover:cursor-pointer'/>
+        <IoAddOutline className='size-5 hover:cursor-pointer' onClick={props.onClick}/>
       </div>
     </div>
   );
