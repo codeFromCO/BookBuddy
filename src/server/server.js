@@ -49,7 +49,7 @@ app.post('/api/book/add', bookController.addBook, (req, res, next) => {
 });
 
 // handle updating notes for book
-app.post('/api/book/update', bookController.updateBook, (req, res, next) => {
+app.patch('/api/book/update', bookController.updateBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully updated',
   });

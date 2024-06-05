@@ -11,7 +11,7 @@ bookController.addBook = async (req, res, next) => {
       title,
     });
 
-    if (existingBook) {
+    if (existingBook.length) {
       return res.status(400).json({ message: 'Book already exists' });
     }
 
@@ -53,7 +53,7 @@ bookController.updateBook = async (req, res, next) => {
   try {
     const { title, author, notes } = req.body;
 
-    if ((!title, author, notes)) {
+    if (!title || !author || !notes) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
@@ -63,9 +63,13 @@ bookController.updateBook = async (req, res, next) => {
         author,
       },
       {
-        $set: notes,
+        $set: { notes: notes },
       }
     );
+
+    if (!result) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
 
     return next();
   } catch (err) {
@@ -80,7 +84,7 @@ bookController.deleteBook = async (req, res, next) => {
   try {
     const { title, author } = req.body;
 
-    if ((!title, author)) {
+    if (!title || !author) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
