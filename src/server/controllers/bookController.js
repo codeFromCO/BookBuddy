@@ -1,20 +1,102 @@
+const Book = require('../models/bookModel');
+
 const bookController = {};
 
-bookController.findBook = async (req, res, next) => {
+bookController.addBook = async (req, res, next) => {
   try {
-    const { queryString } = req.body;
+    const { title, author, cover_i } = req.body;
 
-    console.log('this is the query string', queryString);
+    // check if book already exists
+    const existingBook = await Book.find({
+      title,
+    });
 
-    // sample open library search
-    //openlibrary.org/search.json?q=the+lord+of+the+rings
+    if (existingBook) {
+      return res.status(400).json({ message: 'Book already exists' });
+    }
 
-    //remove spaces from search string and replace with +
-    // let searchString = searchInut.replace(/ /g, '+');
+    await Book.create({
+      title,
+      author,
+      cover_i,
+    });
+
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error on bookController.addBook',
+      message: { error: err },
+    });
+  }
+};
+
+bookController.findBooks = async (req, res, next) => {
+  try {
+    const books = await Book.find({});
+
+    if (!books) {
+      return res.status(400).json({ message: 'There are no books' });
+    }
 
     return next();
   } catch (error) {
-    return next(error);
+    return next({
+      log: 'Error on bookController.findBooks',
+      message: { error: err },
+    });
+  }
+};
+
+bookController.updateBook = async (req, res, next) => {
+  try {
+    const { title, author, notes } = req.body;
+
+    if ((!title, author, notes)) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    const result = await Book.findOneAndUpdate(
+      {
+        title,
+        author,
+      },
+      {
+        $set: notes,
+      }
+    );
+
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error on bookController.updateBook',
+      message: { error: err },
+    });
+  }
+};
+
+bookController.deleteBook = async (req, res, next) => {
+  try {
+    const { title, author } = req.body;
+
+    if ((!title, author)) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    const result = await Book.findOneAndDelete({
+      title,
+      author,
+    });
+
+    if (result) {
+      return next();
+    } else {
+      return res.status(400).json({ message: 'Book does not exist' });
+    }
+  } catch (err) {
+    return next({
+      log: 'Error on bookController.deleteBook',
+      message: { error: err },
+    });
   }
 };
 

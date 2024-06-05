@@ -14,6 +14,10 @@ const bookSchema = new Schema({
   cover_i: {
     type: Number,
   },
+  notes: {
+    type: String,
+    default: ''
+  }
 });
 
 const Book = mongoose.model('Book', bookSchema);
