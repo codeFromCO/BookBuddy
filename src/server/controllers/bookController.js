@@ -38,6 +38,8 @@ bookController.findBooks = async (req, res, next) => {
       return res.status(400).json({ message: 'There are no books' });
     }
 
+    res.locals.data = books;
+
     return next();
   } catch (error) {
     return next({
