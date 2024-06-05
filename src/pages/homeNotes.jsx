@@ -5,6 +5,7 @@ import BookCard from '../components/BookCard';
 import BookCardSearch from '../components/BookCardSearch';
 import ButtonLoading from '../components/ButtonLoading';
 import Button from '../components/Button';
+import { FaHourglass } from 'react-icons/fa6';
 
 const sampleNotes =
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
@@ -92,7 +93,7 @@ const TestHome = () => {
       <Header title='book buddy' />
 
       <div className='px-3'>
-        <div className='my-5 mb-0'>
+        <div className='my-5 mb-0 flex items-end'>
           <input
             className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-basePeach ${
               searchQuery.data ? 'rounded-b-none' : ''
@@ -102,10 +103,13 @@ const TestHome = () => {
             onChange={(e) => setSearchInput(e.target.value)}
           />
           <button
-            className='bg-basePeach border-2 border-basePeach text-baseMidGray rounded-md px-4 py-2'
+            className='bg-basePeach border-2 border-basePeach text-baseMidGray rounded-md px-4 py-2 flex items-center '
             onClick={clickToSearch}
           >
             Search
+            {searchQuery.isFetching && (
+              <FaHourglass className='ml-2'></FaHourglass>
+            )}
           </button>
         </div>
 
