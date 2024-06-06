@@ -38,11 +38,6 @@ const searchBooks = async (input) => {
 
   const dataToReturn = await response.json();
 
-  // check if no data
-  if (dataToReturn.numFound === 0) {
-    console.log('no book found');
-  }
-
   return dataToReturn;
 };
 
