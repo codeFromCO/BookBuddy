@@ -115,8 +115,8 @@ const HomePage = () => {
     }
   };
 
-  const clickToNavigate = (bookTitle) => {
-    navigate(`/book/${bookTitle}`);
+  const clickToNavigate = (ID) => {
+    navigate(`/book/${ID}`);
   };
 
   return (
@@ -175,7 +175,7 @@ const HomePage = () => {
               title={book?.title}
               author={book?.author}
               notes={book?.notes}
-              onClick={() => clickToNavigate(book.title)}
+              onClick={() => clickToNavigate(book._id)}
             />
           ))
         ) : (

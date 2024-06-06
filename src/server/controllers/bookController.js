@@ -49,6 +49,23 @@ bookController.findBooks = async (req, res, next) => {
   }
 };
 
+bookController.findBook = async (req, res, next) => {
+  try {
+    const { _id } = req.body;
+
+    const book = await Book.findOne({ _id });
+
+    res.locals.book = book;
+
+    return next();
+  } catch (error) {
+    return next({
+      log: 'Error on bookController.findBook',
+      message: { error: error },
+    });
+  }
+};
+
 bookController.updateBook = async (req, res, next) => {
   try {
     const { title, author, notes } = req.body;

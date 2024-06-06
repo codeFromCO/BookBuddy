@@ -41,6 +41,13 @@ app.get('/api/book/findAll', bookController.findBooks, (req, res, next) => {
   });
 });
 
+app.put('/api/book/findOne', bookController.findBook, (req, res, next) => {
+  return res.status(200).json({
+    message: 'Book successfully found',
+    data: res.locals.book,
+  });
+});
+
 // handle adding book
 app.post('/api/book/add', bookController.addBook, (req, res, next) => {
   return res.status(201).json({
