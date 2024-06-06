@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         baseGreen: '#8CC084',
         basePeach: '#FF6F61',
+        basePeachLight: '#FFF2ED',
         baseDeepBlue: '#004080',
         baseMidGray: '#DEDEDE',
         baseLightGray: '#F5F5F5'

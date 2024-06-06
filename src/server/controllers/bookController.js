@@ -38,13 +38,13 @@ bookController.findBooks = async (req, res, next) => {
       return res.status(400).json({ message: 'There are no books' });
     }
 
-    res.locals.data = books;
+    res.locals.books = books;
 
     return next();
   } catch (error) {
     return next({
       log: 'Error on bookController.findBooks',
-      message: { error: err },
+      message: { error: error },
     });
   }
 };

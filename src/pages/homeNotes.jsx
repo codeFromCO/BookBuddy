@@ -5,10 +5,8 @@ import BookCard from '../components/BookCard';
 import BookCardSearch from '../components/BookCardSearch';
 import ButtonLoading from '../components/ButtonLoading';
 import Button from '../components/Button';
+import Error from '../components/Error';
 import { FaHourglass } from 'react-icons/fa6';
-
-const sampleNotes =
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius nam quis asperiores quia, aliquid odio et? Inventore eveniet quae accusamus!';
 
 // sample query keys because must be unique
 // e.g. if /posts => ["posts"]
@@ -20,21 +18,29 @@ const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 //remove spaces from search string and replace with +
 // let searchString = searchInut.replace(/ /g, '+');
 
-const getBook = async () => {
-  const response = await fetch(
-    'https://openlibrary.org/search.json?q=fantastic+mr+fox'
-    // 'https://openlibrary.org/search.json?q=dune'
-  );
+const getBooksFunction = async () => {
+  console.log('in getBooksFunction');
 
-  console.log('this was the response', response);
+  const response = await fetch('api/book/findAll', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-  // need to handle error
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
 
-  return response.json();
+  const jsonData = await response.json();
+
+  return jsonData.data;
 };
 
 const searchBooks = async (input) => {
+  console.log('in search books function');
+
   let searchString = input.replace(/ /g, '+');
+
+  // check if book already exists
 
   const response = await fetch(
     `https://openlibrary.org/search.json?q=${searchString}`
@@ -50,12 +56,13 @@ const searchBooks = async (input) => {
 const TestHome = () => {
   const [searchInput, setSearchInput] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [bookExists, setBookExists] = useState(false);
 
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({
     queryKey: ['books'], // unique identifier for query,
-    queryFn: getBook,
+    queryFn: getBooksFunction,
   });
 
   const searchQuery = useQuery({
@@ -65,6 +72,26 @@ const TestHome = () => {
   });
 
   const clickToSearch = () => {
+    // check if searchInput is empty
+    if (searchInput.trim() === '') {
+      return;
+    }
+
+    const normalizedSearchInput = searchInput.trim().toLowerCase();
+
+    // check if book already exists
+    const existingBook = booksQuery.data?.find(
+      (book) => book.title.toLowerCase() === normalizedSearchInput
+    );
+
+    if (existingBook) {
+      console.log('Book already exists');
+      setBookExists(true);
+      return;
+    } else {
+      setBookExists(false);
+    }
+
     setButtonClicked(true);
     searchQuery.refetch();
   };
@@ -84,8 +111,27 @@ const TestHome = () => {
   // useQueries hooks allows you to pass array of queries to run
   // use placeholder data not initial data because initial will be makred as fresh
 
-  const addBookFunction = () => {
-    console.log('the + button was clicked˝');
+  const addBookFunction = async () => {
+    const bookObj = {
+      title: searchQuery.data?.docs[0].title,
+      author: searchQuery.data?.docs[0].author_name[0],
+      cover_i: searchQuery.data?.docs[0].cover_i,
+    };
+
+    const response = await fetch('api/book/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookObj),
+    });
+
+    if (!response.ok) {
+      throw new Error('Response was not okay');
+    }
+
+    console.log(
+      'the + button was clicked and this was the saved data',
+      response.json()
+    );
   };
 
   return (
@@ -126,15 +172,21 @@ const TestHome = () => {
           {buttonClicked && searchQuery.isError && (
             <pre>{JSON.stringify(searchQuery.isError)}</pre>
           )}
+          {bookExists && (<Error alert='Book previously added'/>)}
         </div>
 
-        {booksQuery.data && (
-          <BookCard
-            src={`https://covers.openlibrary.org/b/id/${booksQuery.data.docs[0].cover_i}-M.jpg`}
-            title={booksQuery.data.docs[0].title}
-            author={booksQuery.data.docs[0].author_name}
-            notes={sampleNotes}
-          />
+        {booksQuery.data && booksQuery.data.length > 0 ? (
+          booksQuery.data.map((book, index) => (
+            <BookCard
+              key={index} // Provide a unique key for each item
+              src={`https://covers.openlibrary.org/b/id/${book?.cover_i}-M.jpg`}
+              title={book?.title}
+              author={book?.author}
+              notes={book?.notes}
+            />
+          ))
+        ) : (
+          <p>No books found.</p>
         )}
 
         {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
