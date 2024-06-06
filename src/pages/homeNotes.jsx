@@ -36,9 +36,14 @@ const searchBooks = async (input) => {
   const searchString = input.replace(/ /g, '+');
   const response = await fetch(`${bookSearchAPI}${searchString}`);
 
-  // need to handle error
+  const dataToReturn = await response.json();
 
-  return response.json();
+  // check if no data
+  if (dataToReturn.numFound === 0) {
+    console.log('no book found');
+  }
+
+  return dataToReturn;
 };
 
 const addBook = async (book) => {
@@ -169,19 +174,26 @@ const TestHome = () => {
         </div>
 
         <div>
-          {buttonClicked && !searchQuery.isFetching && searchQuery.data && (
-            // <h1>Success</h1> // even this isn't displaying
-            <BookCardSearch
-              title={searchQuery.data?.docs[0].title}
-              author={searchQuery.data?.docs[0].author_name[0]}
-              src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-M.jpg`}
-              onClick={handleAddBook}
-            />
-          )}
+          {buttonClicked &&
+            !searchQuery.isFetching &&
+            searchQuery.data &&
+            searchQuery.data.numFound > 0 && (
+              // <h1>Success</h1> // even this isn't displaying
+              <BookCardSearch
+                title={searchQuery.data?.docs[0].title}
+                author={searchQuery.data?.docs[0].author_name[0]}
+                src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-M.jpg`}
+                onClick={handleAddBook}
+              />
+            )}
           {buttonClicked && searchQuery.isError && (
             <pre>{JSON.stringify(searchQuery.isError)}</pre>
           )}
           {bookExists && <Error alert='Book previously added' />}
+          {buttonClicked &&
+            !searchQuery.isFetching &&
+            searchQuery.data &&
+            searchQuery.data.numFound === 0 && <Error alert='Book not found' />}
         </div>
 
         {booksQuery.data && booksQuery.data.length > 0 ? (
