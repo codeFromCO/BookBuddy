@@ -15,13 +15,9 @@ import { FaHourglass } from 'react-icons/fa6';
 // /posts/2/comments => ["posts", post.id, "comments"]
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
-const bookcoverAPI = 'https://covers.openlibrary.org/b/id/'
-//remove spaces from search string and replace with +
-// let searchString = searchInut.replace(/ /g, '+');
+const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
 
 const getBooksFunction = async () => {
-  console.log('in getBooksFunction');
-
   const response = await fetch('api/book/findAll', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -37,21 +33,27 @@ const getBooksFunction = async () => {
 };
 
 const searchBooks = async (input) => {
-  console.log('in search books function');
-
-  let searchString = input.replace(/ /g, '+');
-
-  // check if book already exists
-
-  const response = await fetch(
-    `${bookSearchAPI}${searchString}`
-  );
-
-  console.log('this is the search function', response);
+  const searchString = input.replace(/ /g, '+');
+  const response = await fetch(`${bookSearchAPI}${searchString}`);
 
   // need to handle error
 
   return response.json();
+};
+
+const addBook = async (book) => {
+  const response = await fetch('api/book/add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(book),
+  });
+
+  if (!response.ok) {
+    throw new Error('Response was not okay');
+  }
+
+  const jsonData = await response.json();
+  return jsonData;
 };
 
 const TestHome = () => {
@@ -72,6 +74,18 @@ const TestHome = () => {
     enabled: false, // disabled automatically running
   });
 
+  const mutation = useMutation({
+    mutationFn: addBook,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['books']);
+      queryClient.invalidateQueries('[searchBooks');
+      setSearchInput('');
+    },
+    onError: (error) => {
+      console.error('Error adding book:', error);
+    },
+  });
+
   const clickToSearch = () => {
     // check if searchInput is empty
     if (searchInput.trim() === '') {
@@ -86,22 +100,32 @@ const TestHome = () => {
     );
 
     if (existingBook) {
-      console.log('Book already exists');
       setBookExists(true);
       return;
     } else {
       setBookExists(false);
+      setButtonClicked(true);
+      searchQuery.refetch();
     }
+  };
 
-    setButtonClicked(true);
-    searchQuery.refetch();
+  const handleAddBook = () => {
+    if (searchQuery.data?.docs.length > 0) {
+      const book = {
+        title: searchQuery.data.docs[0].title,
+        author: searchQuery.data.docs[0].author_name[0],
+        cover_i: searchQuery.data.docs[0].cover_i,
+      };
+
+      mutation.mutate(book);
+    }
   };
 
   // const {data, status} = useQuery('cars', fetchCars)
 
   //   const newPostMutation = useMutation({
   //     mutationFn: // add function
-  //     onSuccess: () => {
+  //     onSucce ss: () => {
   //       queryClient.invalidateQueries(['posts']);
   //     },
   //     // also onError, onSettled, onMutate NB onMutate is called before function so generally this is where you set your context; mutation won't retry
@@ -112,28 +136,12 @@ const TestHome = () => {
   // useQueries hooks allows you to pass array of queries to run
   // use placeholder data not initial data because initial will be makred as fresh
 
-  const addBookFunction = async () => {
-    const bookObj = {
-      title: searchQuery.data?.docs[0].title,
-      author: searchQuery.data?.docs[0].author_name[0],
-      cover_i: searchQuery.data?.docs[0].cover_i,
-    };
-
-    const response = await fetch('api/book/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(bookObj),
-    });
-
-    if (!response.ok) {
-      throw new Error('Response was not okay');
-    }
-
-    console.log(
-      'the + button was clicked and this was the saved data',
-      response.json()
-    );
-  };
+  // this works but should be done react query style
+  // const bookObj = {
+  //   title: searchQuery.data?.docs[0].title,
+  //   author: searchQuery.data?.docs[0].author_name[0],
+  //   cover_i: searchQuery.data?.docs[0].cover_i,
+  // };
 
   return (
     <div>
@@ -167,13 +175,13 @@ const TestHome = () => {
               title={searchQuery.data?.docs[0].title}
               author={searchQuery.data?.docs[0].author_name[0]}
               src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-M.jpg`}
-              onClick={addBookFunction}
+              onClick={handleAddBook}
             />
           )}
           {buttonClicked && searchQuery.isError && (
             <pre>{JSON.stringify(searchQuery.isError)}</pre>
           )}
-          {bookExists && (<Error alert='Book previously added'/>)}
+          {bookExists && <Error alert='Book previously added' />}
         </div>
 
         {booksQuery.data && booksQuery.data.length > 0 ? (
