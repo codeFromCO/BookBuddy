@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Header from '../components/Header';
 import BookCard from '../components/BookCard';
@@ -51,6 +52,8 @@ const HomePage = () => {
   const [searchInput, setSearchInput] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
   const [bookExists, setBookExists] = useState(false);
+
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
 
@@ -112,6 +115,10 @@ const HomePage = () => {
     }
   };
 
+  const clickToNavigate = (bookTitle) => {
+    navigate(`/book/${bookTitle}`);
+  };
+
   return (
     <div>
       <Header title='book buddy' />
@@ -168,6 +175,7 @@ const HomePage = () => {
               title={book?.title}
               author={book?.author}
               notes={book?.notes}
+              onClick={() => clickToNavigate(book.title)}
             />
           ))
         ) : (
