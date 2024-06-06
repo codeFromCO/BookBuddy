@@ -23,12 +23,7 @@ const getBooksFunction = async () => {
     headers: { 'Content-Type': 'application/json' },
   });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  }
-
   const jsonData = await response.json();
-
   return jsonData.data;
 };
 
@@ -47,10 +42,6 @@ const addBook = async (book) => {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(book),
   });
-
-  if (!response.ok) {
-    throw new Error('Response was not okay');
-  }
 
   const jsonData = await response.json();
   return jsonData;
@@ -120,28 +111,6 @@ const TestHome = () => {
       mutation.mutate(book);
     }
   };
-
-  // const {data, status} = useQuery('cars', fetchCars)
-
-  //   const newPostMutation = useMutation({
-  //     mutationFn: // add function
-  //     onSucce ss: () => {
-  //       queryClient.invalidateQueries(['posts']);
-  //     },
-  //     // also onError, onSettled, onMutate NB onMutate is called before function so generally this is where you set your context; mutation won't retry
-  //     // when do mutation generally want to invalidate a query, can pass parameter {exact: true} instead of everything starting w/ query key
-  //     // can also setQueryData manually in cache
-  //   });
-
-  // useQueries hooks allows you to pass array of queries to run
-  // use placeholder data not initial data because initial will be makred as fresh
-
-  // this works but should be done react query style
-  // const bookObj = {
-  //   title: searchQuery.data?.docs[0].title,
-  //   author: searchQuery.data?.docs[0].author_name[0],
-  //   cover_i: searchQuery.data?.docs[0].cover_i,
-  // };
 
   return (
     <div>
