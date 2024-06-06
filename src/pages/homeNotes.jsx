@@ -15,6 +15,7 @@ import { FaHourglass } from 'react-icons/fa6';
 // /posts/2/comments => ["posts", post.id, "comments"]
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
+const bookcoverAPI = 'https://covers.openlibrary.org/b/id/'
 //remove spaces from search string and replace with +
 // let searchString = searchInut.replace(/ /g, '+');
 
@@ -43,7 +44,7 @@ const searchBooks = async (input) => {
   // check if book already exists
 
   const response = await fetch(
-    `https://openlibrary.org/search.json?q=${searchString}`
+    `${bookSearchAPI}${searchString}`
   );
 
   console.log('this is the search function', response);
@@ -165,7 +166,7 @@ const TestHome = () => {
             <BookCardSearch
               title={searchQuery.data?.docs[0].title}
               author={searchQuery.data?.docs[0].author_name[0]}
-              src={`https://covers.openlibrary.org/b/id/${searchQuery.data?.docs[0].cover_i}-M.jpg`}
+              src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-M.jpg`}
               onClick={addBookFunction}
             />
           )}
@@ -179,7 +180,7 @@ const TestHome = () => {
           booksQuery.data.map((book, index) => (
             <BookCard
               key={index} // Provide a unique key for each item
-              src={`https://covers.openlibrary.org/b/id/${book?.cover_i}-M.jpg`}
+              src={`${bookcoverAPI}${book?.cover_i}-M.jpg`}
               title={book?.title}
               author={book?.author}
               notes={book?.notes}
