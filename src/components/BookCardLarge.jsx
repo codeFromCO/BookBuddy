@@ -1,5 +1,6 @@
 import React from 'react';
-import { MdDelete } from "react-icons/md";
+import { MdDelete } from 'react-icons/md';
+import { MdSave } from 'react-icons/md';
 
 // TO-DO dynamic sizing of cards
 
@@ -10,13 +11,23 @@ const BookCardLarge = (props) => {
         <div className='pl-3 w-full'>
           <div className='flex justify-between'>
             <h2 className='font-bold text-lg'>{props.title}</h2>
-            <MdDelete
-              className='size-5 hover:cursor-pointer hover:text-basePeach'
-              onClick={props.onClick}
-            />
+            <div className='flex space-x-2'>
+              <MdSave
+                className='size-5 hover:cursor-pointer hover:text-basePeach'
+                onClick={props.onSubmit}
+              />
+              <MdDelete
+                className='size-5 hover:cursor-pointer hover:text-basePeach'
+                onClick={props.onClickDelete}
+              />
+            </div>
           </div>
           <h3 className='text-sm mb-2'>{props.author}</h3>
-          <textarea className='text-sm w-full p-2 rounded-md focus:border-2 focus:border-black focus:outline-none resize-none' value={props.value}></textarea>
+          <textarea
+            className='text-sm w-full p-2 rounded-md focus:border-2 focus:border-black focus:outline-none resize-none'
+            value={props.value}
+            onChange={props.onChange}
+          ></textarea>
         </div>
       </div>
     </div>

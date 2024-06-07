@@ -68,16 +68,15 @@ bookController.findBook = async (req, res, next) => {
 
 bookController.updateBook = async (req, res, next) => {
   try {
-    const { title, author, notes } = req.body;
+    const { _id, notes } = req.body;
 
-    if (!title || !author || !notes) {
+    if (!_id || !notes) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const result = await Book.findOneAndUpdate(
       {
-        title,
-        author,
+        _id,
       },
       {
         $set: { notes: notes },
@@ -87,6 +86,8 @@ bookController.updateBook = async (req, res, next) => {
     if (!result) {
       return res.status(404).json({ message: 'Book not found' });
     }
+
+    res.locals.book = result;
 
     return next();
   } catch (err) {
@@ -99,15 +100,14 @@ bookController.updateBook = async (req, res, next) => {
 
 bookController.deleteBook = async (req, res, next) => {
   try {
-    const { title, author } = req.body;
+    const { _id } = req.body;
 
-    if (!title || !author) {
+    if (!_id) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const result = await Book.findOneAndDelete({
-      title,
-      author,
+      _id,
     });
 
     if (result) {

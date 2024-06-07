@@ -59,11 +59,12 @@ app.post('/api/book/add', bookController.addBook, (req, res, next) => {
 app.patch('/api/book/update', bookController.updateBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully updated',
+    data: res.locals.book
   });
 });
 
 // handle deleting book
-app.post('/api/book/delete', bookController.deleteBook, (req, res, next) => {
+app.delete('/api/book/delete', bookController.deleteBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully deleted',
   });
