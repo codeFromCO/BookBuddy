@@ -4,6 +4,7 @@ import { FaRegEdit } from 'react-icons/fa';
 // TO-DO dynamic sizing of cards
 
 const BookCard = (props) => {
+
   return (
     <div className='bg-baseMidGray p-3 rounded-md my-3 w-96'>
       <div className='flex'>
@@ -17,7 +18,7 @@ const BookCard = (props) => {
             />
           </div>
           <h3 className='text-sm mb-2'>{props.author}</h3>
-          <p className='text-sm'>{props.notes}</p>
+          {/* <p className='text-sm whitespace-pre-wrap'>{props.notes}</p> */}
         </div>
       </div>
     </div>

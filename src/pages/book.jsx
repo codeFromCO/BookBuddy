@@ -18,7 +18,6 @@ const getBookFunction = async ({ _id }) => {
 };
 
 const updateBookFunction = async ({ _id, notes }) => {
-  console.log('this came through', _id, notes);
 
   const response = await fetch('/api/book/update', {
     method: 'PATCH',
@@ -94,7 +93,7 @@ const BookPage = () => {
   return (
     <div>
       <Header title='book buddy' />
-      <div className='flex items-center justify-center h-5/6 mt-3'>
+      <div className='flex items-center justify-center mt-3'>
         {bookQuery.data && !showModal && (
           <BookCardLarge
             title={bookQuery.data.title}
