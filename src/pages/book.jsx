@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import BookCardLarge from '../components/BookCardLarge';
 import Header from '../components/Header';
+import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
 const getBookFunction = async ({ _id }) => {
@@ -45,6 +46,7 @@ const deleteBookFunction = async ({ _id }) => {
 const BookPage = () => {
   // get book id off url
   const { bookID } = useParams();
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -93,19 +95,27 @@ const BookPage = () => {
     <div>
       <Header title='book buddy' />
       <div className='flex items-center justify-center h-5/6 mt-3'>
-        {bookQuery.data && (
+        {bookQuery.data && !showModal && (
           <BookCardLarge
             title={bookQuery.data.title}
             author={bookQuery.data.author}
             value={bookQuery.data.notes}
             onSubmit={handleSubmit}
             onChange={(event) => handleUpdate(event.target.value)}
-            onClickDelete={handleDelete}
+            onClickDelete={() => setShowModal(true)}
           >
             {' '}
           </BookCardLarge>
         )}
       </div>
+      {showModal && (
+        <Modal
+          heading='Please confirm'
+          subheading={`Are you sure that you want to delete your notes on ${bookQuery.data.title}? This cannnot be undone.`}
+          cancel={() => setShowModal(false)}
+          okay={() => handleDelete()}
+        />
+      )}
     </div>
   );
 };
