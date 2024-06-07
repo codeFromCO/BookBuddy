@@ -149,7 +149,7 @@ const HomePage = () => {
               <BookCardSearch
                 title={searchQuery.data?.docs[0].title}
                 author={searchQuery.data?.docs[0].author_name[0]}
-                src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-M.jpg`}
+                src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-S.jpg`}
                 onClick={handleAddBook}
               />
             )}
