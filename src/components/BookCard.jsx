@@ -13,7 +13,7 @@ const BookCard = (props) => {
           <div className='flex justify-between'>
             <h2 className='font-bold text-lg'>{props.title}</h2>
             <FaRegEdit
-              className='size-5 hover:cursor-pointer hover:text-basePeach'
+              className='size-5 hover:cursor-pointer hover:text-basePeach ml-3'
               onClick={props.onClick}
             />
           </div>
