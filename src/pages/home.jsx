@@ -9,7 +9,10 @@ import Button from '../components/Button';
 import Error from '../components/Error';
 import { FaHourglass } from 'react-icons/fa6';
 
-// TO-DO clear input after adding a book
+// TO-DO 
+// clear input after adding a book
+// display alphabetically? most recently updated?
+// display date when last updated was made 
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
