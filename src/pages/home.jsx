@@ -9,11 +9,7 @@ import Button from '../components/Button';
 import Error from '../components/Error';
 import { FaHourglass } from 'react-icons/fa6';
 
-// sample query keys because must be unique
-// e.g. if /posts => ["posts"]
-// /posts/1 => ["posts", post.id]
-// /posts?authorId=1 => ["posts", {authorId: 1}]
-// /posts/2/comments => ["posts", post.id, "comments"]
+// TO-DO clear input after adding a book
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
@@ -167,20 +163,22 @@ const HomePage = () => {
             searchQuery.data.numFound === 0 && <Error alert='Book not found' />}
         </div>
 
-        {booksQuery.data && booksQuery.data.length > 0 ? (
-          booksQuery.data.map((book, index) => (
-            <BookCard
-              key={index} // Provide a unique key for each item
-              src={`${bookcoverAPI}${book?.cover_i}-M.jpg`}
-              title={book?.title}
-              author={book?.author}
-              notes={book?.notes}
-              onClick={() => clickToNavigate(book._id)}
-            />
-          ))
-        ) : (
-          <p>No books found.</p>
-        )}
+        <div className='flex flex-wrap'>
+          {booksQuery.data && booksQuery.data.length > 0 ? (
+            booksQuery.data.map((book, index) => (
+              <BookCard
+                key={index} // Provide a unique key for each item
+                src={`${bookcoverAPI}${book?.cover_i}-M.jpg`}
+                title={book?.title}
+                author={book?.author}
+                notes={book?.notes}
+                onClick={() => clickToNavigate(book._id)}
+              />
+            ))
+          ) : (
+            <p>No books found.</p>
+          )}
+        </div>
 
         {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
         {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}

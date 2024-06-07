@@ -6,7 +6,7 @@ import { FaRegEdit } from 'react-icons/fa';
 const BookCard = (props) => {
 
   return (
-    <div className='bg-baseMidGray p-3 rounded-md my-3 w-96'>
+    <div className='bg-baseMidGray p-3 rounded-md mt-3 mr-3 w-96'>
       <div className='flex'>
         <img className='max-h-32' src={props.src}></img>
         <div className='pl-3 w-full'>
