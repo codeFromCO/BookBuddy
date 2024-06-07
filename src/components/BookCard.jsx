@@ -2,6 +2,7 @@ import React from 'react';
 import { FaRegEdit } from 'react-icons/fa';
 
 // TO-DO dynamic sizing of cards
+// CONSIDER SWITCHING TO JUST SHOW BOOKING COVER 
 
 const BookCard = (props) => {
 
