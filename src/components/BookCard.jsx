@@ -8,7 +8,7 @@ const BookCard = (props) => {
   return (
     <div className='bg-baseMidGray p-3 rounded-md mt-3 mr-3 w-96'>
       <div className='flex'>
-        <div className='min-w-16'>
+        <div className='min-w-20'>
 
         <img className='max-h-32' src={props.src}></img>
         </div>
