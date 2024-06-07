@@ -13,7 +13,7 @@ const Modal = (props) => {
         <div className='flex-grow'></div>{' '}
         {/* This will make the space between content and buttons flexible */}
         <div className='flex justify-end pb-5 gap-x-2'>
-          <Button tertiary='true' name='Okay' onClick={props.okay} />
+          <Button tertiary='true' name='Confirm' onClick={props.okay} />
           <Button name='Cancel' onClick={props.cancel} />
         </div>
       </div>
