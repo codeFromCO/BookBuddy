@@ -6,7 +6,7 @@ import { MdSave } from 'react-icons/md';
 
 const BookCardLarge = (props) => {
   return (
-    <div className='bg-baseMidGray p-3 m-3 rounded-md w-5/6 h-full flex flex-col'>
+    <div className='bg-baseMidGray p-3 m-3 rounded-md w-full h-full flex flex-col'>
       <div className='pl-3 w-full'>
         <div className='flex justify-between'>
           <h2 className='font-bold text-lg'>{props.title}</h2>

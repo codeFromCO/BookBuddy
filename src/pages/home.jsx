@@ -9,10 +9,11 @@ import Button from '../components/Button';
 import Error from '../components/Error';
 import { FaHourglass } from 'react-icons/fa6';
 
-// TO-DO 
+// TO-DO
 // clear input after adding a book
 // display alphabetically? most recently updated?
-// display date when last updated was made 
+// distinguish between finished and still reading? 
+
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
@@ -165,7 +166,6 @@ const HomePage = () => {
             searchQuery.data &&
             searchQuery.data.numFound === 0 && <Error alert='Book not found' />}
         </div>
-
         <div className='flex flex-wrap mt-3'>
           {booksQuery.data && booksQuery.data.length > 0 ? (
             booksQuery.data.map((book, index) => (
