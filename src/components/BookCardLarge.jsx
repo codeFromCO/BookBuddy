@@ -6,30 +6,28 @@ import { MdSave } from 'react-icons/md';
 
 const BookCardLarge = (props) => {
   return (
-    <div className='bg-baseMidGray p-3 m-3 rounded-md w-5/6 max-h-screen overflow-auto'>
-      <div className='flex'>
-        <div className='pl-3 w-full flex-grow'>
-          <div className='flex justify-between'>
-            <h2 className='font-bold text-lg'>{props.title}</h2>
-            <div className='flex space-x-2'>
-              <MdSave
-                className='size-5 hover:cursor-pointer hover:text-basePeach'
-                onClick={props.onSubmit}
-              />
-              <MdDelete
-                className='size-5 hover:cursor-pointer hover:text-basePeach'
-                onClick={props.onClickDelete}
-              />
-            </div>
+    <div className='bg-baseMidGray p-3 m-3 rounded-md w-5/6 h-full flex flex-col'>
+      <div className='pl-3 w-full'>
+        <div className='flex justify-between'>
+          <h2 className='font-bold text-lg'>{props.title}</h2>
+          <div className='flex space-x-2'>
+            <MdSave
+              className='size-5 hover:cursor-pointer hover:text-basePeach'
+              onClick={props.onSubmit}
+            />
+            <MdDelete
+              className='size-5 hover:cursor-pointer hover:text-basePeach'
+              onClick={props.onClickDelete}
+            />
           </div>
-          <h3 className='text-sm mb-2'>{props.author}</h3>
-          <textarea
-            className='text-sm w-full p-2 rounded-md focus:border-2 focus:border-black focus:outline-none resize-none'
-            value={props.value}
-            onChange={props.onChange}
-          ></textarea>
         </div>
+        <h3 className='text-sm mb-2'>{props.author}</h3>
       </div>
+      <textarea
+        className='text-sm w-full p-2 rounded-md border-2 border-white focus:border-black focus:outline-none resize-none h-full'
+        value={props.value}
+        onChange={props.onChange}
+      ></textarea>
     </div>
   );
 };
