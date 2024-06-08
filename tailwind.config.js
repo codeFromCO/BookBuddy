@@ -8,6 +8,7 @@ module.exports = {
       },
       colors: {
         baseBackgroundPrimary: '#dde5b6',
+        baseBackgroundComplementary: '#b64040',
         baseBackgroundSecondary: '#f0ead2',
         baseButtonPrimary: '#a98467',
         baseButtonFocus: '#f0ead2',
