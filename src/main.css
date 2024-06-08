@@ -3,8 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply bg-baseLightGray
-    }
+  body {
+    @apply bg-baseBackgroundPrimary;
+  }
 }
-

@@ -12,8 +12,7 @@ import { FaHourglass } from 'react-icons/fa6';
 // TO-DO
 // clear input after adding a book
 // display alphabetically? most recently updated?
-// distinguish between finished and still reading? 
-
+// distinguish between finished and still reading?
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
@@ -126,7 +125,7 @@ const HomePage = () => {
       <div className='px-3'>
         <div className='my-5 mb-0 flex items-end'>
           <input
-            className={`p-2 w-inputSearchWidth border-2 rounded-md focus:outline-none focus:border-basePeach ${
+            className={`p-2 w-inputSearchWidth border-2 border-white placeholder-bg-baseTextPrimary rounded-md focus:outline-none focus:border-baseButtonPrimary ${
               searchQuery.data ? 'rounded-b-none' : ''
             }`}
             type='text'
@@ -134,7 +133,7 @@ const HomePage = () => {
             onChange={(e) => setSearchInput(e.target.value)}
           />
           <button
-            className='bg-basePeach border-2 border-basePeach text-baseMidGray rounded-md px-4 py-2 flex items-center '
+            className='bg-baseButtonPrimary border-2 border-baseButtonPrimary text-baseButtonFocus rounded-md px-4 py-2 flex items-center hover:bg-baseTextPrimary hover:border-baseTextPrimary '
             onClick={clickToSearch}
           >
             Search

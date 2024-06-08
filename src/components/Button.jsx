@@ -6,8 +6,8 @@ const Button = (props) => {
       onClick={props.onClick}
       className={
         props.tertiary
-          ? 'px-5 h-[48px] bg-basePeach text-basePeachLight rounded-md font-semibold hover:bg-baseDeepBlue'
-          : 'px-5 h-[48px] text-basePeach font-semibold bg-basePeachLight rounded-md hover:bg-baseDeepBlue'
+          ? 'px-5 h-[48px] bg-baseButtonPrimary text-baseButtonFocus rounded-md font-semibold hover:bg-baseTextPrimary'
+          : 'px-5 h-[48px] text-baseButtonPrimary font-semibold bg-baseButtonFocus rounded-md hover:bg-baseTextPrimary'
       }
     >
       {props.name}
