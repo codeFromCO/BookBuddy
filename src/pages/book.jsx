@@ -92,7 +92,7 @@ const BookPage = () => {
   return (
     <div className='flex flex-col h-screen'>
       <Header title='book buddy' homeButton='true' />
-      <div className='flex items-center justify-center my-3 flex-grow'>
+      <div className='flex items-center justify-center my-5 flex-grow'>
         {bookQuery.data && !showModal && (
           <BookCardLarge
             title={bookQuery.data.title}
