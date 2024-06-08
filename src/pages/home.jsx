@@ -10,7 +10,6 @@ import Error from '../components/Error';
 import { FaHourglass } from 'react-icons/fa6';
 
 // TO-DO
-// clear input after adding a book
 // display alphabetically? most recently updated?
 // distinguish between finished and still reading?
 
@@ -111,6 +110,7 @@ const HomePage = () => {
       };
 
       mutation.mutate(book);
+      setSearchInput('');
     }
   };
 
@@ -128,6 +128,7 @@ const HomePage = () => {
             className={`p-2 w-inputSearchWidth border-2 border-white placeholder-bg-baseTextPrimary rounded-md focus:outline-none focus:border-baseButtonPrimary ${
               searchQuery.data ? 'rounded-b-none' : ''
             }`}
+            value={searchInput}
             type='text'
             placeholder='Add a new book...'
             onChange={(e) => setSearchInput(e.target.value)}
