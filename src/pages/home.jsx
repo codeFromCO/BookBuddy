@@ -166,15 +166,12 @@ const HomePage = () => {
             searchQuery.data.numFound === 0 && <Error alert='Book not found' />}
         </div>
 
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap mt-3'>
           {booksQuery.data && booksQuery.data.length > 0 ? (
             booksQuery.data.map((book, index) => (
               <BookCard
                 key={index} // Provide a unique key for each item
-                src={`${bookcoverAPI}${book?.cover_i}-M.jpg`}
-                title={book?.title}
-                author={book?.author}
-                notes={book?.notes}
+                src={`${bookcoverAPI}${book?.cover_i}-L.jpg`}
                 onClick={() => clickToNavigate(book._id)}
               />
             ))
