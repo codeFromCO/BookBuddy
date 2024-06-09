@@ -4,6 +4,6 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-gradient-to-br  from-baseBackgroundPrimary to-baseBackgroundComplementary;
+    @apply bg-baseBackgroundPrimary;
   }
 }

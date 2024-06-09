@@ -7,14 +7,16 @@ module.exports = {
         inputSearchWidth: '250px',
       },
       colors: {
-        baseBackgroundPrimary: '#dde5b6',
-        baseBackgroundComplementary: '#b64040',
-        baseBackgroundSecondary: '#f0ead2',
+        baseBackgroundPrimary: '#EAE6DE',
+        // baseBackgroundComplementary: '#b64040',
+        baseBackgroundSecondary: '#8F8E82',
         baseButtonPrimary: '#a98467',
-        baseButtonFocus: '#f0ead2',
-        baseTextPrimary: '#4b382f',
-        baseTextSecondary: '#a98467',
-        baseCardBackground: '#adc178',
+        baseButtonFocus: '#4D4D4D',
+        baseButtonFocus2: '#EAE6DE',
+        baseTextPrimary: 'black',
+        baseCardBackground: '#D1CDC6',
+        baseAlertText: '#EF4444',
+        baseAlertBackground: '#FEE2E2'
       },
     },
     screens: {

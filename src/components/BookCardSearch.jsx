@@ -11,7 +11,7 @@ const BookCardSearch = (props) => {
         <div className='flex justify-between'>
           <h2 className='font-bold text-sm'>{props.title}</h2>
           <IoAddOutline
-            className='size-5 hover:cursor-pointer hover:text-baseButtonPrimary'
+            className='size-5 hover:cursor-pointer hover:text-baseButtonFocus'
             onClick={props.onClick}
           />
         </div>

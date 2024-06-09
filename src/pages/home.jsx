@@ -125,7 +125,7 @@ const HomePage = () => {
       <div className='px-3'>
         <div className='mt-5 mb-0 flex'>
           <input
-            className={`p-2 w-inputSearchWidth border-2 border-white placeholder-bg-baseTextPrimary rounded-md focus:outline-none focus:border-baseButtonPrimary ${
+            className={`p-2 w-inputSearchWidth border-2 border-white text-black placeholder-bg-baseTextPrimary rounded-md focus:outline-none  focus:baseButtonFocus ${
               searchQuery.data ? 'rounded-b-none' : ''
             }`}
             value={searchInput}
@@ -134,7 +134,7 @@ const HomePage = () => {
             onChange={(e) => setSearchInput(e.target.value)}
           />
           <button
-            className='bg-baseButtonPrimary border-2 border-baseButtonPrimary text-baseButtonFocus rounded-md px-4 py-2 flex items-center hover:bg-baseTextPrimary hover:border-baseTextPrimary'
+            className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
             onClick={clickToSearch}
           >
             Search

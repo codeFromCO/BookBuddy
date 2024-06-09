@@ -14,7 +14,7 @@ const Header = (props) => {
       </div>
       {props.homeButton && (
         <FaHome
-          className='size-5 mr-3 hover:cursor-pointer hover:text-baseButtonPrimary'
+          className='size-5 mr-3 hover:cursor-pointer hover:text-baseButtonFocus'
           onClick={() => navigate('/')}
         />
       )}

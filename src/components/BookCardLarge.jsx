@@ -12,11 +12,11 @@ const BookCardLarge = (props) => {
           <h2 className='font-bold text-lg'>{props.title}</h2>
           <div className='flex space-x-2'>
             <MdSave
-              className='size-5 hover:cursor-pointer hover:text-baseButtonPrimary'
+              className='size-5 hover:cursor-pointer hover:text-baseButtonFocus'
               onClick={props.onSubmit}
             />
             <MdDelete
-              className='size-5 hover:cursor-pointer hover:text-baseButtonPrimary'
+              className='size-5 hover:cursor-pointer hover:text-baseButtonFocus'
               onClick={props.onClickDelete}
             />
           </div>
@@ -24,7 +24,7 @@ const BookCardLarge = (props) => {
         <h3 className='text-sm mb-2'>{props.author}</h3>
       </div>
       <textarea
-        className='text-sm w-full p-2 rounded-md border-2 border-white focus:border-baseButtonPrimary focus:outline-none resize-none h-full '
+        className='text-sm w-full p-2 rounded-md border-2 border-white focus:border-baseButtonFocus focus:outline-none resize-none h-full '
         value={props.value}
         onChange={props.onChange}
       ></textarea>
