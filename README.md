@@ -4,7 +4,7 @@
 1. Clone this repo to your local machine.
 2. Set up environment variables by creating a '.env' file and adding configurations for the PORT and MONGODB_URI.
 3. Run 'npm install' to install necessary dependencies.
-4. Run 'npm run dev' to get. 
+4. Run 'npm run dev' to get started. 
 
 ## Key features:
 ### Book search
