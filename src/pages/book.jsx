@@ -6,6 +6,8 @@ import Header from '../components/Header';
 import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 
+// TO-DO consider adding AI feature e.g. which page on book mentioned X 
+
 const getBookFunction = async ({ _id }) => {
   const response = await fetch('/api/book/findOne', {
     method: 'PUT',
