@@ -1,21 +1,45 @@
 # bookBuddy
 
 ## Getting started:
-1. Clone this repo to your local machine.
-2. Set up environment variables by creating a '.env' file and adding configurations for the PORT and MONGODB_URI.
-3. Run 'npm install' to install necessary dependencies.
-4. Run 'npm run dev' to get started. 
+
+1. Ensure that Node.js and npm are installed globally on your machine.
+2. Clone this repo to your local machine.
+3. Navigate to the project directory.
+4. Set up environment variables by creating a '.env' file and adding configurations for the PORT and MONGODB_URI.
+
+```
+PORT=<your-port-number>
+MONGODB_URI=<your-mongodb-uri>
+```
+
+5. Run 'npm install' to install necessary dependencies.
+
+```
+npm install
+```
+
+6. Run 'npm run dev' to get started in development mode.
+
+```
+npm run dev
+```
 
 ## Key features:
-### Book search
-- Quickly find books by title
-### Personal library management
-- Build and maintain your digital library with the ability to add and remove books according to your preferences
-### Note-taking capabilities
-- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material 
 
+### Book search
+
+- Quickly find books by title
+
+### Personal library management
+
+- Build and maintain your digital library with the ability to add and remove books according to your preferences
+
+### Note-taking capabilities
+
+- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material
 
 ## Built using:
+
 ![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![react-query](https://img.shields.io/badge/React_Query-FF4154?style=for-the-badge&logo=ReactQuery&logoColor=white)
@@ -27,4 +51,3 @@
 ![css](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![tailwindcss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![webpack](https://img.shields.io/badge/Webpack-8DD6F9?style=for-the-badge&logo=Webpack&logoColor=white)
-
