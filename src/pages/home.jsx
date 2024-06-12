@@ -130,7 +130,7 @@ const HomePage = () => {
             }`}
             value={searchInput}
             type='text'
-            placeholder='Add a new book...'
+            placeholder='Search for a new book...'
             onChange={(e) => setSearchInput(e.target.value)}
           />
           <button

@@ -8,7 +8,7 @@
 4. Set up environment variables by creating a '.env' file and adding configurations for the PORT and MONGODB_URI.
 
 ```
-PORT=<your-port-number>
+PORT=<your-port-num ber>
 MONGODB_URI=<your-mongodb-uri>
 ```
 
