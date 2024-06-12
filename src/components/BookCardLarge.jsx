@@ -27,6 +27,7 @@ const BookCardLarge = (props) => {
         className='text-sm w-full p-2 rounded-md border-2 border-white focus:border-baseButtonFocus focus:outline-none resize-none h-full '
         value={props.value}
         onChange={props.onChange}
+        placeholder={`Click to add a note. Don't forget to save!`}
       ></textarea>
     </div>
   );
