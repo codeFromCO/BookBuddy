@@ -16,7 +16,8 @@ module.exports = {
         baseTextPrimary: 'black',
         baseCardBackground: '#D1CDC6',
         baseAlertText: '#EF4444',
-        baseAlertBackground: '#FEE2E2'
+        baseAlertBackground: '#FEE2E2',
+        baseSidebar: '#D8D3CA'
       },
     },
     screens: {

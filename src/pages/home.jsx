@@ -8,6 +8,8 @@ import ButtonLoading from '../components/ButtonLoading';
 import Button from '../components/Button';
 import Error from '../components/Error';
 import { FaHourglass } from 'react-icons/fa6';
+import SideBar from '../components/SideBar';
+import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 // TO-DO
 // display alphabetically? most recently updated?
@@ -119,71 +121,81 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <Header title='book buddy' />
+    <div className='flex flex-row'>
+      <SideBar active='home' />
+      <div className='pl-4'>
+        <Header title='BookBuddy' />
 
-      <div className='px-3'>
-        <div className='mt-5 mb-0 flex'>
-          <input
-            className={`p-2 w-inputSearchWidth border-2 border-white text-black placeholder-bg-baseTextPrimary rounded-md focus:outline-none  focus:baseButtonFocus ${
-              searchQuery.data ? 'rounded-b-none' : ''
-            }`}
-            value={searchInput}
-            type='text'
-            placeholder='Search for a new book...'
-            onChange={(e) => setSearchInput(e.target.value)}
-          />
-          <button
-            className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
-            onClick={clickToSearch}
-          >
-            Search
-            {searchQuery.isFetching && (
-              <FaHourglass className='ml-2'></FaHourglass>
-            )}
-          </button>
-        </div>
-
-        <div>
-          {buttonClicked &&
-            !searchQuery.isFetching &&
-            searchQuery.data &&
-            searchQuery.data.numFound > 0 && (
-              // <h1>Success</h1> // even this isn't displaying
-              <BookCardSearch
-                title={searchQuery.data?.docs[0].title}
-                author={searchQuery.data?.docs[0].author_name[0]}
-                src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-S.jpg`}
-                onClick={handleAddBook}
+        <div className='px-3'>
+          <div className='mt-5 mb-0 flex justify-end'>
+            <div
+              className={`items-center flex p-2 w-inputSearchWidth border-2 border-baseSidebar text-black bg-baseSidebar rounded-3xl ${
+                searchQuery.data ? 'rounded-b-none' : ''
+              }`}
+            >
+              <HiMagnifyingGlass/>
+              <input
+                className='border-none focus:outline-none pl-3 bg-baseSidebar placeholder-baseBackgroundSecondary'
+                value={searchInput}
+                type='text'
+                placeholder='Search for a new book...'
+                onChange={(e) => setSearchInput(e.target.value)}
               />
+            </div>
+            <button
+              className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
+              onClick={clickToSearch}
+            >
+              Search
+              {searchQuery.isFetching && (
+                <FaHourglass className='ml-2'></FaHourglass>
+              )}
+            </button>
+          </div>
+
+          <div>
+            {buttonClicked &&
+              !searchQuery.isFetching &&
+              searchQuery.data &&
+              searchQuery.data.numFound > 0 && (
+                // <h1>Success</h1> // even this isn't displaying
+                <BookCardSearch
+                  title={searchQuery.data?.docs[0].title}
+                  author={searchQuery.data?.docs[0].author_name[0]}
+                  src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-S.jpg`}
+                  onClick={handleAddBook}
+                />
+              )}
+            {buttonClicked && searchQuery.isError && (
+              <pre>{JSON.stringify(searchQuery.isError)}</pre>
             )}
-          {buttonClicked && searchQuery.isError && (
-            <pre>{JSON.stringify(searchQuery.isError)}</pre>
-          )}
-          {bookExists && <Error alert='Book previously added' />}
-          {buttonClicked &&
-            !searchQuery.isFetching &&
-            searchQuery.data &&
-            searchQuery.data.numFound === 0 && <Error alert='Book not found' />}
-        </div>
-        <div className='flex flex-wrap mt-3'>
-          {booksQuery.data && booksQuery.data.length > 0 ? (
-            booksQuery.data.map((book, index) => (
-              <BookCard
-                key={index} // Provide a unique key for each item
-                src={`${bookcoverAPI}${book?.cover_i}-L.jpg`}
-                onClick={() => clickToNavigate(book._id)}
-              />
-            ))
-          ) : (
-            <p>No books found.</p>
-          )}
-        </div>
+            {bookExists && <Error alert='Book previously added' />}
+            {buttonClicked &&
+              !searchQuery.isFetching &&
+              searchQuery.data &&
+              searchQuery.data.numFound === 0 && (
+                <Error alert='Book not found' />
+              )}
+          </div>
+          <div className='flex flex-wrap mt-3'>
+            {booksQuery.data && booksQuery.data.length > 0 ? (
+              booksQuery.data.map((book, index) => (
+                <BookCard
+                  key={index} // Provide a unique key for each item
+                  src={`${bookcoverAPI}${book?.cover_i}-L.jpg`}
+                  onClick={() => clickToNavigate(book._id)}
+                />
+              ))
+            ) : (
+              <p>No books found.</p>
+            )}
+          </div>
 
-        {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
-        {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
+          {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
+          {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
 
-        {/* show book cover, option to show book cover + note in card */}
+          {/* show book cover, option to show book cover + note in card */}
+        </div>
       </div>
     </div>
   );
