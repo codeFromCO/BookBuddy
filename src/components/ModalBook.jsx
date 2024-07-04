@@ -5,7 +5,7 @@ import Button from './Button';
 
 const ModalBook = (props) => {
   return (
-    <div className='bg-white text-baseTextPrimary p-3 h-full flex flex-col w-full sm:w-1/2 absolute top-0 right-0'>
+    <div className='bg-white text-baseTextPrimary p-3 h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0'>
       <div className='w-full'>
         <div className='flex justify-between'>
           <h2 className='font-bold text-2xl'>{props.title}</h2>
