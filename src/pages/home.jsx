@@ -11,6 +11,8 @@ import { FaHourglass } from 'react-icons/fa6';
 import SideBar from '../components/SideBar';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 
+import ModalBook from '../components/ModalBook';
+
 // TO-DO
 // display alphabetically? most recently updated?
 // distinguish between finished and still reading?
@@ -197,6 +199,7 @@ const HomePage = () => {
           {/* show book cover, option to show book cover + note in card */}
         </div>
       </div>
+      <ModalBook title="Test title" author="Test author"/>
     </div>
   );
 };

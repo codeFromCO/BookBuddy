@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import BookCardLarge from '../components/BookCardLarge';
 import Header from '../components/Header';
-import Modal from '../components/Modal';
+import ModalAlert from '../components/ModalAlert';
 import { useNavigate } from 'react-router-dom';
 
 // TO-DO consider adding AI feature e.g. which page on book mentioned X 
@@ -109,7 +109,7 @@ const BookPage = () => {
         )}
       </div>
       {showModal && (
-        <Modal
+        <ModalAlert
           heading='Please confirm'
           subheading={`Are you sure that you want to delete your notes on ${bookQuery.data.title}? This cannnot be undone.`}
           cancel={() => setShowModal(false)}
