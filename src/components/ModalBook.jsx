@@ -25,8 +25,8 @@ const ModalBook = (props) => {
         placeholder={`Click to add a note. Don't forget to save!`}
       ></textarea>
       <div className='flex justify-end space-x-3 mt-3'>
-        <Button name='Cancel' tertiary='true' />
-        <Button name='Save' />
+        <Button name='Cancel' tertiary='true' onClick={props.cancel} />
+        <Button name='Save' onClick={props.save} />
       </div>
     </div>
   );

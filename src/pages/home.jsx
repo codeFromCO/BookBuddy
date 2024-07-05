@@ -27,6 +27,8 @@ const getBooksFunction = async () => {
   });
 
   const jsonData = await response.json();
+
+  console.log('this is the data', jsonData);
   return jsonData.data;
 };
 
@@ -54,9 +56,9 @@ const HomePage = () => {
   const [searchInput, setSearchInput] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
   const [bookExists, setBookExists] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({
@@ -118,8 +120,12 @@ const HomePage = () => {
     }
   };
 
-  const clickToNavigate = (ID) => {
-    navigate(`/book/${ID}`);
+  const clickToViewNotes = (title, author, notes) => {
+    setSelectedBook({ title, author, notes });
+  };
+
+  const clickToCloseNotes = () => {
+    setSelectedBook(null);
   };
 
   return (
@@ -135,7 +141,7 @@ const HomePage = () => {
                 searchQuery.data ? 'rounded-b-none' : ''
               }`}
             >
-              <HiMagnifyingGlass/>
+              <HiMagnifyingGlass />
               <input
                 className='border-none focus:outline-none pl-3 bg-baseSidebar placeholder-baseBackgroundSecondary'
                 value={searchInput}
@@ -185,7 +191,10 @@ const HomePage = () => {
                 <BookCard
                   key={index} // Provide a unique key for each item
                   src={`${bookcoverAPI}${book?.cover_i}-L.jpg`}
-                  onClick={() => clickToNavigate(book._id)}
+                  // onClick={() => clickToNavigate(book._id)}
+                  onClick={() =>
+                    clickToViewNotes(book.title, book.author, book.notes)
+                  }
                 />
               ))
             ) : (
@@ -199,7 +208,15 @@ const HomePage = () => {
           {/* show book cover, option to show book cover + note in card */}
         </div>
       </div>
-      <ModalBook title="Test title" author="Test author"/>
+      {selectedBook && (
+        <ModalBook
+          title={selectedBook.title}
+          author={selectedBook.author}
+          value={selectedBook.notes}
+          cancel={() => clickToCloseNotes()}
+          // save={() => handleSave()}
+        />
+      )}
     </div>
   );
 };
