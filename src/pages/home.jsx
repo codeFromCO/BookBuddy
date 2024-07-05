@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import Header from '../components/Header';
-import BookCard from '../components/BookCard';
-import BookCardSearch from '../components/BookCardSearch';
-import ButtonLoading from '../components/ButtonLoading';
-import Button from '../components/Button';
-import Error from '../components/Error';
-import { FaHourglass } from 'react-icons/fa6';
-import SideBar from '../components/SideBar';
-import { HiMagnifyingGlass } from 'react-icons/hi2';
-
-import ModalBook from '../components/ModalBook';
-
 // TO-DO
 // display alphabetically? most recently updated?
 // distinguish between finished and still reading?
+// scroll to top functionality 
+// better error handling 
+// stop unnecessary re-renders of child components when updating or deleting book
+// more isFetching 
+// consider moving functions to seperate file
+
+import React, { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { FaHourglass } from 'react-icons/fa6';
+import { HiMagnifyingGlass } from 'react-icons/hi2';
+
+import Header from '../components/Header';
+import SideBar from '../components/SideBar';
+import BookCard from '../components/BookCard';
+import BookCardSearch from '../components/BookCardSearch';
+import ButtonLoading from '../components/ButtonLoading';
+import Error from '../components/Error';
+import ModalBook from '../components/ModalBook';
+import ModalAlert from '../components/ModalAlert';
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
 
-const getBooksFunction = async () => {
+const getBooks = async () => {
   const response = await fetch('api/book/findAll', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   });
 
   const jsonData = await response.json();
-
-  console.log('this is the data', jsonData);
   return jsonData.data;
 };
 
@@ -37,7 +39,6 @@ const searchBooks = async (input) => {
   const response = await fetch(`${bookSearchAPI}${searchString}`);
 
   const dataToReturn = await response.json();
-
   return dataToReturn;
 };
 
@@ -52,18 +53,41 @@ const addBook = async (book) => {
   return jsonData;
 };
 
+const updateBook = async ({ _id, notes }) => {
+  const response = await fetch('/api/book/update', {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ _id, notes }),
+  });
+
+  const jsonData = await response.json();
+  return jsonData;
+};
+
+const deleteBook = async ({ _id }) => {
+  const response = await fetch('/api/book/delete', {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ _id }),
+  });
+
+  const jsonData = await response.json();
+  return jsonData.data;
+};
+
 const HomePage = () => {
   const [searchInput, setSearchInput] = useState('');
   const [buttonClicked, setButtonClicked] = useState(false);
   const [bookExists, setBookExists] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showModalAlert, setShowModalAlert] = useState(false);
+  const [notesInput, setNotesInput] = useState('');
 
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({
     queryKey: ['books'], // unique identifier for query,
-    queryFn: getBooksFunction,
+    queryFn: getBooks,
   });
 
   const searchQuery = useQuery({
@@ -72,7 +96,7 @@ const HomePage = () => {
     enabled: false, // disabled automatically running
   });
 
-  const mutation = useMutation({
+  const addBookMutation = useMutation({
     mutationFn: addBook,
     onSuccess: () => {
       queryClient.invalidateQueries(['books']);
@@ -84,7 +108,24 @@ const HomePage = () => {
     },
   });
 
-  const clickToSearch = () => {
+  const updateBookMutation = useMutation({
+    mutationFn: updateBook,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['books']);
+      setSelectedBook(null);
+      setNotesInput('');
+    },
+  });
+
+  const deleteBookMutation = useMutation({
+    mutationFn: deleteBook,
+    onSuccess: () => {
+      queryClient.invalidateQueries(['books']);
+      setSelectedBook(null);
+    },
+  });
+
+  const handleSearch = () => {
     // check if searchInput is empty
     if (searchInput.trim() === '') {
       return;
@@ -107,6 +148,25 @@ const HomePage = () => {
     }
   };
 
+  const handleViewNotes = (title, author, notes, _id) => {
+    setSelectedBook({ title, author, notes, _id });
+    setNotesInput(notes);
+  };
+
+  const handleCloseNotes = () => {
+    setSelectedBook(null);
+    setNotesInput('');
+    setShowModalAlert(false);
+  };
+
+  const handleDisplayAlertModal = () => {
+    setShowModalAlert(true);
+  };
+
+  const handleCloseAlertModal = () => {
+    setShowModalAlert(false);
+  };
+
   const handleAddBook = () => {
     if (searchQuery.data?.docs.length > 0) {
       const book = {
@@ -115,17 +175,26 @@ const HomePage = () => {
         cover_i: searchQuery.data.docs[0].cover_i,
       };
 
-      mutation.mutate(book);
+      addBookMutation.mutate(book);
       setSearchInput('');
     }
   };
 
-  const clickToViewNotes = (title, author, notes) => {
-    setSelectedBook({ title, author, notes });
+  const handleSaveNotes = () => {
+    if (selectedBook) {
+      updateBookMutation.mutate({ _id: selectedBook._id, notes: notesInput });
+    }
+    setSelectedBook(null);
+    setNotesInput('');
   };
 
-  const clickToCloseNotes = () => {
-    setSelectedBook(null);
+  const handleDelete = () => {
+    if (selectedBook) {
+      deleteBookMutation.mutate({ _id: selectedBook._id });
+
+      setShowModalAlert(false);
+      setNotesInput('');
+    }
   };
 
   return (
@@ -152,7 +221,7 @@ const HomePage = () => {
             </div>
             <button
               className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
-              onClick={clickToSearch}
+              onClick={handleSearch}
             >
               Search
               {searchQuery.isFetching && (
@@ -166,7 +235,6 @@ const HomePage = () => {
               !searchQuery.isFetching &&
               searchQuery.data &&
               searchQuery.data.numFound > 0 && (
-                // <h1>Success</h1> // even this isn't displaying
                 <BookCardSearch
                   title={searchQuery.data?.docs[0].title}
                   author={searchQuery.data?.docs[0].author_name[0]}
@@ -191,9 +259,13 @@ const HomePage = () => {
                 <BookCard
                   key={index} // Provide a unique key for each item
                   src={`${bookcoverAPI}${book?.cover_i}-L.jpg`}
-                  // onClick={() => clickToNavigate(book._id)}
                   onClick={() =>
-                    clickToViewNotes(book.title, book.author, book.notes)
+                    handleViewNotes(
+                      book.title,
+                      book.author,
+                      book.notes,
+                      book._id
+                    )
                   }
                 />
               ))
@@ -212,9 +284,19 @@ const HomePage = () => {
         <ModalBook
           title={selectedBook.title}
           author={selectedBook.author}
-          value={selectedBook.notes}
-          cancel={() => clickToCloseNotes()}
-          // save={() => handleSave()}
+          value={notesInput}
+          onChange={(event) => setNotesInput(event.target.value)}
+          onClickDelete={handleDisplayAlertModal}
+          cancel={handleCloseNotes}
+          save={handleSaveNotes}
+        />
+      )}
+      {showModalAlert && selectedBook && (
+        <ModalAlert
+          heading='Please confirm'
+          subheading={`Are you sure that you want to delete your notes on ${selectedBook.title}? This cannnot be undone.`}
+          cancel={handleCloseAlertModal}
+          confirm={handleDelete}
         />
       )}
     </div>

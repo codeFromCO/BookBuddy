@@ -7,8 +7,8 @@ const ModalAlert = (props) => {
       <div className='text-xl font-medium'>{props.heading}</div>
       <div className='text-sm my-2'>{props.subheading}</div>
       <div className='flex justify-end pb-5 gap-x-2'>
-        <Button tertiary='true' name='Confirm' onClick={props.okay} />
-        <Button name='Cancel' onClick={props.cancel} />
+        <Button name='Cancel' tertiary='true' onClick={props.cancel} />
+        <Button name='Confirm' onClick={props.confirm} />
       </div>
     </div>
   );
