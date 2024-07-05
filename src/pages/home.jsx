@@ -1,10 +1,10 @@
 // TO-DO
 // display alphabetically? most recently updated?
 // distinguish between finished and still reading?
-// scroll to top functionality 
-// better error handling 
+// scroll to top functionality
+// better error handling
 // stop unnecessary re-renders of child components when updating or deleting book
-// more isFetching 
+// more isFetching
 // consider moving functions to seperate file
 
 import React, { useState } from 'react';
@@ -20,6 +20,8 @@ import ButtonLoading from '../components/ButtonLoading';
 import Error from '../components/Error';
 import ModalBook from '../components/ModalBook';
 import ModalAlert from '../components/ModalAlert';
+import ModalSearch from '../components/ModalSearch';
+import Button from '../components/Button';
 
 const bookSearchAPI = 'https://openlibrary.org/search.json?q=';
 const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
@@ -80,6 +82,7 @@ const HomePage = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
   const [bookExists, setBookExists] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showModalSearch, setShowModalSearch] = useState(false);
   const [showModalAlert, setShowModalAlert] = useState(false);
   const [notesInput, setNotesInput] = useState('');
 
@@ -167,6 +170,13 @@ const HomePage = () => {
     setShowModalAlert(false);
   };
 
+  const handleDisplaySearchModal = () => {
+    setShowModalSearch(true);
+  };
+
+  const handleCloseSearchModal = () => {
+    setShowModalSearch(false);
+  };
   const handleAddBook = () => {
     if (searchQuery.data?.docs.length > 0) {
       const book = {
@@ -227,6 +237,12 @@ const HomePage = () => {
               {searchQuery.isFetching && (
                 <FaHourglass className='ml-2'></FaHourglass>
               )}
+            </button>
+            <button
+              className='text-white bg-black p-3 rounded-md'
+              onClick={handleDisplaySearchModal}
+            >
+              + Add new book
             </button>
           </div>
 
@@ -299,6 +315,7 @@ const HomePage = () => {
           confirm={handleDelete}
         />
       )}
+      {showModalSearch && <ModalSearch cancel={handleCloseSearchModal} />}
     </div>
   );
 };
