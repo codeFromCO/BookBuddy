@@ -227,30 +227,16 @@ const HomePage = () => {
         <Header title='BookBuddy' />
 
         <div className='px-3'>
-          <div className='mt-5 mb-0 flex justify-end'>
-            {/* <div
-              className={`items-center flex p-2 w-inputSearchWidth border-2 border-baseSidebar text-black bg-baseSidebar rounded-3xl ${
-                searchQuery.data ? 'rounded-b-none' : ''
-              }`}
+          <div className='mt-5 mb-0 flex justify-end space-x-3'>
+            <div
+              className={`items-center flex p-1 border-2 w-inputSearchWidth border-baseSidebar  text-black  bg-baseSidebar rounded-3xl`}
             >
               <HiMagnifyingGlass />
               <input
-                className='border-none focus:outline-none pl-3 bg-baseSidebar placeholder-baseBackgroundSecondary'
-                value={searchInput}
-                type='text'
-                placeholder='Search for a new book...'
-                onChange={(e) => setSearchInput(e.target.value)}
+                className='border-none focus:outline-none pl-3 w-full bg-baseSidebar placeholder-baseBackgroundSecondary '
+                placeholder='Search existing books'
               />
             </div>
-            <button
-              className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
-              onClick={handleSearch}
-            >
-              Search
-              {searchQuery.isFetching && (
-                <FaHourglass className='ml-2'></FaHourglass>
-              )}
-            </button> */}
             <button
               className='text-white bg-black p-3 rounded-md'
               onClick={handleDisplaySearchModal}
@@ -285,8 +271,8 @@ const HomePage = () => {
             {booksQuery.data && booksQuery.data.length > 0 ? (
               booksQuery.data.map((book, index) => (
                 <BookCard
-                title={book?.title}
-                author={book?.author}
+                  title={book?.title}
+                  author={book?.author}
                   key={index} // Provide a unique key for each item
                   src={
                     book?.cover_i > 0
@@ -350,3 +336,29 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
+{
+  /* <div
+  className={`items-center flex p-2 w-inputSearchWidth border-2 border-baseSidebar text-black bg-baseSidebar rounded-3xl ${
+    searchQuery.data ? 'rounded-b-none' : ''
+  }`}
+>
+  <HiMagnifyingGlass />
+  <input
+    className='border-none focus:outline-none pl-3 bg-baseSidebar placeholder-baseBackgroundSecondary'
+    value={searchInput}
+    type='text'
+    placeholder='Search for a new book...'
+    onChange={(e) => setSearchInput(e.target.value)}
+  />
+</div>
+<button
+  className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
+  onClick={handleSearch}
+>
+  Search
+  {searchQuery.isFetching && (
+    <FaHourglass className='ml-2'></FaHourglass>
+  )}
+</button> */
+}
