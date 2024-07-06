@@ -17,7 +17,10 @@ module.exports = {
         baseCardBackground: '#D1CDC6',
         baseAlertText: '#EF4444',
         baseAlertBackground: '#FEE2E2',
-        baseSidebar: '#D8D3CA'
+        baseSidebar: '#D8D3CA',
+      },
+      boxShadow: {
+        thick: '0 45px 75px -20px rgba(0, 0, 0, 0.7)',
       },
     },
     screens: {

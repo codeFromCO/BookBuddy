@@ -13,7 +13,7 @@ const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
 
 const ModalSearch = (props) => {
   return (
-    <div className='bg-white text-baseTextPrimary h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6'>
+    <div className='bg-white text-baseTextPrimary h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6 shadow-thick'>
       <div className='w-full'>
         <div className='flex justify-between'>
           <h2 className='font-bold text-2xl mb-3'>Add book</h2>
