@@ -153,7 +153,6 @@ const HomePage = () => {
       return;
     } else {
       setBookExists(false);
-      setButtonClicked(true);
       searchQuery.refetch();
     }
   };
