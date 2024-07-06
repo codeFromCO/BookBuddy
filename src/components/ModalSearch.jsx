@@ -13,7 +13,7 @@ const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
 
 const ModalSearch = (props) => {
   return (
-    <div className='bg-white text-baseTextPrimary p-6 h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0'>
+    <div className='bg-white text-baseTextPrimary h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6'>
       <div className='w-full'>
         <div className='flex justify-between'>
           <h2 className='font-bold text-2xl mb-3'>Add book</h2>
@@ -50,7 +50,8 @@ const ModalSearch = (props) => {
         {props.bookExists && <Error alert='Book previously added.' />}
         {props.searching && <Searching />}
       </div>
-      <div className='flex justify-end space-x-3 mt-3'>
+      <hr className='w-full border border-baseCardBackground my-3' />
+      <div className='flex justify-end space-x-3'>
         <Button
           className='fixed bottom-0 right-0'
           name='Cancel'
