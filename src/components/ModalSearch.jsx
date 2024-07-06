@@ -37,10 +37,14 @@ const ModalSearch = (props) => {
         {props.books &&
           props.books.map((book) => (
             <BookCard
+              title={book.title}
+              author={book.author_name[0]}
               onClick={() =>
                 props.onClick(book.title, book.author_name[0], book.cover_i)
               }
-              src={`${bookcoverAPI}${book.cover_i}-L.jpg`}
+              src={
+                book?.cover_i > 0 ? `${bookcoverAPI}${book?.cover_i}-L.jpg` : ''
+              }
               modalSearch={true}
             />
           ))}

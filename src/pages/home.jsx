@@ -33,6 +33,7 @@ const getBooks = async () => {
   });
 
   const jsonData = await response.json();
+  console.log('this is the data', jsonData.data);
   return jsonData.data;
 };
 
@@ -42,13 +43,12 @@ const searchBooks = async (input) => {
 
   const allData = await response.json();
 
-
   if (allData.docs.length < 6) {
-    const firstBooks = allData.docs
-    return firstBooks
+    const firstBooks = allData.docs;
+    return firstBooks;
   }
   const firstFiveBooks = allData.docs.slice(0, 6);
-  
+
   return firstFiveBooks;
 };
 
@@ -188,11 +188,9 @@ const HomePage = () => {
     setSearchInput('');
   };
 
-
   const handleAddBook = (title, author, cover_i) => {
-
-    console.log('in add book')
-    console.log('this is the data', title, author, cover_i)
+    console.log('in add book');
+    console.log('this is the data', title, author, cover_i);
 
     const book = {
       title,
@@ -202,7 +200,7 @@ const HomePage = () => {
 
     addBookMutation.mutate(book);
     setSearchInput('');
-    setShowModalSearch(false)
+    setShowModalSearch(false);
   };
 
   const handleSaveNotes = () => {
@@ -287,8 +285,14 @@ const HomePage = () => {
             {booksQuery.data && booksQuery.data.length > 0 ? (
               booksQuery.data.map((book, index) => (
                 <BookCard
+                title={book?.title}
+                author={book?.author}
                   key={index} // Provide a unique key for each item
-                  src={`${bookcoverAPI}${book?.cover_i}-L.jpg`}
+                  src={
+                    book?.cover_i > 0
+                      ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
+                      : ''
+                  }
                   onClick={() =>
                     handleViewNotes(
                       book.title,
