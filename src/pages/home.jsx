@@ -9,7 +9,6 @@
 
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { FaHourglass } from 'react-icons/fa6';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 import Header from '../components/Header';
@@ -87,7 +86,7 @@ const deleteBook = async ({ _id }) => {
 
 const HomePage = () => {
   const [searchInput, setSearchInput] = useState('');
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [existingBookSearchInput, setExistingSearchBookInput] = useState('');
   const [bookExists, setBookExists] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showModalSearch, setShowModalSearch] = useState(false);
@@ -220,13 +219,23 @@ const HomePage = () => {
     }
   };
 
+  const handleFindExistingBook = (inputValue) => {
+    setExistingSearchBookInput(inputValue);
+  };
+
+  const filteredBooks = booksQuery.data?.filter((book) =>
+    book.title
+      .toLowerCase()
+      .includes(existingBookSearchInput.trim().toLowerCase())
+  );
+
   return (
-    <div className='flex flex-row'>
+    <div className='flex flex-row h-screen'>
       <SideBar active='home' />
-      <div className='pl-4'>
+      <div className='pl-20 px-7 w-full'>
         <Header title='BookBuddy' />
 
-        <div className='px-3'>
+        <div>
           <div className='mt-5 mb-0 flex justify-end space-x-3'>
             <div
               className={`items-center flex p-1 border-2 w-inputSearchWidth border-baseSidebar  text-black  bg-baseSidebar rounded-3xl`}
@@ -234,7 +243,8 @@ const HomePage = () => {
               <HiMagnifyingGlass />
               <input
                 className='border-none focus:outline-none pl-3 w-full bg-baseSidebar placeholder-baseBackgroundSecondary '
-                placeholder='Search existing books'
+                placeholder='Search existing books by title'
+                onChange={(e) => handleFindExistingBook(e.target.value)}
               />
             </div>
             <button
@@ -245,31 +255,34 @@ const HomePage = () => {
             </button>
           </div>
 
-          <div>
-            {buttonClicked &&
-              !searchQuery.isFetching &&
-              searchQuery.data &&
-              searchQuery.data.numFound > 0 && (
-                <BookCardSearch
-                  title={searchQuery.data?.docs[0].title}
-                  author={searchQuery.data?.docs[0].author_name[0]}
-                  src={`${bookcoverAPI}${searchQuery.data?.docs[0].cover_i}-S.jpg`}
-                  onClick={handleAddBook}
+          <div className='flex flex-wrap mt-3'>
+            {booksQuery.data &&
+              booksQuery.data.length > 0 &&
+              !filteredBooks &&
+              booksQuery.data.map((book, index) => (
+                <BookCard
+                  title={book?.title}
+                  author={book?.author}
+                  key={index} // Provide a unique key for each item
+                  src={
+                    book?.cover_i > 0
+                      ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
+                      : ''
+                  }
+                  onClick={() =>
+                    handleViewNotes(
+                      book.title,
+                      book.author,
+                      book.notes,
+                      book._id
+                    )
+                  }
                 />
-              )}
-            {buttonClicked && searchQuery.isError && (
-              <pre>{JSON.stringify(searchQuery.isError)}</pre>
-            )}
-            {buttonClicked &&
-              !searchQuery.isFetching &&
-              searchQuery.data &&
-              searchQuery.data.numFound === 0 && (
-                <Error alert='Book not found' />
-              )}
+              ))}
           </div>
           <div className='flex flex-wrap mt-3'>
-            {booksQuery.data && booksQuery.data.length > 0 ? (
-              booksQuery.data.map((book, index) => (
+            {filteredBooks && filteredBooks.length > 0 ? (
+              filteredBooks.map((book, index) => (
                 <BookCard
                   title={book?.title}
                   author={book?.author}
@@ -290,7 +303,7 @@ const HomePage = () => {
                 />
               ))
             ) : (
-              <p>No books found.</p>
+              <Error alert='No books found' />
             )}
           </div>
 
@@ -336,29 +349,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-{
-  /* <div
-  className={`items-center flex p-2 w-inputSearchWidth border-2 border-baseSidebar text-black bg-baseSidebar rounded-3xl ${
-    searchQuery.data ? 'rounded-b-none' : ''
-  }`}
->
-  <HiMagnifyingGlass />
-  <input
-    className='border-none focus:outline-none pl-3 bg-baseSidebar placeholder-baseBackgroundSecondary'
-    value={searchInput}
-    type='text'
-    placeholder='Search for a new book...'
-    onChange={(e) => setSearchInput(e.target.value)}
-  />
-</div>
-<button
-  className='text-white border-2 bg-black border-black rounded-md px-4 py-2 flex items-center  hover:bg-baseButtonFocus hover:border-baseButtonFocus'
-  onClick={handleSearch}
->
-  Search
-  {searchQuery.isFetching && (
-    <FaHourglass className='ml-2'></FaHourglass>
-  )}
-</button> */
-}

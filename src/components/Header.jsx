@@ -7,7 +7,7 @@ const Header = (props) => {
   const navigate = useNavigate();
 
   return (
-    <header className='flex items-center justify-between px-3 gap-x-2 text-baseTextPrimary h-12 font-semibold'>
+    <header className='flex items-center justify-between gap-x-2 text-baseTextPrimary h-12 font-semibold'>
       <div className='flex items-center'>
         <h1 className='text-4xl'>{props.title}</h1>
         <FaWorm className='size-8 ml-2' />

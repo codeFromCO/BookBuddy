@@ -8,7 +8,7 @@ export default function SideBar(props) {
 
   return (
     <div>
-      <div className='flex flex-col w-14 items-center bg-baseSidebar h-full pt-16 gap-5 border-r-2 border-baseSidebar'>
+      <div className='fixed flex flex-col w-14 items-center bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-baseSidebar'>
         <Link
           to='/'
           className={`${

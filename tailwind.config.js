@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       width: {
-        inputSearchWidth: '250px',
+        inputSearchWidth: '350px',
       },
       colors: {
         baseBackgroundPrimary: '#EAE6DE',
