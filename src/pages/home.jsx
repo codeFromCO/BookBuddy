@@ -40,8 +40,16 @@ const searchBooks = async (input) => {
   const searchString = input.replace(/ /g, '+');
   const response = await fetch(`${bookSearchAPI}${searchString}`);
 
-  const dataToReturn = await response.json();
-  return dataToReturn;
+  const allData = await response.json();
+
+
+  if (allData.docs.length < 6) {
+    const firstBooks = allData.docs
+    return firstBooks
+  }
+  const firstFiveBooks = allData.docs.slice(0, 6);
+  
+  return firstFiveBooks;
 };
 
 const addBook = async (book) => {
@@ -151,8 +159,8 @@ const HomePage = () => {
     }
   };
 
-  const handleViewNotes = (title, author, notes, _id) => {
-    setSelectedBook({ title, author, notes, _id });
+  const handleViewNotes = (title, author_name, notes, _id) => {
+    setSelectedBook({ title, author: author_name, notes, _id });
     setNotesInput(notes);
   };
 
@@ -176,18 +184,25 @@ const HomePage = () => {
 
   const handleCloseSearchModal = () => {
     setShowModalSearch(false);
+    setBookExists(false);
+    setSearchInput('');
   };
-  const handleAddBook = () => {
-    if (searchQuery.data?.docs.length > 0) {
-      const book = {
-        title: searchQuery.data.docs[0].title,
-        author: searchQuery.data.docs[0].author_name[0],
-        cover_i: searchQuery.data.docs[0].cover_i,
-      };
 
-      addBookMutation.mutate(book);
-      setSearchInput('');
-    }
+
+  const handleAddBook = (title, author, cover_i) => {
+
+    console.log('in add book')
+    console.log('this is the data', title, author, cover_i)
+
+    const book = {
+      title,
+      author,
+      cover_i,
+    };
+
+    addBookMutation.mutate(book);
+    setSearchInput('');
+    setShowModalSearch(false)
   };
 
   const handleSaveNotes = () => {
@@ -215,7 +230,7 @@ const HomePage = () => {
 
         <div className='px-3'>
           <div className='mt-5 mb-0 flex justify-end'>
-            <div
+            {/* <div
               className={`items-center flex p-2 w-inputSearchWidth border-2 border-baseSidebar text-black bg-baseSidebar rounded-3xl ${
                 searchQuery.data ? 'rounded-b-none' : ''
               }`}
@@ -237,7 +252,7 @@ const HomePage = () => {
               {searchQuery.isFetching && (
                 <FaHourglass className='ml-2'></FaHourglass>
               )}
-            </button>
+            </button> */}
             <button
               className='text-white bg-black p-3 rounded-md'
               onClick={handleDisplaySearchModal}
@@ -261,7 +276,6 @@ const HomePage = () => {
             {buttonClicked && searchQuery.isError && (
               <pre>{JSON.stringify(searchQuery.isError)}</pre>
             )}
-            {bookExists && <Error alert='Book previously added' />}
             {buttonClicked &&
               !searchQuery.isFetching &&
               searchQuery.data &&
@@ -315,7 +329,18 @@ const HomePage = () => {
           confirm={handleDelete}
         />
       )}
-      {showModalSearch && <ModalSearch cancel={handleCloseSearchModal} />}
+      {showModalSearch && (
+        <ModalSearch
+          cancel={handleCloseSearchModal}
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
+          search={handleSearch}
+          books={searchQuery.data}
+          bookExists={bookExists}
+          onClick={handleAddBook}
+          searching={searchQuery.isFetching}
+        />
+      )}
     </div>
   );
 };
