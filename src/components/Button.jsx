@@ -4,11 +4,11 @@ const Button = (props) => {
   return (
     <button
       onClick={props.onClick}
-      className={
+      className={`flex justify-center items-center h-[48px] w-[96px] rounded-md font-semibold ${
         props.tertiary
-          ? 'flex justify-center items-center h-[48px] w-[96px] text-black rounded-md font-semibold hover:bg-baseButtonFocus2'
-          : 'flex justify-center items-center h-[48px] w-[96px] font-semibold bg-black rounded-md text-white hover:bg-baseButtonFocus'
-      }
+          ? 'text-black hover:bg-baseButtonFocus2'
+          : 'text-white bg-black hover:bg-baseButtonFocus'
+      }`}
     >
       {props.name}
     </button>

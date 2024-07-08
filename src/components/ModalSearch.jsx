@@ -9,7 +9,7 @@ import Error from './Error';
 import Searching from './Searching';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 
-const bookcoverAPI = 'https://covers.openlibrary.org/b/id/';
+import { bookcoverAPI } from '../utils/constants';
 
 const ModalSearch = (props) => {
   return (

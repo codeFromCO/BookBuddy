@@ -26,6 +26,7 @@ export const searchBooksByInput = async (input) => {
 
     const allData = await response.json();
 
+    // accounts for no results as well - returns an empty array
     if (allData.docs.length < 6) {
       const firstBooks = allData.docs;
       return firstBooks;
