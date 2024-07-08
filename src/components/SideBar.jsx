@@ -5,7 +5,6 @@ import { SiBookstack } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 export default function SideBar(props) {
-
   return (
     <div>
       <div className='fixed flex flex-col w-14 items-center bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-baseSidebar'>
@@ -16,6 +15,7 @@ export default function SideBar(props) {
               ? 'bg-baseBackgroundPrimary'
               : 'hover:bg-baseBackgroundSecondary'
           }  w-10 h-10 flex items-center justify-center rounded-md`}
+          aria-label='Home'
         >
           <GiOpenBook size='1.5em' />
         </Link>
@@ -26,6 +26,7 @@ export default function SideBar(props) {
               ? 'bg-baseBackgroundPrimary'
               : 'hover:bg-baseBackgroundSecondary'
           }  w-10 h-10 flex items-center justify-center rounded-md`}
+          aria-label='History'
         >
           <SiBookstack size='1.5em' />
         </Link>
@@ -36,6 +37,7 @@ export default function SideBar(props) {
               ? 'bg-baseBackgroundPrimary'
               : 'hover:bg-baseBackgroundSecondary'
           }  w-10 h-10 flex items-center justify-center rounded-md`}
+          aria-label='Settings'
         >
           <IoSettingsSharp size='1.5em' />
         </Link>

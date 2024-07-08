@@ -1,6 +1,5 @@
 import React from 'react';
 import { MdDelete } from 'react-icons/md';
-import { MdSave } from 'react-icons/md';
 import Button from './Button';
 
 const ModalBook = (props) => {
@@ -13,6 +12,7 @@ const ModalBook = (props) => {
             <MdDelete
               className='size-6 hover:cursor-pointer hover:text-baseButtonFocus'
               onClick={props.onClickDelete}
+              aria-label='Delete'
             />
           </div>
         </div>

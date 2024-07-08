@@ -6,6 +6,10 @@ import { FaHome } from 'react-icons/fa';
 const Header = (props) => {
   const navigate = useNavigate();
 
+  const handleHomeClick = () => {
+    navigate('/');
+  };
+
   return (
     <header className='flex items-center justify-between gap-x-2 text-baseTextPrimary h-12 font-semibold'>
       <div className='flex items-center'>
@@ -15,7 +19,8 @@ const Header = (props) => {
       {props.homeButton && (
         <FaHome
           className='size-5 mr-3 hover:cursor-pointer hover:text-baseButtonFocus'
-          onClick={() => navigate('/')}
+          onClick={handleHomeClick}
+          aria-label='Home'
         />
       )}
     </header>

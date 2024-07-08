@@ -9,6 +9,7 @@ const Button = (props) => {
           ? 'text-black hover:bg-baseButtonFocus2'
           : 'text-white bg-black hover:bg-baseButtonFocus'
       }`}
+      aria-label={props.name}
     >
       {props.name}
     </button>

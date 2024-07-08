@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { FaRegEdit } from 'react-icons/fa';
 
 const CardBook = (props) => {
   const [imgError, setImgError] = useState(false);

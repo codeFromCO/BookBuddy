@@ -5,7 +5,7 @@
 // more isFetching
 // handle existing books better
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -36,8 +36,8 @@ const HomePage = () => {
   const [existingBookSearchInput, setExistingSearchBookInput] = useState('');
   const [bookExists, setBookExists] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
-  const [showModalSearch, setShowModalSearch] = useState(false);
-  const [showModalAlert, setShowModalAlert] = useState(false);
+  const [isModalSearchVisible, setisModalSearchVisible] = useState(false);
+  const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
   const [notesInput, setNotesInput] = useState('');
 
   const queryClient = useQueryClient();
@@ -82,7 +82,7 @@ const HomePage = () => {
     },
   });
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     // check if searchInput is empty
     if (searchInput.trim() === '') {
       return;
@@ -102,14 +102,14 @@ const HomePage = () => {
       setBookExists(false);
       searchQuery.refetch();
     }
-  };
+  }, [searchInput, booksQuery.data, searchQuery]);
 
   const handleDisplaySearchModal = () => {
-    setShowModalSearch(true);
+    setisModalSearchVisible(true);
   };
 
   const handleCloseSearchModal = () => {
-    setShowModalSearch(false);
+    setisModalSearchVisible(false);
     setBookExists(false);
     setSearchInput('');
   };
@@ -122,15 +122,15 @@ const HomePage = () => {
   const handleCloseNotesModal = () => {
     setSelectedBook(null);
     setNotesInput('');
-    setShowModalAlert(false);
+    setisModalAlertVisible(false);
   };
 
   const handleDisplayAlertModal = () => {
-    setShowModalAlert(true);
+    setisModalAlertVisible(true);
   };
 
   const handleCloseAlertModal = () => {
-    setShowModalAlert(false);
+    setisModalAlertVisible(false);
   };
 
   const handleAddBook = (title, author, cover_i) => {
@@ -142,7 +142,7 @@ const HomePage = () => {
 
     addBookMutation.mutate(book);
     setSearchInput('');
-    setShowModalSearch(false);
+    setisModalSearchVisible(false);
   };
 
   const handleSaveNotes = () => {
@@ -156,11 +156,11 @@ const HomePage = () => {
     setNotesInput('');
   };
 
-  const handleDelete = () => {
+  const handleDeleteBook = () => {
     if (selectedBook) {
       deleteBookMutation.mutate({ _id: selectedBook._id });
 
-      setShowModalAlert(false);
+      setisModalAlertVisible(false);
       setNotesInput('');
     }
   };
@@ -169,9 +169,13 @@ const HomePage = () => {
     setExistingSearchBookInput(inputValue);
   };
 
-  const filteredBooks = booksQuery.data?.filter((book) =>
-    book.title.toLowerCase().includes(normalizeString(existingBookSearchInput))
-  );
+  const filteredBooks = useMemo(() => {
+    return booksQuery.data?.filter((book) =>
+      book.title
+        .toLowerCase()
+        .includes(normalizeString(existingBookSearchInput))
+    );
+  }, [booksQuery.data, existingBookSearchInput]);
 
   return (
     <div className='flex flex-row h-screen'>
@@ -263,15 +267,15 @@ const HomePage = () => {
           save={handleSaveNotes}
         />
       )}
-      {showModalAlert && selectedBook && (
+      {isModalAlertVisible && selectedBook && (
         <ModalAlert
           heading='Please confirm'
           subheading={`Are you certain you want to delete your notes on '${selectedBook.title}'? This action cannot be undone.`}
           cancel={handleCloseAlertModal}
-          confirm={handleDelete}
+          confirm={handleDeleteBook}
         />
       )}
-      {showModalSearch && (
+      {isModalSearchVisible && (
         <ModalSearch
           cancel={handleCloseSearchModal}
           value={searchInput}

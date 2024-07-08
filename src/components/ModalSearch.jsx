@@ -1,7 +1,3 @@
-// TO-DO
-// fix position of cancel button
-// handle books without a cover
-
 import React from 'react';
 import Button from './Button';
 import CardBook from './CardBook';
