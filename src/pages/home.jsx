@@ -1,9 +1,6 @@
 // TO-DO
-// display alphabetically? most recently updated?
-// distinguish between finished and still reading?
-// stop unnecessary re-renders of child components when updating or deleting book
-// more isFetching
-// handle existing books better
+// change display options e.g. alphabetically, recently added, recently updated 
+// consider adding unread, reading and read status indicators
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
