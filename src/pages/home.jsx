@@ -6,6 +6,7 @@
 // stop unnecessary re-renders of child components when updating or deleting book
 // more isFetching
 // consider moving functions to seperate file
+// handle existing books better
 
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -326,7 +327,7 @@ const HomePage = () => {
       {showModalAlert && selectedBook && (
         <ModalAlert
           heading='Please confirm'
-          subheading={`Are you sure that you want to delete your notes on ${selectedBook.title}? This cannnot be undone.`}
+          subheading={`Are you certain you want to delete your notes on '${selectedBook.title}'? This action cannot be undone.`}
           cancel={handleCloseAlertModal}
           confirm={handleDelete}
         />
