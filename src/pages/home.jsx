@@ -15,7 +15,6 @@ import { HiMagnifyingGlass } from 'react-icons/hi2';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 import BookCard from '../components/BookCard';
-import BookCardSearch from '../components/BookCardSearch';
 import ButtonLoading from '../components/ButtonLoading';
 import Error from '../components/Error';
 import ModalBook from '../components/ModalBook';
