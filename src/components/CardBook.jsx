@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaRegEdit } from 'react-icons/fa';
 
-const BookCard = (props) => {
+const CardBook = (props) => {
   const [imgError, setImgError] = useState(false);
 
   const handleError = () => {
@@ -41,4 +41,4 @@ const BookCard = (props) => {
   );
 };
 
-export default BookCard;
+export default CardBook;

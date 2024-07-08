@@ -14,7 +14,7 @@ import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
-import BookCard from '../components/BookCard';
+import CardBook from '../components/CardBook';
 import ButtonLoading from '../components/ButtonLoading';
 import Error from '../components/Error';
 import ModalBook from '../components/ModalBook';
@@ -259,7 +259,7 @@ const HomePage = () => {
               booksQuery.data.length > 0 &&
               !filteredBooks &&
               booksQuery.data.map((book, index) => (
-                <BookCard
+                <CardBook
                   title={book?.title}
                   author={book?.author}
                   key={index} // Provide a unique key for each item
@@ -282,7 +282,7 @@ const HomePage = () => {
           <div className='flex flex-wrap mt-3'>
             {filteredBooks && filteredBooks.length > 0 ? (
               filteredBooks.map((book, index) => (
-                <BookCard
+                <CardBook
                   title={book?.title}
                   author={book?.author}
                   key={index} // Provide a unique key for each item

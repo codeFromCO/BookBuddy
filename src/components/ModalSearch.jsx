@@ -4,7 +4,7 @@
 
 import React from 'react';
 import Button from './Button';
-import BookCard from './BookCard';
+import CardBook from './CardBook';
 import Error from './Error';
 import Searching from './Searching';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
@@ -36,7 +36,7 @@ const ModalSearch = (props) => {
       <div className='h-full flex flex-wrap content-start overflow-scroll'>
         {props.books &&
           props.books.map((book) => (
-            <BookCard
+            <CardBook
               title={book.title}
               author={book.author_name[0]}
               onClick={() =>
