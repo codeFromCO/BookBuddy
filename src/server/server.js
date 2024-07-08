@@ -59,7 +59,7 @@ app.post('/api/book/add', bookController.addBook, (req, res, next) => {
 app.patch('/api/book/update', bookController.updateBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully updated',
-    data: res.locals.book
+    data: res.locals.book,
   });
 });
 
@@ -73,14 +73,16 @@ app.delete('/api/book/delete', bookController.deleteBook, (req, res, next) => {
 // error
 app.use((err, req, res, next) => {
   const defaultErr = {
-    message: {
-      err: 'A global error has occured',
-    },
+    message: 'A global error has occured',
     status: 500,
     log: 'Express handle caught unknown middleware error',
   };
   const errObj = Object.assign({}, defaultErr, err);
-  return res.status(errObj.status).json(errObj.message);
+
+  // Log the error
+  console.error('Error:', errObj.log);
+
+  return res.status(errObj.status).json({ error: errObj.message });
 });
 
 // catch all
