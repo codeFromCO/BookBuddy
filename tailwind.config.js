@@ -8,7 +8,6 @@ module.exports = {
       },
       colors: {
         baseBackgroundPrimary: '#EAE6DE',
-        // baseBackgroundComplementary: '#b64040',
         baseBackgroundSecondary: '#8F8E82',
         baseButtonPrimary: '#a98467',
         baseButtonFocus: '#4D4D4D',
@@ -25,16 +24,9 @@ module.exports = {
     },
     screens: {
       sm: '576px',
-      // => @media (min-width: 576px) { ... }
-
       md: '960px',
-      // => @media (min-width: 960px) { ... }
-
       lg: '1440px',
-      // => @media (min-width: 1440px) { ... }
     },
   },
   plugins: [],
 };
-
-// consider brown and green
