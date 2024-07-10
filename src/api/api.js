@@ -10,6 +10,14 @@ export const fetchBooks = async () => {
 
     const jsonData = await response.json();
 
+    if (!response.ok) {
+      throw new Error('Failed to fetch books');
+    }
+
+    if (!jsonData.data || jsonData.data.length === 0) {
+      throw new Error('No books found'); 
+    }
+
     return jsonData.data;
   } catch (error) {
     console.error('Error fetching books', error);

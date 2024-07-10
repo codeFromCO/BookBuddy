@@ -1,3 +1,5 @@
+// TO-DO change conditions in which error msg appears
+
 import React from 'react';
 import Button from './Button';
 import CardBook from './CardBook';
@@ -31,10 +33,11 @@ const ModalSearch = (props) => {
       </div>
       <div className='h-full flex flex-wrap content-start overflow-scroll'>
         {props.books &&
-          props.books.map((book) => (
+          props.books.map((book, index) => (
             <CardBook
               title={book.title}
               author={book.author_name[0]}
+              key={index}
               onClick={() =>
                 props.onClick(book.title, book.author_name[0], book.cover_i)
               }

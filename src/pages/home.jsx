@@ -1,6 +1,8 @@
 // TO-DO
-// change display options e.g. alphabetically, recently added, recently updated 
+// change display options e.g. alphabetically, recently added, recently updated
 // consider adding unread, reading and read status indicators
+
+// Query data cannot be undefined. Please make sure to return a value other than undefined from your query function. Affected query key: ["books"]
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -57,9 +59,6 @@ const HomePage = () => {
       queryClient.invalidateQueries('[searchBooksByInput');
       setSearchInput('');
     },
-    onError: (error) => {
-      console.error('Error adding book:', error);
-    },
   });
 
   const updateBookNotesMutation = useMutation({
@@ -88,7 +87,7 @@ const HomePage = () => {
     const normalizedSearchInput = normalizeString(searchInput);
 
     // check if book already exists
-    const existingBook = booksQuery.data?.find(
+    const existingBook = booksQuery.data.find(
       (book) => book.title.toLowerCase() === normalizedSearchInput
     );
 
@@ -224,34 +223,30 @@ const HomePage = () => {
             ))}
         </div>
         <div className='flex flex-wrap mt-3'>
-          {filteredBooks && filteredBooks.length > 0 ? (
-            filteredBooks.map((book, index) => (
-              <CardBook
-                title={book?.title}
-                author={book?.author}
-                key={index} // Provide a unique key for each item
-                src={
-                  book?.cover_i > 0
-                    ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
-                    : ''
-                }
-                onClick={() =>
-                  handleDisplayNotesModal(
-                    book.title,
-                    book.author,
-                    book.notes,
-                    book._id
-                  )
-                }
-              />
-            ))
-          ) : (
-            <Error alert='No books found' />
-          )}
+          {filteredBooks && filteredBooks.length > 0
+            ? filteredBooks.map((book, index) => (
+                <CardBook
+                  title={book?.title}
+                  author={book?.author}
+                  key={index} // Provide a unique key for each item
+                  src={
+                    book?.cover_i > 0
+                      ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
+                      : ''
+                  }
+                  onClick={() =>
+                    handleDisplayNotesModal(
+                      book.title,
+                      book.author,
+                      book.notes,
+                      book._id
+                    )
+                  }
+                />
+              ))
+            : booksQuery.isFetched && <Error alert='No books found' />}
         </div>
-
         {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
-        {booksQuery.isError && <h1>{JSON.stringify(booksQuery.error)}</h1>}
       </div>
       {selectedBook && (
         <ModalBook
@@ -278,7 +273,7 @@ const HomePage = () => {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           search={handleSearch}
-          books={searchQuery.data}
+          books={searchQuery?.data}
           bookExists={bookExists}
           onClick={handleAddBook}
           searching={searchQuery.isFetching}

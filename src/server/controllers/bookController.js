@@ -34,8 +34,8 @@ bookController.findBooks = async (req, res, next) => {
   try {
     const books = await Book.find({});
 
-    if (!books) {
-      return res.status(400).json({ message: 'There are no books' });
+    if (!books || books.length === 0) {
+      return res.status(200).json({ message: 'There are no books', data: [] });
     }
 
     res.locals.books = books;
