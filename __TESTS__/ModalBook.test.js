@@ -3,10 +3,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ModalBook from '../src/components/ModalBook';
 
+const mockDeleteBook = jest.fn();
+const mockUpdateBook = jest.fn();
+const mockOnChange = jest.fn()
+
 describe('Modal Book', () => {
-  const mockDeleteBook = jest.fn();
-  const mockUpdateBook = jest.fn();
-  const mockOnChange = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks();

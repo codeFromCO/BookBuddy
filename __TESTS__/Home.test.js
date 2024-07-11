@@ -30,7 +30,6 @@ jest.mock('../src/components/ModalBook', () => ({ title, author }) => (
   </div>
 ));
 
-
 // mock data
 const mockBooks = [
   {
@@ -76,7 +75,7 @@ const renderHomePage = () =>
 describe('Home Page', () => {
   beforeEach(() => {
     cleanClient.clear(); // clear query client
-    jest.clearAllMocks(); // resets mocks 
+    jest.clearAllMocks(); // resets mocks
     cleanup(); // unmounts components
   });
 

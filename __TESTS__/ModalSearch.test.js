@@ -28,10 +28,6 @@ describe('Modal Search', () => {
   test('renders a cancel button to cancel displaying the modal', () => {
     render(
       <ModalSearch
-        books={[
-          { title: 'Test title 1', author_name: ['Test author 1'] },
-          { title: 'Test title 2', author_name: ['Test author 2'] },
-        ]}
         cancel={mockOnClick}
       />
     );
