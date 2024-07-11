@@ -148,6 +148,32 @@ describe('Home Page', () => {
     expect(screen.getByText('Author: Author 1')).toBeInTheDocument();
   });
 
+  test('does not allow the book and search modals to both be displayed at the same time', async () => {
+    // mock fetckBooks API function
+    require('../src/api/api').fetchBooks.mockResolvedValueOnce(mockBooks);
+
+    // render HomePage component
+    renderHomePage();
+
+    // wait for the book to appear in the document
+    expect(await screen.findByText(/Book 1 - Author 1/i)).toBeInTheDocument();
+
+    // simulate click on the '+ Add new book' button
+    fireEvent.click(screen.getByText(/\+ Add new book/i))
+
+    // wait for search modal to appear in the document
+    await screen.findByTestId('modal-search')
+
+    // simulate a click of the book 
+    fireEvent.click(screen.getByText(/Book 1 - Author 1/i));
+
+    // wait for the modal to appear in the document
+    await screen.findByTestId('modal-book')
+
+    // assert that the search modal is no longer displayed in the document
+    expect(screen.queryByTestId('modal-search')).not.toBeInTheDocument();
+  });
+
   test(`hides existing books and displays a 'No books found' error message if the title search for an existing book yields no results`, async () => {
     // mock fetckBooks API function
     require('../src/api/api').fetchBooks.mockResolvedValueOnce(mockBooks);
