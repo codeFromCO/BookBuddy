@@ -114,6 +114,8 @@ const HomePage = () => {
   const handleDisplayNotesModal = (title, author_name, notes, _id) => {
     setSelectedBook({ title, author: author_name, notes, _id });
     setNotesInput(notes);
+    setisModalSearchVisible(false)
+    setSearchInput('')
   };
 
   const handleCloseNotesModal = () => {
