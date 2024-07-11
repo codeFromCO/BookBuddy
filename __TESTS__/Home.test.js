@@ -75,12 +75,9 @@ const renderHomePage = () =>
 
 describe('Home Page', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    cleanup();
-  });
-
-  afterEach(() => {
-    cleanClient.clear();
+    cleanClient.clear(); // clear query client
+    jest.clearAllMocks(); // resets mocks 
+    cleanup(); // unmounts components
   });
 
   test('renders the components on the home page', () => {
