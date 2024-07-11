@@ -27,6 +27,7 @@ import CardBook from '../components/CardBook';
 import ModalBook from '../components/ModalBook';
 import ModalAlert from '../components/ModalAlert';
 import ModalSearch from '../components/ModalSearch';
+import Button from '../components/Button';
 import ButtonLoading from '../components/ButtonLoading';
 import Error from '../components/Error';
 
@@ -189,12 +190,11 @@ const HomePage = () => {
               onChange={(e) => handleFindExistingBook(e.target.value)}
             />
           </div>
-          <button
-            className='text-white bg-black p-3 rounded-md'
+          <Button
+            name='+ Add new book'
+            wide='true'
             onClick={handleDisplaySearchModal}
-          >
-            + Add new book
-          </button>
+          />
         </div>
 
         <div className='flex flex-wrap mt-3'>
