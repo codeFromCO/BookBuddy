@@ -21,12 +21,12 @@ const renderApp = (initialEntries = ['/']) =>
   );
 
 describe('App', () => {
-  test('renders HomePage at root route', async () => {
+  test('renders HomePage at root route', () => {
     renderApp(['/']);
     expect(screen.getByText('HomePage')).toBeInTheDocument();
   });
 
-  test('renders ErrorPage at unknown route', async () => {
+  test('renders ErrorPage at unknown route', () => {
     renderApp(['/unknown-route']);
     expect(screen.getByText('ErrorPage')).toBeInTheDocument();
   });
