@@ -15,7 +15,7 @@ export const fetchBooks = async () => {
     }
 
     if (!jsonData.data || jsonData.data.length === 0) {
-      throw new Error('No books found'); 
+      throw new Error('No books found');
     }
 
     return jsonData.data;
@@ -34,15 +34,25 @@ export const searchBooksByInput = async (input) => {
 
     const allData = await response.json();
 
-    // accounts for no results as well - returns an empty array
-    if (allData.docs.length < 6) {
-      const firstBooks = allData.docs;
-      return firstBooks;
+    const docs = allData.docs;
+
+    // iterate through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
+    const arrayToReturn = [];
+
+    for (
+      let i = 0;
+      arrayToReturn.length === docs.length || arrayToReturn.length <= 5;
+      i++
+    ) {
+      if (
+        docs[i].hasOwnProperty('title') &&
+        docs[i].hasOwnProperty('author_name')
+      ) {
+        arrayToReturn.push(docs[i]);
+      }
     }
 
-    const firstFiveBooks = allData.docs.slice(0, 6);
-
-    return firstFiveBooks;
+    return arrayToReturn;
   } catch (error) {
     console.error('Error searching books:', error);
     throw error;
