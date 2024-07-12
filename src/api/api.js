@@ -34,35 +34,38 @@ export const searchBooksByInput = async (input, existingBooks) => {
 
     const allData = await response.json();
 
-    // books data is returned in docs property 
+    // books data is returned in docs property
     const docs = allData.docs;
 
+    console.log('this was the search data', docs);
+
     // create object to check for title of existing book
-    const existingBooksLookup = {}
+    const existingBooksLookup = {};
     for (let i = 0; i < existingBooks.length; i++) {
-      existingBooksLookup[existingBooks[i].title] = true
-    } 
+      existingBooksLookup[existingBooks[i].title] = true;
+    }
+
+    console.log('here are the existing books', existingBooksLookup);
 
     // iterate through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
     const arrayToReturn = [];
 
-    for (
-      let i = 0;
-      arrayToReturn.length === docs.length || arrayToReturn.length <= 5;
-      i++
-    ) {
+    // sometimes author is [], sometimes not
+    for (let i = 0; i < docs.length && arrayToReturn.length < 6; i++) {
+      console.log('this is the doc', docs[i]);
       if (
         docs[i].hasOwnProperty('title') &&
         docs[i].hasOwnProperty('author_name')
       ) {
-        arrayToReturn.push(docs[i]);
+        const book = {
+          ...docs[i],
+        };
 
-        // if book already exists, create a true flag 
-        if (Object.keys(existingBooksLookup).includes(arrayToReturn[i].title)) {
-          arrayToReturn[i].alreadyExists = 'true'
-          console.log(arrayToReturn[i])
-
+        if (existingBooksLookup[docs[i].title]) {
+          book.alreadyExists = true;
         }
+
+        arrayToReturn.push(book);
       }
     }
 
@@ -73,7 +76,7 @@ export const searchBooksByInput = async (input, existingBooks) => {
   }
 };
 
-// NEED TO HANDLE IF THE BOOK ALREADY EXISTS IN DATABASE 
+// NEED TO HANDLE IF THE BOOK ALREADY EXISTS IN DATABASE
 // add a new book
 export const addBook = async (book) => {
   try {
@@ -84,8 +87,8 @@ export const addBook = async (book) => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json()
-      throw new Error(`${response.status}: ${errorData.message}`)
+      const errorData = await response.json();
+      throw new Error(`${response.status}: ${errorData.message}`);
     }
     const jsonData = await response.json();
 

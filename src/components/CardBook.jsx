@@ -30,7 +30,7 @@ const CardBook = (props) => {
               props.alreadyExists
                 ? 'outline outline-4 outline-offset-[-4px] outline-baseAlertText opacity-50'
                 : ''
-            }` }
+            }`}
             onClick={props.alreadyExists ? null : props.onClick}
             src={props.src}
             onError={handleError}
@@ -41,6 +41,10 @@ const CardBook = (props) => {
             className={`bg-baseCardBackground border-l-8 border-black h-64 text-center p-6 ${
               props.modalSearch && !props.alreadyExists
                 ? 'hover:outline hover:outline-4 hover:outline-blue-500'
+                : ''
+            } ${
+              props.alreadyExists
+                ? 'outline outline-4 outline-offset-[-4px] outline-baseAlertText opacity-50'
                 : ''
             }`}
             onClick={props.alreadyExists ? null : props.onClick}
