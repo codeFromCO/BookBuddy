@@ -34,6 +34,7 @@ export const searchBooksByInput = async (input) => {
 
     const allData = await response.json();
 
+    // books data is returned in docs property 
     const docs = allData.docs;
 
     // iterate through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
