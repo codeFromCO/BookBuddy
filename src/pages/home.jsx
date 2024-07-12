@@ -1,6 +1,7 @@
 // TO-DO
 // change display options e.g. alphabetically, recently added, recently updated
 // consider adding unread, reading and read status indicators
+// better handle trying to add a book if it already exists 
 
 // Query data cannot be undefined. Please make sure to return a value other than undefined from your query function. Affected query key: ["books"]
 

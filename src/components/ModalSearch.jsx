@@ -31,7 +31,7 @@ const ModalSearch = (props) => {
           <Button name='Search' onClick={props.search} />
         </div>
       </div>
-      <div className='h-full flex flex-wrap content-start overflow-scroll'>
+      <div className='h-full mt-3 flex flex-wrap content-start overflow-scroll'>
         {props.books &&
           props.books.map((book, index) => (
             <CardBook
@@ -50,7 +50,7 @@ const ModalSearch = (props) => {
         {props.books?.length === 0 && (
           <Error alert='No luck! Try searching for something else.' />
         )}
-        {props.bookExists && <Error alert='Book previously added.' />}
+        {props.bookExists && <Error alert='Book previously added' />}
         {props.searching && <Searching />}
       </div>
       <hr className='w-full border border-baseCardBackground my-3' />
