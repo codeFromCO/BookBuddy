@@ -1,5 +1,3 @@
-// TO-DO change conditions in which error msg appears
-
 import React from 'react';
 import Button from './Button';
 import CardBook from './CardBook';
@@ -37,6 +35,7 @@ const ModalSearch = (props) => {
             <CardBook
               title={book.title}
               author={book.author_name[0]}
+              alreadyExists={book.alreadyExists}
               key={index}
               onClick={() =>
                 props.onClick(book.title, book.author_name[0], book.cover_i)

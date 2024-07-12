@@ -1,7 +1,7 @@
 // TO-DO
 // change display options e.g. alphabetically, recently added, recently updated
 // consider adding unread, reading and read status indicators
-// better handle trying to add a book if it already exists 
+// better handle trying to add a book if it already exists
 
 // Query data cannot be undefined. Please make sure to return a value other than undefined from your query function. Affected query key: ["books"]
 
@@ -50,7 +50,7 @@ const HomePage = () => {
 
   const searchQuery = useQuery({
     queryKey: ['searchBooksByInput', searchInput],
-    queryFn: () => searchBooksByInput(searchInput),
+    queryFn: () => searchBooksByInput(searchInput, booksQuery?.data),
     enabled: false, // disabled automatically running
   });
 
@@ -61,6 +61,9 @@ const HomePage = () => {
       queryClient.invalidateQueries('[searchBooksByInput');
       setSearchInput('');
     },
+    onError: () => {
+      console.log('there was an erorr')
+    }
   });
 
   const updateBookNotesMutation = useMutation({
