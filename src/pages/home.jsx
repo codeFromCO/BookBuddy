@@ -1,11 +1,9 @@
 // TO-DO
-// change display options e.g. alphabetically, recently added, recently updated
 // consider adding unread, reading and read status indicators
-// better handle trying to add a book if it already exists
 
 // Query data cannot be undefined. Please make sure to return a value other than undefined from your query function. Affected query key: ["books"]
 
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import {
@@ -16,7 +14,14 @@ import {
   deleteBook,
 } from '../api/api';
 
-import { normalizeString } from '../utils/functions';
+import {
+  normalizeString,
+  sortAlphabetically,
+  sortAddedNewOld,
+  sortAddedOldNew,
+  sortUpdatedNewOld,
+  sortUpdatedOldNew,
+} from '../utils/functions';
 
 import { bookcoverAPI } from '../utils/constants';
 
@@ -31,6 +36,7 @@ import ModalSearch from '../components/ModalSearch';
 import Button from '../components/Button';
 import ButtonLoading from '../components/ButtonLoading';
 import Error from '../components/Error';
+import Selector from '../components/Selector';
 
 const HomePage = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -40,12 +46,16 @@ const HomePage = () => {
   const [isModalSearchVisible, setisModalSearchVisible] = useState(false);
   const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
   const [notesInput, setNotesInput] = useState('');
+  const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
 
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({
     queryKey: ['books'], // unique identifier for query,
     queryFn: fetchBooks,
+    onSuccess: (data) => {
+      setSortedBooks(data);
+    },
   });
 
   const searchQuery = useQuery({
@@ -62,8 +72,8 @@ const HomePage = () => {
       setSearchInput('');
     },
     onError: () => {
-      console.log('there was an erorr')
-    }
+      console.log('there was an error');
+    },
   });
 
   const updateBookNotesMutation = useMutation({
@@ -118,8 +128,8 @@ const HomePage = () => {
   const handleDisplayNotesModal = (title, author_name, notes, _id) => {
     setSelectedBook({ title, author: author_name, notes, _id });
     setNotesInput(notes);
-    setisModalSearchVisible(false)
-    setSearchInput('')
+    setisModalSearchVisible(false);
+    setSearchInput('');
   };
 
   const handleCloseNotesModal = () => {
@@ -172,6 +182,37 @@ const HomePage = () => {
     setExistingSearchBookInput(inputValue);
   };
 
+  const handleReOrder = (selectedOption) => {
+    setSelectedSortOption(selectedOption);
+  };
+
+  useEffect(() => {
+    if (booksQuery.data) {
+      let sortedData = [...booksQuery.data];
+
+      switch (selectedSortOption) {
+        case 'title':
+          sortAlphabetically(sortedData);
+          break;
+        case 'addedNewOld':
+          sortAddedNewOld(sortedData);
+          break;
+        case 'addedOldNew':
+          sortAddedOldNew(sortedData);
+          break;
+        case 'updatedNewOld':
+          sortUpdatedNewOld(sortedData);
+          break;
+        case 'updatedOldNew':
+          sortUpdatedOldNew(sortedData);
+          break;
+        default:
+          break;
+      }
+      queryClient.setQueryData(['books'], sortedData);
+    }
+  }, [booksQuery.data, selectedSortOption]);
+
   const filteredBooks = useMemo(() => {
     return booksQuery.data?.filter((book) =>
       book.title
@@ -202,7 +243,7 @@ const HomePage = () => {
             onClick={handleDisplaySearchModal}
           />
         </div>
-
+        <Selector onChange={(e) => handleReOrder(e.target.value)} />
         <div className='flex flex-wrap mt-3'>
           {booksQuery.data &&
             booksQuery.data.length > 0 &&
@@ -228,7 +269,7 @@ const HomePage = () => {
               />
             ))}
         </div>
-        <div className='flex flex-wrap mt-3'>
+        <div className='flex flex-wrap'>
           {filteredBooks && filteredBooks.length > 0
             ? filteredBooks.map((book, index) => (
                 <CardBook

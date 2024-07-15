@@ -14,7 +14,7 @@ describe('Modal Search', () => {
     render(<ModalSearch search={mockOnClick} />);
 
     const searchInput = screen.getByPlaceholderText(
-      /Search for a book to add by title/i
+      /Search for a book title to add/i
     );
     expect(searchInput).toBeInTheDocument();
 

@@ -6,7 +6,6 @@ bookController.addBook = async (req, res, next) => {
   try {
     const { title, author, cover_i } = req.body;
 
-
     // maybe should not do this, but should handle it trying to add but it exists
     // check if book already exists
     const existingBook = await Book.find({
@@ -17,7 +16,7 @@ bookController.addBook = async (req, res, next) => {
       return res.status(409).json({ message: 'Book already exists' });
     }
 
-    // error.error.code === 11000 means duplicate key 
+    // error.error.code === 11000 means duplicate key
 
     await Book.create({
       title,
@@ -27,9 +26,9 @@ bookController.addBook = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    // check for duplication key 
+    // check for duplication key
     if (err.code === 11000) {
-      return res.status(409).json({message: 'Book already exists'})
+      return res.status(409).json({ message: 'Book already exists' });
     }
     return next({
       log: 'Error on bookController.addBook',
@@ -87,8 +86,12 @@ bookController.updateBook = async (req, res, next) => {
         _id,
       },
       {
-        $set: { notes: notes },
-      }
+        $set: {
+          notes: notes,
+          updated: new Date(),
+        },
+      },
+      { new: true }
     );
 
     if (!result) {
