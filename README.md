@@ -24,11 +24,17 @@ npm install
 npm run dev
 ```
 
+7. Run 'npm run test' to test out changes.
+
+```
+npm run test
+```
+
 ## Key features:
 
 ### Book search
 
-- Quickly find books by title
+- Quickly find books by title and sort by various critera
 
 ### Personal library management
 
