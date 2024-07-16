@@ -30,9 +30,11 @@ export const searchBooksByInput = async (input, existingBooks) => {
   try {
     const searchString = input.replace(/ /g, '+');
 
-    const response = await fetch(`${bookSearchAPI}${searchString}`);
+    const response = await fetch(bookSearchAPI(searchString));
 
     const allData = await response.json();
+
+    console.log('here is the data', allData.docs)
 
     // books data is returned in docs property
     const docs = allData.docs;
