@@ -34,12 +34,8 @@ export const searchBooksByInput = async (input, existingBooks) => {
 
     const allData = await response.json();
 
-    console.log('here is the data', allData.docs)
-
     // books data is returned in docs property
     const docs = allData.docs;
-
-    console.log('this was the search data', docs);
 
     // create object to check for title of existing book
     const existingBooksLookup = {};
@@ -47,14 +43,11 @@ export const searchBooksByInput = async (input, existingBooks) => {
       existingBooksLookup[existingBooks[i].title] = true;
     }
 
-    console.log('here are the existing books', existingBooksLookup);
-
     // iterate through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
     const arrayToReturn = [];
 
     // sometimes author is [], sometimes not
     for (let i = 0; i < docs.length && arrayToReturn.length < 6; i++) {
-      console.log('this is the doc', docs[i]);
       if (
         docs[i].hasOwnProperty('title') &&
         docs[i].hasOwnProperty('author_name')
