@@ -2,9 +2,9 @@ import React from 'react';
 
 const Selector = (props) => {
   return (
-    <div className='flex h-[48px] my-3'>
+    <div className='flex h-[48px]'>
       <select
-        className='h-full rounded-md p-3 hover:cursor-pointer focus:outline-none'
+        className={`h-full rounded-md p-3 hover:cursor-pointer focus:outline-none w-full sm:w-fit`}
         defaultValue={'DEFAULT'}
         onChange={props.onChange}
       >

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaWorm } from 'react-icons/fa6';
-import { FaHome } from 'react-icons/fa';
+import Button from './Button';
+import { IoMdAdd } from "react-icons/io";
 
 const Header = (props) => {
   const navigate = useNavigate();
@@ -11,18 +12,17 @@ const Header = (props) => {
   };
 
   return (
-    <header className='flex items-center justify-between gap-x-2 text-baseTextPrimary h-12 font-semibold'>
-      <div className='flex items-center'>
-        <h1 className='text-4xl'>{props.title}</h1>
-        <FaWorm className='size-8 ml-2' />
+    <header className='flex justify-between mt-3'>
+      <div className='flex items-center justify-between gap-x-2 text-baseTextPrimary h-12 font-semibold'>
+        <div className='flex items-center'>
+          <h1 className='text-4xl'>{props.title}</h1>
+          <FaWorm className='size-8 ml-2' />
+        </div>
       </div>
-      {props.homeButton && (
-        <FaHome
-          className='size-5 mr-3 hover:cursor-pointer hover:text-baseButtonFocus'
-          onClick={handleHomeClick}
-          aria-label='Home'
-        />
-      )}
+      {/* <Button name='Add book' wide='true' onClick={props.onClick}/> */}
+      <button className={`w-10 h-10 bg-black hover:bg-baseButtonFocus flex items-center justify-center rounded-md ${!props.savedBooksExist && 'animate-pulse hover:animate-none'}`} onClick={props.onClick}>
+      <IoMdAdd size='1.5em' className='text-white' />
+      </button>
     </header>
   );
 };

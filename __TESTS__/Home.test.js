@@ -83,13 +83,13 @@ describe('Home Page', () => {
     // render HomePage component
     renderHomePage();
 
-    // assert that the modal displays the header, sidebar, search input and '+ Add new book' button
+    // assert that the modal displays the header, sidebar, search input and 'Add book' button
     expect(screen.getByText(/Header/i)).toBeInTheDocument();
     expect(screen.getByText(/SideBar/i)).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(/Search existing books by title/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/\+ Add new book/i)).toBeInTheDocument();
+    expect(screen.getByText(/\Add book/i)).toBeInTheDocument();
   });
 
   test('renders error message if there are no existing books', async () => {
@@ -119,12 +119,12 @@ describe('Home Page', () => {
     expect(await screen.findByText(/Book 3 - Author 3/i)).toBeInTheDocument();
   });
 
-  test(`opens search modal upon clicking '+ Add new book' button`, async () => {
+  test(`opens search modal upon clicking 'Add book' button`, async () => {
     // render HomePage component
     renderHomePage();
 
-    // simulate clicking '+ Add new book' button
-    fireEvent.click(screen.getByText(/\+ Add new book/i));
+    // simulate clicking 'Add book' button
+    fireEvent.click(screen.getByText(/\Add book/i));
 
     // assert that ModalSearch component will be displayed
     expect(await screen.findByTestId('modal-search')).toBeInTheDocument();
@@ -158,8 +158,8 @@ describe('Home Page', () => {
     // wait for the book to appear in the document
     expect(await screen.findByText(/Book 1 - Author 1/i)).toBeInTheDocument();
 
-    // simulate click on the '+ Add new book' button
-    fireEvent.click(screen.getByText(/\+ Add new book/i))
+    // simulate click on the 'Add book' button
+    fireEvent.click(screen.getByText(/\Add book/i))
 
     // wait for search modal to appear in the document
     await screen.findByTestId('modal-search')

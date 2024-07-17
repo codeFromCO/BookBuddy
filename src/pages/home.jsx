@@ -47,6 +47,7 @@ const HomePage = () => {
   const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
   const [notesInput, setNotesInput] = useState('');
   const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
+  const [savedBooksExist, setSavedBooksExist] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -187,6 +188,8 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    setSavedBooksExist(booksQuery.data);
+
     if (booksQuery.data) {
       let sortedData = [...booksQuery.data];
 
@@ -225,10 +228,14 @@ const HomePage = () => {
     <div className='flex flex-row h-screen'>
       <SideBar active='home' />
       <div className='pl-20 px-7 w-full'>
-        <Header title='BookBuddy' />
-        <div className='mt-5 mb-0 flex justify-end space-x-3'>
+        <Header
+          title='BookBuddy'
+          onClick={handleDisplaySearchModal}
+          savedBooksExist={savedBooksExist}
+        />
+        <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
           <div
-            className={`items-center flex p-1 border-2 w-inputSearchWidth border-baseSidebar  text-black  bg-baseSidebar rounded-3xl`}
+            className={`items-center flex p-1 border-2 w-full h-[48px] border-baseSidebar  text-black  bg-baseSidebar rounded-3xl `}
           >
             <HiMagnifyingGlass />
             <input
@@ -237,13 +244,8 @@ const HomePage = () => {
               onChange={(e) => handleFindExistingBook(e.target.value)}
             />
           </div>
-          <Button
-            name='+ Add new book'
-            wide='true'
-            onClick={handleDisplaySearchModal}
-          />
+          <Selector onChange={(e) => handleReOrder(e.target.value)} />
         </div>
-        <Selector onChange={(e) => handleReOrder(e.target.value)} />
         <div className='flex flex-wrap mt-3'>
           {booksQuery.data &&
             booksQuery.data.length > 0 &&
