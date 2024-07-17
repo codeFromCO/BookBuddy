@@ -21,6 +21,7 @@ import {
   sortAddedOldNew,
   sortUpdatedNewOld,
   sortUpdatedOldNew,
+  scrollToTopOfPage
 } from '../utils/functions';
 
 import { bookcoverAPI } from '../utils/constants';
@@ -37,6 +38,7 @@ import Button from '../components/Button';
 import ButtonLoading from '../components/ButtonLoading';
 import Error from '../components/Error';
 import Selector from '../components/Selector';
+import ModalJumpToTop from '../components/ModalJumpToTop';
 
 const HomePage = () => {
   const [searchInput, setSearchInput] = useState('');
@@ -326,6 +328,7 @@ const HomePage = () => {
           searching={searchQuery.isFetching}
         />
       )}
+      <ModalJumpToTop onClick={scrollToTopOfPage}/>
     </div>
   );
 };

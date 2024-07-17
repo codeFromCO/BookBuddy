@@ -19,3 +19,11 @@ export const sortUpdatedNewOld = (data) => {
 export const sortUpdatedOldNew = (data) => {
   return data.sort((a, b) => new Date(a.updated) - new Date(b.updated));
 };
+
+export const scrollToTopOfPage = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: 'smooth',
+  });
+};
