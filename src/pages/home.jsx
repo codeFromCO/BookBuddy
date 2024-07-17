@@ -293,7 +293,7 @@ const HomePage = () => {
               ))
             : booksQuery.isFetched && <Error alert='No books found' />}
         </div>
-        {booksQuery.isFetching && !booksQuery.data && <ButtonLoading />}
+        {booksQuery.isLoading && !booksQuery.data && <ButtonLoading text={'Loading...'} />}
       </div>
       {selectedBook && (
         <ModalBook
