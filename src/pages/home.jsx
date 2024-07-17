@@ -47,12 +47,11 @@ const HomePage = () => {
   const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
   const [notesInput, setNotesInput] = useState('');
   const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
-  const [savedBooksExist, setSavedBooksExist] = useState(false);
 
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({
-    queryKey: ['books'], // unique identifier for query,
+    queryKey: ['books'], 
     queryFn: fetchBooks,
     onSuccess: (data) => {
       setSortedBooks(data);
@@ -188,7 +187,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    setSavedBooksExist(booksQuery.data);
 
     if (booksQuery.data) {
       let sortedData = [...booksQuery.data];
@@ -226,20 +224,20 @@ const HomePage = () => {
 
   return (
     <div className='flex flex-row h-screen'>
-      <SideBar active='home' />
-      <div className='pl-20 px-7 w-full'>
+      <SideBar active='home'/>
+      <div className='sm:pl-20 px-7 w-full'>
         <Header
           title='BookBuddy'
           onClick={handleDisplaySearchModal}
-          savedBooksExist={savedBooksExist}
+          savedBooksExist={booksQuery.data && booksQuery.data.length > 0}
         />
         <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
           <div
-            className={`items-center flex p-1 border-2 w-full h-[48px] border-baseSidebar  text-black  bg-baseSidebar rounded-3xl `}
+            className={`items-center flex p-1 border-2 w-full h-[48px] border-baseSidebar  text-black  bg-baseSidebar sm:rounded-3xl rounded-md `}
           >
             <HiMagnifyingGlass />
             <input
-              className='border-none focus:outline-none pl-3 w-full bg-baseSidebar placeholder-baseBackgroundSecondary '
+              className='border-none focus:outline-none pl-3 w-full bg-baseSidebar placeholder-baseBackgroundSecondary'
               placeholder='Search existing books by title'
               onChange={(e) => handleFindExistingBook(e.target.value)}
             />
@@ -254,7 +252,7 @@ const HomePage = () => {
               <CardBook
                 title={book?.title}
                 author={book?.author}
-                key={index} // Provide a unique key for each item
+                key={index} 
                 src={
                   book?.cover_i > 0
                     ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
@@ -277,7 +275,7 @@ const HomePage = () => {
                 <CardBook
                   title={book?.title}
                   author={book?.author}
-                  key={index} // Provide a unique key for each item
+                  key={index}
                   src={
                     book?.cover_i > 0
                       ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
