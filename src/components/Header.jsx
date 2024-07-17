@@ -1,16 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FaWorm } from 'react-icons/fa6';
 import Button from './Button';
 import { IoMdAdd } from "react-icons/io";
 
 const Header = (props) => {
-  const navigate = useNavigate();
-
-  const handleHomeClick = () => {
-    navigate('/');
-  };
-
   return (
     <header className='flex items-center justify-between mt-3'>
       <div className='flex gap-x-2 text-baseTextPrimary h-12 font-semibold'>
