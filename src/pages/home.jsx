@@ -314,7 +314,7 @@ const HomePage = () => {
       {isModalAlertVisible && selectedBook && (
         <ModalAlert
           heading='Please confirm'
-          subheading={`Are you certain you want to delete your notes on '${selectedBook.title}'? This action cannot be undone.`}
+          subheading={`Are you certain you want to delete '${selectedBook.title}'? This action cannot be undone.`}
           cancel={handleCloseAlertModal}
           confirm={handleDeleteBook}
         />
