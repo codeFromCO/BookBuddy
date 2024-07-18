@@ -9,7 +9,7 @@ const CardBook = (props) => {
 
   return (
     <div
-      className={`sm:w-44 w-1/2 content-end pr-4 py-2 ${
+      className={`sm:w-44 w-[calc((100%-40px)/3)] content-end ${
         props.alreadyExists
           ? 'hover:cursor-not-allowed'
           : 'hover:cursor-pointer'
@@ -60,4 +60,6 @@ const CardBook = (props) => {
 
 export default CardBook;
 
-//
+
+
+// py-2 pr-4

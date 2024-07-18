@@ -29,7 +29,7 @@ const ModalSearch = (props) => {
           <Button name='Search' onClick={props.search} />
         </div>
       </div>
-      <div className='h-full mt-3 flex flex-wrap content-start overflow-scroll'>
+      <div className='h-full mt-3 flex flex-wrap gap-5 content-start overflow-scroll'>
         {props.books &&
           props.books.map((book, index) => (
             <CardBook

@@ -21,7 +21,7 @@ import {
   sortAddedOldNew,
   sortUpdatedNewOld,
   sortUpdatedOldNew,
-  scrollToTopOfPage
+  scrollToTopOfPage,
 } from '../utils/functions';
 
 import { bookcoverAPI } from '../utils/constants';
@@ -53,7 +53,7 @@ const HomePage = () => {
   const queryClient = useQueryClient();
 
   const booksQuery = useQuery({
-    queryKey: ['books'], 
+    queryKey: ['books'],
     queryFn: fetchBooks,
     onSuccess: (data) => {
       setSortedBooks(data);
@@ -189,7 +189,6 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-
     if (booksQuery.data) {
       let sortedData = [...booksQuery.data];
 
@@ -226,8 +225,8 @@ const HomePage = () => {
 
   return (
     <div className='flex flex-row h-screen'>
-      <SideBar active='home'/>
-      <div className='sm:pl-20 px-7 w-full'>
+      <SideBar active='home' />
+      <div className='sm:pl-20 px-5 w-full'>
         <Header
           title='BookBuddy'
           onClick={handleDisplaySearchModal}
@@ -246,7 +245,8 @@ const HomePage = () => {
           </div>
           <Selector onChange={(e) => handleReOrder(e.target.value)} />
         </div>
-        <div className='flex flex-wrap mt-3'>
+
+        <div className='flex flex-wrap mt-3 bg-red-500'>
           {booksQuery.data &&
             booksQuery.data.length > 0 &&
             !filteredBooks &&
@@ -254,7 +254,7 @@ const HomePage = () => {
               <CardBook
                 title={book?.title}
                 author={book?.author}
-                key={index} 
+                key={index}
                 src={
                   book?.cover_i > 0
                     ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
@@ -271,7 +271,7 @@ const HomePage = () => {
               />
             ))}
         </div>
-        <div className='flex flex-wrap'>
+        <div className='mt-3 flex flex-wrap gap-5 justify-between sm:justify-normal'>
           {filteredBooks && filteredBooks.length > 0
             ? filteredBooks.map((book, index) => (
                 <CardBook
@@ -295,7 +295,10 @@ const HomePage = () => {
               ))
             : booksQuery.isFetched && <Error alert='No books found' />}
         </div>
-        {booksQuery.isLoading && !booksQuery.data && <ButtonLoading text={'Loading...'} />}
+        <div className='h-5 w-full'></div>
+        {booksQuery.isLoading && !booksQuery.data && (
+          <ButtonLoading text={'Loading...'} />
+        )}
       </div>
       {selectedBook && (
         <ModalBook
@@ -306,8 +309,8 @@ const HomePage = () => {
           onClickDelete={handleDisplayAlertModal}
           cancel={handleCloseNotesModal}
           save={handleSaveNotes}
-        />
-      )}
+          />
+          )}
       {isModalAlertVisible && selectedBook && (
         <ModalAlert
           heading='Please confirm'
@@ -327,8 +330,8 @@ const HomePage = () => {
           onClick={handleAddBook}
           searching={searchQuery.isFetching}
         />
-      )}
-      <ModalJumpToTop onClick={scrollToTopOfPage}/>
+        )}
+      <ModalJumpToTop onClick={scrollToTopOfPage} />
     </div>
   );
 };
