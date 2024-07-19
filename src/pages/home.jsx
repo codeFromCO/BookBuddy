@@ -148,6 +148,13 @@ const HomePage = () => {
     setisModalAlertVisible(false);
   };
 
+  const handleChangingSearchInput = (inputValue) => {
+    if (bookExists) {
+      setBookExists(false);
+    }
+    setSearchInput(inputValue);
+  };
+
   const handleAddBook = (title, author, cover_i) => {
     const book = {
       title,
@@ -327,7 +334,7 @@ const HomePage = () => {
         <ModalSearch
           cancel={handleCloseSearchModal}
           value={searchInput}
-          onChange={(e) => setSearchInput(e.target.value)}
+          onChange={(e) => handleChangingSearchInput(e.target.value)}
           search={handleSearch}
           books={searchQuery?.data}
           bookExists={bookExists}
