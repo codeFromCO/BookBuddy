@@ -30,7 +30,6 @@ import { HiMagnifyingGlass } from 'react-icons/hi2';
 
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
-import SideBarNames from '../components/SideBarNames';
 import CardBook from '../components/CardBook';
 import ModalBook from '../components/ModalBook';
 import ModalAlert from '../components/ModalAlert';
@@ -50,7 +49,6 @@ const HomePage = () => {
   const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
   const [notesInput, setNotesInput] = useState('');
   const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
-  const [showSidebarNames, setShowSidebarNames] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -234,12 +232,7 @@ const HomePage = () => {
 
   return (
     <div className='flex flex-row h-screen'>
-      <SideBar
-        active='home'
-        onMouseOver={() => setShowSidebarNames(true)}
-        onMouseOut={() => setShowSidebarNames(false)}
-      />
-      <SideBarNames active='home' visible={showSidebarNames} />
+      <SideBar active='home' />
       <div
         className={`sm:pl-20 px-5 w-full ${
           isModalSearchVisible || selectedBook ? 'overflow-hidden' : ''
