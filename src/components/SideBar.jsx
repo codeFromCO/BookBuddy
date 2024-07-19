@@ -52,7 +52,7 @@ export default function SideBar(props) {
       </div>
       {/* text component */}
       <div
-        className={`fixed flex flex-col w-20 bg-baseSidebar h-screen pt-16 gap-5 border-r-2 translate-x-14 border-baseSidebar invisible sm:visible z-10 ${
+        className={`fixed flex flex-col w-20 bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-baseSidebar invisible sm:visible z-10 ${
           showSidebarNames ? 'animate-nav-expand' : 'animate-nav-hide'
         }`}
       >

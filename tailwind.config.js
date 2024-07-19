@@ -28,12 +28,12 @@ module.exports = {
         '100%': { transform: 'translateX(0)', opacity: '1' },
       },
       'slide-nav-text-out-right': {
-        '0%': { transform: 'translateX(-3.5rem)' },
+        '0%': { transform: 'translateX(1.5rem)' },
         '100%': { transform: 'translateX(3.5rem)' },
       },
       'slide-nav-text-in-left': {
         '0%': { transform: 'translateX(3.5rem)' },
-        '100%': { transform: 'translateX(-3.5rem)' },
+        '100%': { transform: 'translateX(-1.5rem)' },
       },
       'slide-down-from-top': {
         '0%': { transform: 'translateY(-100%)', opacity: '0' },
