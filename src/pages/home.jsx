@@ -226,7 +226,11 @@ const HomePage = () => {
   return (
     <div className='flex flex-row h-screen'>
       <SideBar active='home' />
-      <div className='sm:pl-20 px-5 w-full'>
+      <div
+        className={`sm:pl-20 px-5 w-full ${
+          isModalSearchVisible || selectedBook ? 'overflow-hidden' : ''
+        }`}
+      >
         <Header
           title='BookBuddy'
           onClick={handleDisplaySearchModal}
@@ -271,7 +275,7 @@ const HomePage = () => {
               />
             ))}
         </div>
-        <div className='mt-3 flex flex-wrap gap-5 justify-between sm:justify-normal'>
+        <div className='mt-3 flex flex-wrap gap-5 justify-normal'>
           {filteredBooks && filteredBooks.length > 0
             ? filteredBooks.map((book, index) => (
                 <CardBook
@@ -309,8 +313,8 @@ const HomePage = () => {
           onClickDelete={handleDisplayAlertModal}
           cancel={handleCloseNotesModal}
           save={handleSaveNotes}
-          />
-          )}
+        />
+      )}
       {isModalAlertVisible && selectedBook && (
         <ModalAlert
           heading='Please confirm'
@@ -330,7 +334,7 @@ const HomePage = () => {
           onClick={handleAddBook}
           searching={searchQuery.isFetching}
         />
-        )}
+      )}
       <ModalJumpToTop onClick={scrollToTopOfPage} />
     </div>
   );
