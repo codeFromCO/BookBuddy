@@ -48,8 +48,8 @@ module.exports = {
       'slide-in': 'slide-modal-in-from-right 0.5s ease-out forwards',
       'slide-down': 'slide-down-from-top 0.5s ease-out forwards',
       'fade-in': 'fade-in 1s ease-out forwards',
-      'nav-expand': 'slide-nav-text-out-right 0.5s ease-out forwards',
-      'nav-hide': 'slide-nav-text-in-left 0.5s ease-out forwards',
+      'nav-expand': 'slide-nav-text-out-right 0.25s ease-out forwards',
+      'nav-hide': 'slide-nav-text-in-left 0.25s ease-out forwards',
     },
     screens: {
       sm: '576px',

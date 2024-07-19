@@ -14,12 +14,18 @@ export default function SideBar(props) {
         onMouseOver={() => setShowSidebarNames(true)}
         onMouseOut={() => setShowSidebarNames(false)}
       >
-        <div className='fixed flex flex-col w-14 items-center bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-baseSidebar invisible sm:visible z-20'>
+        <div
+          className={`fixed flex flex-col w-14 items-center bg-baseSidebar h-screen pt-16 gap-5 border-r-2 ${
+            showSidebarNames
+              ? 'border-r-baseSidebar'
+              : 'border-r-baseCardBackground'
+          } invisible sm:visible z-20`}
+        >
           <Link
             to='/'
             className={`${
               props.active === 'home'
-                ? 'bg-baseBackgroundPrimary'
+                ? 'bg-baseBackgroundSecondary'
                 : 'hover:bg-baseBackgroundSecondary'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
             aria-label='Home'
@@ -30,7 +36,7 @@ export default function SideBar(props) {
             to='/history'
             className={`${
               props.active === 'history'
-                ? 'bg-baseBackgroundPrimary'
+                ? 'bg-baseBackgroundSecondary'
                 : 'hover:bg-baseBackgroundSecondary'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
             aria-label='History'
@@ -41,7 +47,7 @@ export default function SideBar(props) {
             to='/settings'
             className={`${
               props.active === 'settings'
-                ? 'bg-baseBackgroundPrimary'
+                ? 'bg-baseBackgroundSecondary'
                 : 'hover:bg-baseBackgroundSecondary'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
             aria-label='Settings'
@@ -52,13 +58,13 @@ export default function SideBar(props) {
       </div>
       {/* text component */}
       <div
-        className={`fixed flex flex-col w-20 bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-baseSidebar invisible sm:visible z-10 ${
+        className={`fixed flex flex-col w-20 bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-r-baseCardBackground invisible sm:visible z-10 ${
           showSidebarNames ? 'animate-nav-expand' : 'animate-nav-hide'
         }`}
       >
         <div
           className={`
-          h-10 flex items-center`}
+          h-10 flex items-center ${props.active === 'home' ? 'font-bold' : ''}`}
         >
           Home
         </div>
