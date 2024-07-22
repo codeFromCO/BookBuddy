@@ -40,12 +40,14 @@ const mockBooks = [
   },
 ];
 
-test('normalize string returns a lowercase string and trims white spaces', () => {
+test('normalizeString returns a lowercase string and removes white spaces from both ends of the string', () => {
   expect(normalizeString(' THIS IS A TEST ')).toBe('this is a test');
 });
 
 test('sortAlphabetically sorts an array by title', () => {
-  expect(sortAlphabetically(mockBooks)).toEqual([
+  const books = [...mockBooks];
+  sortAlphabetically(books);
+  expect(books).toEqual([
     {
       id: 1,
       title: 'Book 1',
@@ -80,7 +82,9 @@ test('sortAlphabetically sorts an array by title', () => {
 });
 
 test('sortAddedNewOld sorts an array from newest to oldest in terms of date added', () => {
-  expect(sortAddedNewOld(mockBooks)).toEqual([
+  const books = [...mockBooks];
+  sortAddedNewOld(books);
+  expect(books).toEqual([
     {
       id: 4,
       title: 'Book 4',
@@ -115,7 +119,9 @@ test('sortAddedNewOld sorts an array from newest to oldest in terms of date adde
 });
 
 test('sortAddedOldNew sorts an array from oldest to newest in terms of date added', () => {
-  expect(sortAddedOldNew(mockBooks)).toEqual([
+  const books = [...mockBooks];
+  sortAddedOldNew(books);
+  expect(books).toEqual([
     {
       id: 5,
       title: 'Book 5',
@@ -150,7 +156,9 @@ test('sortAddedOldNew sorts an array from oldest to newest in terms of date adde
 });
 
 test('sortUpdatedOldNew sorts an array from oldest to newest in terms of date updated', () => {
-  expect(sortUpdatedOldNew(mockBooks)).toEqual([
+  const books = [...mockBooks];
+  sortUpdatedOldNew(books);
+  expect(books).toEqual([
     {
       id: 5,
       title: 'Book 5',
@@ -185,7 +193,9 @@ test('sortUpdatedOldNew sorts an array from oldest to newest in terms of date up
 });
 
 test('sortUpdatedNewOld sorts an array from newest to oldest in terms of date updated', () => {
-  expect(sortUpdatedNewOld(mockBooks)).toEqual([
+  const books = [...mockBooks];
+  sortUpdatedNewOld(books);
+  expect(books).toEqual([
     {
       id: 1,
       title: 'Book 1',

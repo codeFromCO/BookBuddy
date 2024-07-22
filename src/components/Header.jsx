@@ -20,7 +20,7 @@ const Header = (props) => {
         className={`w-10 h-10 bg-buttonDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
           !props.savedBooksExist && 'animate-pulse hover:animate-none'
         }`}
-        onClick={props.displaySearchModal}
+        onClick={props.displayModalSearch}
       >
         <IoMdAdd size='1.5em' className='text-textOnDark' />
       </button>

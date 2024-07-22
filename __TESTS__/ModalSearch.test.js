@@ -39,7 +39,7 @@ describe('Modal Search', () => {
     expect(mockOnClick).toHaveBeenCalled();
   });
 
-  test('renders clickable books found during search', () => {
+  test('renders clickable books if books are found during search', () => {
     render(
       <ModalSearch
         books={[
@@ -64,7 +64,7 @@ describe('Modal Search', () => {
     expect(mockOnClick).toHaveBeenCalled();
   });
 
-  test('displays error message in the event there are no books to display', () => {
+  test('displays an error message in the event there were no books found during the search', () => {
     render(<ModalSearch books={[]} />);
 
     const errorMessage = screen.getByText(

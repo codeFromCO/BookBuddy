@@ -113,11 +113,11 @@ const HomePage = () => {
     }
   }, [newBookSearchInput, booksQuery.data, searchQuery]);
 
-  const handleDisplaySearchModal = () => {
+  const handleDisplayModalSearch = () => {
     setisModalSearchVisible(true);
   };
 
-  const handleCloseSearchModal = () => {
+  const handleCloseModalSearch = () => {
     setisModalSearchVisible(false);
     setBookAlreadyExists(false);
     setNewBookSearchInput('');
@@ -243,7 +243,7 @@ const HomePage = () => {
         <Header
           title='BookBuddy'
           displayModalHamburger={handleDisplayModalHamburger}
-          displaySearchModal={handleDisplaySearchModal}
+          displayModalSearch={handleDisplayModalSearch}
           savedBooksExist={booksQuery.data && booksQuery.data.length > 0}
         />
 
@@ -342,7 +342,7 @@ const HomePage = () => {
       )}
       {isModalSearchVisible && (
         <ModalSearch
-          cancel={handleCloseSearchModal}
+          cancel={handleCloseModalSearch}
           value={newBookSearchInput}
           onChange={(e) => handleChangingSearchInput(e.target.value)}
           search={handleSearch}

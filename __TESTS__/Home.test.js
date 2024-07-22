@@ -10,8 +10,22 @@ jest.mock('../src/api/api', () => ({
 }));
 
 // mock components
-jest.mock('../src/components/Header', () => () => <div>Header</div>);
+jest.mock(
+  '../src/components/Header',
+  () =>
+    ({ displayModalSearch, displayModalHamburger }) =>
+      (
+        <header data-testid='header'>
+          <button onClick={displayModalHamburger}>Hamburger</button>
+          <button onClick={displayModalSearch}>+</button>
+        </header>
+      )
+);
 jest.mock('../src/components/SideBar', () => () => <div>SideBar</div>);
+jest.mock('../src/components/Selector', () => () => <div>Selector</div>);
+jest.mock('../src/components/ModalJumpToTop', () => () => (
+  <div data-testid='modal-jump'>ModalJumpToTop</div>
+));
 jest.mock('../src/components/ButtonLoading', () => () => (
   <div data-testid='button-loading'>ButtonLoading</div>
 ));
@@ -29,6 +43,16 @@ jest.mock('../src/components/ModalBook', () => ({ title, author }) => (
     <div>Author: {author}</div>
   </div>
 ));
+jest.mock(
+  '../src/components/ModalHamburger',
+  () =>
+    ({ hideModalHamburger }) =>
+      (
+        <div data-testid='modal-Hamburger' onClick={hideModalHamburger}>
+          ModalHamburger
+        </div>
+      )
+);
 
 // mock data
 const mockBooks = [
@@ -79,17 +103,32 @@ describe('Home Page', () => {
     cleanup(); // unmounts components
   });
 
-  test('renders the components on the home page', () => {
+  test('renders the default components (Header, Sidebar, search input, Selector and ModalJump) on the home page', () => {
     // render HomePage component
     renderHomePage();
 
-    // assert that the modal displays the header, sidebar, search input and 'Add book' button
-    expect(screen.getByText(/Header/i)).toBeInTheDocument();
+    // assert that the modal displays the header, sidebar, search input and jump button
+    expect(screen.getByTestId(/Header/i)).toBeInTheDocument();
     expect(screen.getByText(/SideBar/i)).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(/Search existing books by title/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/\Add book/i)).toBeInTheDocument();
+    expect(screen.getByText(/selector/i)).toBeInTheDocument();
+    expect(screen.getByTestId(/modal-jump/i)).toBeInTheDocument();
+  });
+
+  test(`does not render ModalBook, ModalSearch and ModalHamburger by default`, async () => {
+    // render HomePage component
+    renderHomePage();
+
+    // assert that ModalBook is not in the document
+    expect(screen.queryByTestId('modal-book')).not.toBeInTheDocument();
+
+    // assert that ModalSearch is not in the document
+    expect(screen.queryByTestId('modal-search')).not.toBeInTheDocument();
+
+    // assert that ModalHamburger is not in the document
+    expect(screen.queryByTestId('modal-hamburger')).not.toBeInTheDocument();
   });
 
   test('renders error message if there are no existing books', async () => {
@@ -106,7 +145,7 @@ describe('Home Page', () => {
     expect(screen.queryByTestId('card-book')).not.toBeInTheDocument();
   });
 
-  test('renders existing books', async () => {
+  test('renders existing books (if present)', async () => {
     // mock fetckBooks API function
     require('../src/api/api').fetchBooks.mockResolvedValueOnce(mockBooks);
 
@@ -117,17 +156,6 @@ describe('Home Page', () => {
     expect(await screen.findByText(/Book 1 - Author 1/i)).toBeInTheDocument();
     expect(await screen.findByText(/Book 2 - Author 2/i)).toBeInTheDocument();
     expect(await screen.findByText(/Book 3 - Author 3/i)).toBeInTheDocument();
-  });
-
-  test(`opens search modal upon clicking 'Add book' button`, async () => {
-    // render HomePage component
-    renderHomePage();
-
-    // simulate clicking 'Add book' button
-    fireEvent.click(screen.getByText(/\Add book/i));
-
-    // assert that ModalSearch component will be displayed
-    expect(await screen.findByTestId('modal-search')).toBeInTheDocument();
   });
 
   test('opens book modal and display existing book data when an existing book is clicked', async () => {
@@ -148,6 +176,34 @@ describe('Home Page', () => {
     expect(screen.getByText('Author: Author 1')).toBeInTheDocument();
   });
 
+  test('opens search modal when + button is clicked', async () => {
+    // render HomePage component
+    renderHomePage();
+
+    // simulate clicking the + button
+    fireEvent.click(screen.getByText(/\+/i));
+
+    // wait for the modal to appear in the document
+    expect(await screen.findByTestId('modal-search')).toBeInTheDocument();
+  });
+
+  test('opens hamburger modal when hamburger button in header is clicked, and closes when the hamburger modal cross is clicked', async () => {
+    // render HomePage component
+    renderHomePage();
+
+    // simulate clicking the hamburger button
+    fireEvent.click(screen.getByText(/Hamburger/i));
+
+    // wait for the modal to appear in the document
+    expect(await screen.findByTestId(/modal-hamburger/i)).toBeInTheDocument();
+
+    // simulate clicking the hamburger modal
+    fireEvent.click(screen.getByTestId(/modal-Hamburger/i));
+
+    // assert that the hamburger modal is not in the document
+    expect(screen.queryByTestId('modal-Hamburger')).not.toBeInTheDocument();
+  });
+
   test('does not allow the book and search modals to both be displayed at the same time', async () => {
     // mock fetckBooks API function
     require('../src/api/api').fetchBooks.mockResolvedValueOnce(mockBooks);
@@ -158,20 +214,43 @@ describe('Home Page', () => {
     // wait for the book to appear in the document
     expect(await screen.findByText(/Book 1 - Author 1/i)).toBeInTheDocument();
 
-    // simulate click on the 'Add book' button
-    fireEvent.click(screen.getByText(/\Add book/i))
+    // simulate clicking the + button
+    fireEvent.click(screen.getByText(/\+/i));
 
     // wait for search modal to appear in the document
-    await screen.findByTestId('modal-search')
+    await screen.findByTestId('modal-search');
 
-    // simulate a click of the book 
+    // simulate a click of the book
     fireEvent.click(screen.getByText(/Book 1 - Author 1/i));
 
     // wait for the modal to appear in the document
-    await screen.findByTestId('modal-book')
+    await screen.findByTestId('modal-book');
 
     // assert that the search modal is no longer displayed in the document
     expect(screen.queryByTestId('modal-search')).not.toBeInTheDocument();
+  });
+
+  test(`displays only the matching books if a book is searched for and exists`, async () => {
+    // mock fetckBooks API function
+    require('../src/api/api').fetchBooks.mockResolvedValueOnce(mockBooks);
+
+    // render HomePage component
+    renderHomePage();
+
+    // simulate typing search query into search input
+    fireEvent.change(
+      screen.getByPlaceholderText(/Search existing books by title/i),
+      {
+        target: { value: 'Book 1' },
+      }
+    );
+
+    // assert that the matching book will be displayed
+    expect(await screen.findByText(/Book 1 - Author 1/i)).toBeInTheDocument();
+
+    // assert that books not matching the query will not be displayed
+    expect(screen.queryByText(/Book 2 - Author 2/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Book 3 - Author 3/)).not.toBeInTheDocument();
   });
 
   test(`hides existing books and displays a 'No books found' error message if the title search for an existing book yields no results`, async () => {
@@ -194,29 +273,6 @@ describe('Home Page', () => {
 
     // assert that no CardBooks will appear in the document
     expect(screen.queryByTestId('card-book')).not.toBeInTheDocument();
-  });
-
-  test(`if a book is searched for and exists, only that book will be displayed`, async () => {
-    // mock fetckBooks API function
-    require('../src/api/api').fetchBooks.mockResolvedValueOnce(mockBooks);
-
-    // render HomePage component
-    renderHomePage();
-
-    // simulate typing search query into search input
-    fireEvent.change(
-      screen.getByPlaceholderText(/Search existing books by title/i),
-      {
-        target: { value: 'Book 1' },
-      }
-    );
-
-    // assert that the matching book will be displayed
-    expect(await screen.findByText(/Book 1 - Author 1/i)).toBeInTheDocument();
-
-    // assert that books not matching the query will not be displayed
-    expect(screen.queryByText(/Book 2 - Author 2/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Book 3 - Author 3/)).not.toBeInTheDocument();
   });
 
   test('displays a ButtonLoading component while data is being fetched', async () => {
