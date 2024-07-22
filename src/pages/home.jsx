@@ -249,11 +249,11 @@ const HomePage = () => {
 
         <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
           <div
-            className={`items-center flex p-1 border-2 w-full h-[48px] border-baseSidebar  text-black  bg-baseSidebar sm:rounded-3xl rounded-md `}
+            className={`items-center flex p-1 border-2 w-full h-[48px] border-primary  text-textOnLight  bg-primary sm:rounded-3xl rounded-md `}
           >
             <HiMagnifyingGlass />
             <input
-              className='border-none focus:outline-none pl-3 w-full bg-baseSidebar placeholder-baseBackgroundSecondary'
+              className='border-none focus:outline-none pl-3 w-full bg-primary placeholder-primaryFocus'
               placeholder='Search existing books by title'
               onChange={(e) => handleExistingBookSearch(e.target.value)}
             />

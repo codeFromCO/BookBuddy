@@ -15,7 +15,7 @@ const ModalHamburger = (props) => {
   };
 
   return (
-    <div className='fixed h-screen w-full  bg-baseBackgroundPrimary space-y-3 text-2xl p-5 z-40 animate-slide-in-from-left'>
+    <div className='fixed h-screen w-full  bg-background space-y-3 text-2xl p-5 z-40 animate-slide-in-from-left'>
       <div className='flex justify-end'>
         <button onClick={props.hideModalHamburger}>
           <IoMdAdd className='size-8 rotate-45' />

@@ -8,8 +8,8 @@ const Button = (props) => {
         props.wide ? '' : 'w-[96px]'
       } rounded-md font-semibold ${
         props.tertiary
-          ? 'text-black hover:bg-baseButtonFocus2'
-          : 'text-white bg-black hover:bg-baseButtonFocus'
+          ? 'text-textOnLight hover:bg-buttonLightFocus'
+          : 'text-textOnDark bg-buttonDark hover:bg-buttonDarkFocus'
       }`}
       aria-label={props.name}
       title={props.name}

@@ -9,18 +9,18 @@ import { bookcoverAPI } from '../utils/constants';
 
 const ModalSearch = (props) => {
   return (
-    <div className='bg-white text-baseTextPrimary h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6 shadow-thick z-40  animate-slide-down-from-top sm:animate-slide-in-from-right'>
+    <div className='bg-white text-textOnLight h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6 shadow-thick z-40  animate-slide-down-from-top sm:animate-slide-in-from-right'>
       <div className='w-full'>
         <div className='flex justify-between'>
           <h2 className='font-bold text-2xl mb-3'>Add book</h2>
         </div>
         <div className='flex space-x-3'>
           <div
-            className={`items-center flex p-1 w-full border-2 border-baseButtonFocus2  text-black bg-baseButtonFocus2 rounded-3xl`}
+            className={`items-center flex p-1 w-full border-2 border-primaryOnWhite  text-textOnLight bg-primaryOnWhite rounded-3xl`}
           >
             <HiMagnifyingGlass />
             <input
-              className='border-none focus:outline-none pl-3 w-full bg-baseButtonFocus2 placeholder-baseBackgroundSecondary'
+              className='border-none focus:outline-none pl-3 w-full bg-primaryOnWhite placeholder-primaryFocus'
               placeholder='Search for a book title to add'
               value={props.value}
               onChange={props.onChange}
@@ -52,7 +52,7 @@ const ModalSearch = (props) => {
         {props.bookExists && <Error alert='Book previously added' />}
         {props.searching && <Searching />}
       </div>
-      <hr className='w-full border border-baseCardBackground my-3' />
+      <hr className='w-full border border-primaryOnWhite my-3' />
       <div className='flex justify-end space-x-3'>
         <Button
           className='fixed bottom-0 right-0'

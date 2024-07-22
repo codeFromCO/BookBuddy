@@ -12,17 +12,17 @@ const Header = (props) => {
       >
         <RxHamburgerMenu className='size-8' />
       </button>
-      <div className='flex items-center gap-x-2 text-baseTextPrimary h-12 font-semibold'>
+      <div className='flex items-center gap-x-2 text-textOnLight h-12 font-semibold'>
         <h1 className='text-4xl'>{props.title}</h1>
         <FaWorm className='size-8 ml-2 hidden sm:block' />
       </div>
       <button
-        className={`w-10 h-10 bg-black hover:bg-baseButtonFocus flex items-center justify-center rounded-md ${
+        className={`w-10 h-10 bg-buttonDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
           !props.savedBooksExist && 'animate-pulse hover:animate-none'
         }`}
         onClick={props.displaySearchModal}
       >
-        <IoMdAdd size='1.5em' className='text-white' />
+        <IoMdAdd size='1.5em' className='text-textOnDark' />
       </button>
     </header>
   );

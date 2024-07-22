@@ -15,18 +15,18 @@ export default function SideBar(props) {
         onMouseOut={() => setShowSidebarNames(false)}
       >
         <div
-          className={`fixed flex flex-col w-14 items-center bg-baseSidebar h-screen pt-16 gap-5 border-r-2 ${
+          className={`fixed flex flex-col w-14 items-center bg-primary h-screen pt-16 gap-5 border-r-2 ${
             showSidebarNames
-              ? 'border-r-baseSidebar'
-              : 'border-r-baseCardBackground'
+              ? 'border-r-primary'
+              : 'border-r-primaryAccent'
           } invisible sm:visible z-20`}
         >
           <Link
             to='/'
             className={`${
               props.active === 'home'
-                ? 'bg-baseBackgroundSecondary'
-                : 'hover:bg-baseBackgroundSecondary'
+                ? 'bg-primaryFocus'
+                : 'hover:bg-primaryFocus'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
             aria-label='Home'
           >
@@ -36,8 +36,8 @@ export default function SideBar(props) {
             to='/history'
             className={`${
               props.active === 'history'
-                ? 'bg-baseBackgroundSecondary'
-                : 'hover:bg-baseBackgroundSecondary'
+                ? 'bg-primaryFocus'
+                : 'hover:bg-primaryFocus'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
             aria-label='History'
           >
@@ -47,8 +47,8 @@ export default function SideBar(props) {
             to='/settings'
             className={`${
               props.active === 'settings'
-                ? 'bg-baseBackgroundSecondary'
-                : 'hover:bg-baseBackgroundSecondary'
+                ? 'bg-primaryFocus'
+                : 'hover:bg-primaryFocus'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
             aria-label='Settings'
           >
@@ -58,7 +58,7 @@ export default function SideBar(props) {
       </div>
       {/* text component */}
       <div
-        className={`fixed flex flex-col w-20 bg-baseSidebar h-screen pt-16 gap-5 border-r-2 border-r-baseCardBackground invisible sm:visible z-10 ${
+        className={`fixed flex flex-col w-20 bg-primary h-screen pt-16 gap-5 border-r-2 border-r-primaryAccent invisible sm:visible z-10 ${
           showSidebarNames ? 'animate-nav-expand' : 'animate-nav-hide'
         }`}
       >
