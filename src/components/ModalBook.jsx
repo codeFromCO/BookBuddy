@@ -4,7 +4,7 @@ import Button from './Button';
 
 const ModalBook = (props) => {
   return (
-    <div className='bg-white text-baseTextPrimary h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6 shadow-thick z-40 animate-fade-in sm:animate-slide-in'>
+    <div className='bg-white text-baseTextPrimary h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6 shadow-thick z-40 animate-fade-in sm:animate-slide-in-from-right'>
       <div className='w-full p-2'>
         <div className='flex justify-between'>
           <h2 className='font-bold text-2xl'>{props.title}</h2>
