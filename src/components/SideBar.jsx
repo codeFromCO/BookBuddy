@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoSettingsSharp } from 'react-icons/io5';
+import { IoStatsChartSharp } from "react-icons/io5";
 import { GiOpenBook } from 'react-icons/gi';
-import { SiBookstack } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 export default function SideBar(props) {
@@ -33,15 +33,15 @@ export default function SideBar(props) {
             <GiOpenBook size='1.5em' />
           </Link>
           <Link
-            to='/history'
+            to='/stats'
             className={`${
-              props.active === 'history'
+              props.active === 'stats'
                 ? 'bg-primaryFocus'
                 : 'hover:bg-primaryFocus'
             }  w-10 h-10 flex items-center justify-center rounded-md`}
-            aria-label='History'
+            aria-label='Stats'
           >
-            <SiBookstack size='1.5em' />
+            <IoStatsChartSharp size='1.5em' />
           </Link>
           <Link
             to='/settings'
@@ -72,7 +72,7 @@ export default function SideBar(props) {
           className={`
           h-10 flex items-center`}
         >
-          History
+          Stats
         </div>
         <div
           className={`

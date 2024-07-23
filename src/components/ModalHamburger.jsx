@@ -5,7 +5,7 @@ import { MdOutlineNavigateNext } from 'react-icons/md';
 
 const ModalHamburger = (props) => {
   const [displayHomeArrow, setDisplayHomeArrow] = useState(false);
-  const [displayHistoryArrow, setDisplayHistoryArrow] = useState(false);
+  const [displayStatsArrow, setDisplayStatsArrow] = useState(false);
   const [displaySettingsArrow, setDisplaySettingsArrow] = useState(false);
 
   const handleLinkClick = (page) => {
@@ -37,16 +37,16 @@ const ModalHamburger = (props) => {
         </div>
         <div className='flex justify-between items-center'>
           <Link
-            to='/history'
-            onClick={() => handleLinkClick('history')}
-            aria-label='History'
-            onMouseOver={() => setDisplayHistoryArrow(true)}
-            onMouseOut={() => setDisplayHistoryArrow(false)}
-            className={`${props.active === 'history' ? 'font-bold' : ''}`}
+            to='/stats'
+            onClick={() => handleLinkClick('stats')}
+            aria-label='Stats'
+            onMouseOver={() => setDisplayStatsArrow(true)}
+            onMouseOut={() => setDisplayStatsArrow(false)}
+            className={`${props.active === 'stats' ? 'font-bold' : ''}`}
           >
-            History
+            Stats
           </Link>
-          {displayHistoryArrow && <MdOutlineNavigateNext className='size-8' />}
+          {displayStatsArrow && <MdOutlineNavigateNext className='size-8' />}
         </div>
         <div className='flex justify-between items-center'>
           <Link
