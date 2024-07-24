@@ -26,10 +26,7 @@ if (!process.env.MONGODB_URI || !process.env.PORT) {
 
 // establish db connection
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI, {})
   .then(() => console.log('Connected to database!'))
   .catch((err) => console.log('Database connection error:', err));
 

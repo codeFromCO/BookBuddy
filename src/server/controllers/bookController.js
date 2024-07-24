@@ -6,17 +6,14 @@ bookController.addBook = async (req, res, next) => {
   try {
     const { title, author, cover_i } = req.body;
 
-    // maybe should not do this, but should handle it trying to add but it exists
     // check if book already exists
-    const existingBook = await Book.find({
+    const existingBook = await Book.findOne({
       title,
     });
 
-    if (existingBook.length) {
+    if (existingBook) {
       return res.status(409).json({ message: 'Book already exists' });
     }
-
-    // error.error.code === 11000 means duplicate key
 
     await Book.create({
       title,
@@ -27,9 +24,9 @@ bookController.addBook = async (req, res, next) => {
     return next();
   } catch (err) {
     // check for duplication key
-    if (err.code === 11000) {
-      return res.status(409).json({ message: 'Book already exists' });
-    }
+    // if (err.code === 11000) {
+    //   return res.status(409).json({ message: 'Book already exists' });
+    // }
     return next({
       log: 'Error on bookController.addBook',
       message: { error: err },
@@ -41,17 +38,17 @@ bookController.findBooks = async (req, res, next) => {
   try {
     const books = await Book.find({});
 
-    if (!books || books.length === 0) {
+    if (books.length === 0) {
       return res.status(200).json({ message: 'There are no books', data: [] });
     }
 
     res.locals.books = books;
 
     return next();
-  } catch (error) {
+  } catch (err) {
     return next({
       log: 'Error on bookController.findBooks',
-      message: { error: error },
+      message: { error: err },
     });
   }
 };
@@ -65,10 +62,10 @@ bookController.findBook = async (req, res, next) => {
     res.locals.book = book;
 
     return next();
-  } catch (error) {
+  } catch (err) {
     return next({
       log: 'Error on bookController.findBook',
-      message: { error: error },
+      message: { error: err },
     });
   }
 };
@@ -122,9 +119,9 @@ bookController.deleteBook = async (req, res, next) => {
     });
 
     if (result) {
-      return next();
+      return res.status(200).json({ message: 'Book deleted' });
     } else {
-      return res.status(400).json({ message: 'Book does not exist' });
+      return res.status(404).json({ message: 'Book not found' });
     }
   } catch (err) {
     return next({

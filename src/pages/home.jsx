@@ -66,11 +66,8 @@ const HomePage = () => {
     mutationFn: addBook,
     onSuccess: () => {
       queryClient.invalidateQueries(['books']);
-      queryClient.invalidateQueries('[searchBooksByInput');
+      queryClient.invalidateQueries(['searchBooksByInput']);
       setNewBookSearchInput('');
-    },
-    onError: () => {
-      console.log('there was an error');
     },
   });
 
@@ -113,51 +110,51 @@ const HomePage = () => {
     }
   }, [newBookSearchInput, booksQuery.data, searchQuery]);
 
-  const handleDisplayModalSearch = () => {
+  const handleDisplayModalSearch = useCallback(() => {
     setisModalSearchVisible(true);
-  };
+  }, []);
 
-  const handleCloseModalSearch = () => {
+  const handleCloseModalSearch = useCallback(() => {
     setisModalSearchVisible(false);
     setBookAlreadyExists(false);
     setNewBookSearchInput('');
-  };
+  }, []);
 
-  const handleDisplayNotesModal = (title, author_name, notes, _id) => {
+  const handleDisplayNotesModal = useCallback((title, author_name, notes, _id) => {
     setSelectedBook({ title, author: author_name, notes, _id });
     setNotesInput(notes);
     setisModalSearchVisible(false);
     setNewBookSearchInput('');
-  };
+  }, []);
 
-  const handleCloseNotesModal = () => {
+  const handleCloseNotesModal = useCallback(() => {
     setSelectedBook(null);
     setNotesInput('');
     setisModalAlertVisible(false);
-  };
+  }, []);
 
-  const handleDisplayAlertModal = () => {
+  const handleDisplayAlertModal = useCallback(() => {
     setisModalAlertVisible(true);
-  };
-  const handleCloseAlertModal = () => {
+  }, []);
+  const handleCloseAlertModal = useCallback(() => {
     setisModalAlertVisible(false);
-  };
+  }, []);
 
-  const handleDisplayModalHamburger = () => {
+  const handleDisplayModalHamburger = useCallback(() => {
     setModalHamburgerVisible(true);
-  };
-  const handleCloseModalHamburger = () => {
+  }, []);
+  const handleCloseModalHamburger = useCallback(() => {
     setModalHamburgerVisible(false);
-  };
+  }, []);
 
-  const handleChangingSearchInput = (inputValue) => {
+  const handleChangingSearchInput = useCallback((inputValue) => {
     if (bookAlreadyExists) {
       setBookAlreadyExists(false);
     }
     setNewBookSearchInput(inputValue);
-  };
+  }, [bookAlreadyExists]);
 
-  const handleAddBook = (title, author, cover_i) => {
+  const handleAddBook = useCallback((title, author, cover_i) => {
     const book = {
       title,
       author,
@@ -167,9 +164,9 @@ const HomePage = () => {
     addBookMutation.mutate(book);
     setNewBookSearchInput('');
     setisModalSearchVisible(false);
-  };
+  }, [addBookMutation]);
 
-  const handleSaveNotes = () => {
+  const handleSaveNotes = useCallback(() => {
     if (selectedBook) {
       updateBookNotesMutation.mutate({
         _id: selectedBook._id,
@@ -178,24 +175,24 @@ const HomePage = () => {
     }
     setSelectedBook(null);
     setNotesInput('');
-  };
+  }, [selectedBook, notesInput, updateBookNotesMutation]);
 
-  const handleDeleteBook = () => {
+  const handleDeleteBook = useCallback(() => {
     if (selectedBook) {
       deleteBookMutation.mutate({ _id: selectedBook._id });
 
       setisModalAlertVisible(false);
       setNotesInput('');
     }
-  };
+  }, [selectedBook, deleteBookMutation]);
 
-  const handleExistingBookSearch = (inputValue) => {
+  const handleExistingBookSearch = useCallback((inputValue) => {
     setExistingSearchBookInput(inputValue);
-  };
+  }, []);
 
-  const handleReOrder = (selectedOption) => {
+  const handleReOrder = useCallback((selectedOption) => {
     setSelectedSortOption(selectedOption);
-  };
+  }, []);
 
   useEffect(() => {
     if (booksQuery.data) {
