@@ -3,6 +3,7 @@ import { bookSearchAPI, API_URL } from '../utils/constants';
 // fetch existing books
 export const fetchBooks = async () => {
   try {
+    console.log('IT WAS CALLED')
     const response = await fetch(`${API_URL}/findAll`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
@@ -22,8 +23,7 @@ export const fetchBooks = async () => {
 
     return jsonData.data;
   } catch (error) {
-    console.error('Error fetching books', error);
-    throw error;
+    throw new Error('Error fetching books');
   }
 };
 
@@ -60,8 +60,7 @@ export const searchBooksByInput = async (input, existingBooks) => {
 
     return arrayToReturn;
   } catch (error) {
-    console.error('Error searching books:', error);
-    throw error;
+    throw new Error('Error searching books');
   }
 };
 
@@ -82,8 +81,7 @@ export const addBook = async (book) => {
 
     return jsonData;
   } catch (error) {
-    console.error('Error adding book:', error);
-    throw error;
+    throw new Error('Error adding book');
   }
 };
 
@@ -99,8 +97,7 @@ export const updateBookNotes = async ({ _id, notes }) => {
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
-    console.error('Error updating book notes:', error);
-    throw error;
+    throw new Error('Error updating book notes');
   }
 };
 
@@ -116,7 +113,6 @@ export const deleteBook = async ({ _id }) => {
     const jsonData = await response.json();
     return jsonData.data;
   } catch (error) {
-    console.error('Error deleting book:', error);
-    throw error;
+    throw new Error('Error deleting book');
   }
 };
