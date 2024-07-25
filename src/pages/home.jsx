@@ -31,7 +31,6 @@ import ModalSearch from '../components/ModalSearch';
 import ModalAlert from '../components/ModalAlert';
 import ModalJumpToTop from '../components/ModalJumpToTop';
 import ModalHamburger from '../components/ModalHamburger';
-import ButtonLoading from '../components/ModalLoading';
 import Error from '../components/Error';
 import Selector from '../components/Selector';
 import Searching from '../components/Searching';
@@ -91,7 +90,15 @@ const HomePage = () => {
     },
   });
 
-  const handleSearch = useCallback(() => {
+  const handleExistingBookSearch = useCallback((inputValue) => {
+    setExistingSearchBookInput(inputValue);
+  }, []);
+
+  const handleReOrder = useCallback((selectedOption) => {
+    setSelectedSortOption(selectedOption);
+  }, []);
+
+  const handleNewBookSearch = useCallback(() => {
     // check if searchInput is empty
     if (newBookSearchInput.trim() === '') {
       return;
@@ -153,7 +160,7 @@ const HomePage = () => {
     setModalHamburgerVisible(false);
   }, []);
 
-  const handleChangingSearchInput = useCallback(
+  const handleChangingNewBookSearchInput = useCallback(
     (inputValue) => {
       if (bookAlreadyExists) {
         setBookAlreadyExists(false);
@@ -196,14 +203,6 @@ const HomePage = () => {
       setNotesInput('');
     }
   }, [selectedBook, deleteBookMutation]);
-
-  const handleExistingBookSearch = useCallback((inputValue) => {
-    setExistingSearchBookInput(inputValue);
-  }, []);
-
-  const handleReOrder = useCallback((selectedOption) => {
-    setSelectedSortOption(selectedOption);
-  }, []);
 
   useEffect(() => {
     if (booksQuery.data) {
@@ -254,6 +253,7 @@ const HomePage = () => {
           displayModalHamburger={handleDisplayModalHamburger}
           displayModalSearch={handleDisplayModalSearch}
           savedBooksExist={booksQuery.data && booksQuery.data.length > 0}
+          existingBookSearchInputExists={existingBookSearchInput !== ''}
         />
 
         <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
@@ -317,14 +317,13 @@ const HomePage = () => {
                   }
                 />
               ))
-            : booksQuery.isFetched && existingBookSearchInput !== '' && <Error alert='No matching books found' />}
+            : booksQuery.isFetched &&
+              booksQuery.data.length !== 0 &&
+              existingBookSearchInput !== '' && (
+                <Error alert='No matching books found' />
+              )}
         </div>
         {booksQuery.data && booksQuery.data.length === 0 && <EmptyState />}
-
-        {/* {booksQuery.isLoading && !booksQuery.data && (
-          <ButtonLoading text={'Loading...'} />
-        )} */}
-        {/* <ButtonLoading text={'Loading...'} /> */}
       </div>
       {isModalHamburgerVisible && (
         <ModalHamburger
@@ -355,8 +354,8 @@ const HomePage = () => {
         <ModalSearch
           cancel={handleCloseModalSearch}
           value={newBookSearchInput}
-          onChange={(e) => handleChangingSearchInput(e.target.value)}
-          search={handleSearch}
+          onChange={(e) => handleChangingNewBookSearchInput(e.target.value)}
+          search={handleNewBookSearch}
           books={searchQuery?.data}
           bookExists={bookAlreadyExists}
           onClick={handleAddBook}

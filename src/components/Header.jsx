@@ -18,7 +18,7 @@ const Header = (props) => {
       <button
         className={`w-10 h-10 bg-buttonDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
           !props.savedBooksExist && 'animate-pulse hover:animate-none'
-        }`}
+        } ${props.existingBookSearchInputExists ? 'bg-textOnError' : ''} `}
         onClick={props.displayModalSearch}
       >
         <IoMdAdd size='1.5em' className='text-textOnDark' />

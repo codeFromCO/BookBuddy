@@ -282,7 +282,7 @@ describe('Home Page', () => {
     expect(screen.queryByTestId('card-book')).not.toBeInTheDocument();
   });
 
-  test('displays a ButtonLoading component while data is being fetched', async () => {
+  test('displays a modal loading component while data is being fetched', async () => {
     // simulate the fetching state with no data
     require('../src/api/api').fetchBooks.mockImplementation(
       () => new Promise(() => {})

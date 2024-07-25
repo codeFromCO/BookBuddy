@@ -21,7 +21,7 @@ const ModalSearch = (props) => {
             <HiMagnifyingGlass />
             <input
               className='border-none focus:outline-none pl-3 w-full bg-primaryOnWhite placeholder-primaryFocus'
-              placeholder='Search for a book title to add'
+              placeholder='Search for a book title'
               value={props.value}
               onChange={props.onChange}
             />

@@ -22,7 +22,7 @@ const ModalBook = (props) => {
         className='text-sm w-full p-2 rounded-md border-2 border-white focus:outline-none resize-none h-full '
         value={props.value}
         onChange={props.onChange}
-        placeholder={`Click to add a note. Remember to click save!`}
+        placeholder={`Click here and start typing to add a note. Remember to click save!`}
       ></textarea>
       <hr className='w-full border border-primaryOnWhite my-3' />
       <div className='flex justify-end space-x-3'>
