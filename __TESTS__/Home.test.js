@@ -26,8 +26,8 @@ jest.mock('../src/components/Selector', () => () => <div>Selector</div>);
 jest.mock('../src/components/ModalJumpToTop', () => () => (
   <div data-testid='modal-jump'>ModalJumpToTop</div>
 ));
-jest.mock('../src/components/ButtonLoading', () => () => (
-  <div data-testid='button-loading'>ButtonLoading</div>
+jest.mock('../src/components/ModalLoading', () => () => (
+  <div data-testid='modal-loading'>ModalLoading</div>
 ));
 jest.mock('../src/components/CardBook', () => ({ title, author, onClick }) => (
   <div data-testid='card-book' onClick={onClick}>
@@ -53,6 +53,9 @@ jest.mock(
         </div>
       )
 );
+jest.mock('../src/components/EmptyState', () => () => (
+  <div data-testid='empty-state'>EmptyState</div>
+));
 
 // mock data
 const mockBooks = [
@@ -131,15 +134,15 @@ describe('Home Page', () => {
     expect(screen.queryByTestId('modal-hamburger')).not.toBeInTheDocument();
   });
 
-  test('renders error message if there are no existing books', async () => {
+  test('renders an empty state if there are no books to display', async () => {
     // mock fetckBooks API function
     require('../src/api/api').fetchBooks.mockResolvedValueOnce(emptyMockBooks);
 
     // render HomePage component
     renderHomePage();
 
-    // assert that the modal displays an error message
-    expect(await screen.findByText(/No books found/i)).toBeInTheDocument();
+    // assert that an empty state will render
+    expect(await screen.findByTestId('empty-state')).toBeInTheDocument();
 
     // assert that no book cards are in the document
     expect(screen.queryByTestId('card-book')).not.toBeInTheDocument();
@@ -269,7 +272,11 @@ describe('Home Page', () => {
     );
 
     // assert that an error will appear in the document
-    expect(await screen.findByText(/No books found/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(
+        /No matching books found/i
+      )
+    ).toBeInTheDocument();
 
     // assert that no CardBooks will appear in the document
     expect(screen.queryByTestId('card-book')).not.toBeInTheDocument();
@@ -284,7 +291,7 @@ describe('Home Page', () => {
     // render HomePage component
     renderHomePage();
 
-    // assert that a loading button will be displayed whilst books are being fetched
-    expect(screen.getByTestId('button-loading')).toBeInTheDocument();
+    // assert that a loading modal will be displayed whilst books are being fetched
+    expect(screen.getByTestId('modal-loading')).toBeInTheDocument();
   });
 });

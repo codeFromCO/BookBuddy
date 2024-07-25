@@ -8,14 +8,19 @@ export const fetchBooks = async () => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const jsonData = await response.json();
+    console.log('this is the response', response);
 
+    const jsonData = await response.json();
+    console.log('this is the jsonData', jsonData);
+
+    // handle error
     if (!response.ok) {
       throw new Error('Failed to fetch books');
     }
 
+    // handle event that request was successful but there are no saved books 
     if (!jsonData.data || jsonData.data.length === 0) {
-      throw new Error('No books found');
+      return [];
     }
 
     return jsonData.data;
@@ -36,15 +41,16 @@ export const searchBooksByInput = async (input, existingBooks) => {
 
     // books data is returned in docs property
     const docs = allData.docs;
-    console.log('here are the books', docs);
 
     // create object to check for title of existing book
     const existingBooksLookup = {};
-    for (let i = 0; i < existingBooks.length; i++) {
-      existingBooksLookup[existingBooks[i].title] = existingBooks[i].author;
-    }
 
-    console.log('these exists', existingBooksLookup);
+    //
+    if (existingBooks) {
+      for (let i = 0; i < existingBooks.length; i++) {
+        existingBooksLookup[existingBooks[i].title] = existingBooks[i].author;
+      }
+    }
 
     // iterate through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
     const arrayToReturn = [];

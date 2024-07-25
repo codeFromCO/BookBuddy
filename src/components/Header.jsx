@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaWorm } from 'react-icons/fa6';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { IoMdAdd } from 'react-icons/io';
 
@@ -12,10 +11,10 @@ const Header = (props) => {
       >
         <RxHamburgerMenu className='size-8' />
       </button>
-      <div className='flex items-center gap-x-2 text-textOnLight h-12 font-semibold'>
-        <h1 className='text-4xl'>{props.title}</h1>
-        <FaWorm className='size-8 ml-2 hidden sm:block' />
-      </div>
+      <h1 className='text-4xl text-textOnLight h-12 font-semibold'>
+        {props.title}
+      </h1>
+
       <button
         className={`w-10 h-10 bg-buttonDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
           !props.savedBooksExist && 'animate-pulse hover:animate-none'

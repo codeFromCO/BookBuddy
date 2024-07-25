@@ -6,9 +6,9 @@ const ModalBook = (props) => {
   return (
     <div className='bg-white text-textOnLight h-full flex flex-col w-full sm:w-1/2 fixed top-0 right-0 p-6 shadow-thick z-40 animate-slide-down-from-top sm:animate-slide-in-from-right'>
       <div className='w-full p-2'>
-        <div className='flex justify-between'>
+        <div className='flex justify-between space-x-3'>
           <h2 className='font-bold text-2xl'>{props.title}</h2>
-          <div className='flex space-x-2'>
+          <div>
             <MdDelete
               className='size-6 hover:cursor-pointer hover:text-buttonDarkFocus'
               onClick={props.onClickDelete}

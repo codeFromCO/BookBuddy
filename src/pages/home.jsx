@@ -31,9 +31,12 @@ import ModalSearch from '../components/ModalSearch';
 import ModalAlert from '../components/ModalAlert';
 import ModalJumpToTop from '../components/ModalJumpToTop';
 import ModalHamburger from '../components/ModalHamburger';
-import ButtonLoading from '../components/ButtonLoading';
+import ButtonLoading from '../components/ModalLoading';
 import Error from '../components/Error';
 import Selector from '../components/Selector';
+import Searching from '../components/Searching';
+import ModalLoading from '../components/ModalLoading';
+import EmptyState from '../components/EmptyState';
 
 const HomePage = () => {
   const [newBookSearchInput, setNewBookSearchInput] = useState('');
@@ -120,12 +123,15 @@ const HomePage = () => {
     setNewBookSearchInput('');
   }, []);
 
-  const handleDisplayNotesModal = useCallback((title, author_name, notes, _id) => {
-    setSelectedBook({ title, author: author_name, notes, _id });
-    setNotesInput(notes);
-    setisModalSearchVisible(false);
-    setNewBookSearchInput('');
-  }, []);
+  const handleDisplayNotesModal = useCallback(
+    (title, author_name, notes, _id) => {
+      setSelectedBook({ title, author: author_name, notes, _id });
+      setNotesInput(notes);
+      setisModalSearchVisible(false);
+      setNewBookSearchInput('');
+    },
+    []
+  );
 
   const handleCloseNotesModal = useCallback(() => {
     setSelectedBook(null);
@@ -147,24 +153,30 @@ const HomePage = () => {
     setModalHamburgerVisible(false);
   }, []);
 
-  const handleChangingSearchInput = useCallback((inputValue) => {
-    if (bookAlreadyExists) {
-      setBookAlreadyExists(false);
-    }
-    setNewBookSearchInput(inputValue);
-  }, [bookAlreadyExists]);
+  const handleChangingSearchInput = useCallback(
+    (inputValue) => {
+      if (bookAlreadyExists) {
+        setBookAlreadyExists(false);
+      }
+      setNewBookSearchInput(inputValue);
+    },
+    [bookAlreadyExists]
+  );
 
-  const handleAddBook = useCallback((title, author, cover_i) => {
-    const book = {
-      title,
-      author,
-      cover_i,
-    };
+  const handleAddBook = useCallback(
+    (title, author, cover_i) => {
+      const book = {
+        title,
+        author,
+        cover_i,
+      };
 
-    addBookMutation.mutate(book);
-    setNewBookSearchInput('');
-    setisModalSearchVisible(false);
-  }, [addBookMutation]);
+      addBookMutation.mutate(book);
+      setNewBookSearchInput('');
+      setisModalSearchVisible(false);
+    },
+    [addBookMutation]
+  );
 
   const handleSaveNotes = useCallback(() => {
     if (selectedBook) {
@@ -180,7 +192,6 @@ const HomePage = () => {
   const handleDeleteBook = useCallback(() => {
     if (selectedBook) {
       deleteBookMutation.mutate({ _id: selectedBook._id });
-
       setisModalAlertVisible(false);
       setNotesInput('');
     }
@@ -233,7 +244,8 @@ const HomePage = () => {
     <div className='flex flex-row h-screen'>
       <SideBar active='home' />
       <div
-        className={`sm:pl-20 px-5 w-full ${
+        // BE CAREFUL OF SETTING HEIGHT
+        className={`sm:pl-20 px-5 w-full flex flex-col ${
           isModalSearchVisible || selectedBook ? 'overflow-hidden' : ''
         }`}
       >
@@ -305,12 +317,14 @@ const HomePage = () => {
                   }
                 />
               ))
-            : booksQuery.isFetched && <Error alert='No books found' />}
+            : booksQuery.isFetched && existingBookSearchInput !== '' && <Error alert='No matching books found' />}
         </div>
-        <div className='h-5 w-full'></div>
-        {booksQuery.isLoading && !booksQuery.data && (
+        {booksQuery.data && booksQuery.data.length === 0 && <EmptyState />}
+
+        {/* {booksQuery.isLoading && !booksQuery.data && (
           <ButtonLoading text={'Loading...'} />
-        )}
+        )} */}
+        {/* <ButtonLoading text={'Loading...'} /> */}
       </div>
       {isModalHamburgerVisible && (
         <ModalHamburger
@@ -349,6 +363,7 @@ const HomePage = () => {
           searching={searchQuery.isFetching}
         />
       )}
+      {booksQuery.isLoading && !booksQuery.data && <ModalLoading />}
       <ModalJumpToTop onClick={scrollToTopOfPage} />
     </div>
   );
