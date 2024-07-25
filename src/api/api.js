@@ -8,17 +8,14 @@ export const fetchBooks = async () => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    console.log('this is the response', response);
-
     const jsonData = await response.json();
-    console.log('this is the jsonData', jsonData);
 
     // handle error
     if (!response.ok) {
       throw new Error('Failed to fetch books');
     }
 
-    // handle event that request was successful but there are no saved books 
+    // handle event that request was successful but there are no saved books
     if (!jsonData.data || jsonData.data.length === 0) {
       return [];
     }
@@ -52,29 +49,14 @@ export const searchBooksByInput = async (input, existingBooks) => {
       }
     }
 
-    // iterate through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
-    const arrayToReturn = [];
-
-    // sometimes author is [], sometimes not
-    for (let i = 0; i < docs.length && arrayToReturn.length < 6; i++) {
-      if (
-        docs[i].hasOwnProperty('title') &&
-        docs[i].hasOwnProperty('author_name')
-      ) {
-        const book = {
-          ...docs[i],
-        };
-
-        if (
-          existingBooksLookup.hasOwnProperty([docs[i].title]) &&
-          existingBooksLookup[docs[i].title] === docs[i].author_name[0]
-        ) {
-          book.alreadyExists = true;
-        }
-
-        arrayToReturn.push(book);
-      }
-    }
+    // check through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
+    const arrayToReturn = docs
+      .filter((doc) => doc.title && doc.author_name)
+      .slice(0, 6)
+      .map((doc) => ({
+        ...doc,
+        alreadyExists: existingBooksLookup[doc.title] === doc.author_name[0],
+      }));
 
     return arrayToReturn;
   } catch (error) {
@@ -83,7 +65,6 @@ export const searchBooksByInput = async (input, existingBooks) => {
   }
 };
 
-// NEED TO HANDLE IF THE BOOK ALREADY EXISTS IN DATABASE
 // add a new book
 export const addBook = async (book) => {
   try {
@@ -101,6 +82,7 @@ export const addBook = async (book) => {
 
     return jsonData;
   } catch (error) {
+    console.error('Error adding book:', error);
     throw error;
   }
 };

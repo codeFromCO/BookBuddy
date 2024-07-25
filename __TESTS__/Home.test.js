@@ -48,7 +48,7 @@ jest.mock(
   () =>
     ({ hideModalHamburger }) =>
       (
-        <div data-testid='modal-Hamburger' onClick={hideModalHamburger}>
+        <div data-testid='modal-hamburger' onClick={hideModalHamburger}>
           ModalHamburger
         </div>
       )
@@ -201,7 +201,7 @@ describe('Home Page', () => {
     expect(await screen.findByTestId(/modal-hamburger/i)).toBeInTheDocument();
 
     // simulate clicking the hamburger modal
-    fireEvent.click(screen.getByTestId(/modal-Hamburger/i));
+    fireEvent.click(screen.getByTestId(/modal-hamburger/i));
 
     // assert that the hamburger modal is not in the document
     expect(screen.queryByTestId('modal-Hamburger')).not.toBeInTheDocument();

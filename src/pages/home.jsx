@@ -59,7 +59,7 @@ const HomePage = () => {
   });
 
   const searchQuery = useQuery({
-    queryKey: ['searchBooksByInput', newBookSearchInput],
+    queryKey: ['searchBooksByInput', newBookSearchInput, booksQuery.data],
     queryFn: () => searchBooksByInput(newBookSearchInput, booksQuery?.data),
     enabled: false, // disabled automatically running
   });
@@ -108,7 +108,7 @@ const HomePage = () => {
 
     // check if book already exists
     const existingBook = booksQuery.data?.find(
-      (book) => book.title.toLowerCase() === normalizedSearchInput
+      (book) => normalizeString(book.title) === normalizedSearchInput
     );
 
     if (existingBook) {
@@ -272,7 +272,7 @@ const HomePage = () => {
 
         <div className='flex flex-wrap mt-3'>
           {booksQuery.data &&
-            booksQuery.data.length > 0 &&
+            booksQuery.data?.length > 0 &&
             !filteredBooks &&
             booksQuery.data.map((book, index) => (
               <CardBook
@@ -318,6 +318,7 @@ const HomePage = () => {
                 />
               ))
             : booksQuery.isFetched &&
+              booksQuery.data &&
               booksQuery.data.length !== 0 &&
               existingBookSearchInput !== '' && (
                 <Error alert='No matching books found' />

@@ -74,7 +74,7 @@ bookController.updateBook = async (req, res, next) => {
   try {
     const { _id, notes } = req.body;
 
-    if (!_id || !notes) {
+    if (!_id) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
