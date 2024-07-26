@@ -265,8 +265,7 @@ const HomePage = () => {
     <div className='flex flex-row h-screen'>
       <SideBar active='home' />
       <div
-        // BE CAREFUL OF SETTING HEIGHT
-        className={`sm:pl-20 px-5 w-full flex flex-col ${
+        className={`sm:pl-20 px-5 w-full flex flex-col  mb-5 ${
           isModalSearchVisible || selectedBook ? 'overflow-hidden' : ''
         }`}
       >
