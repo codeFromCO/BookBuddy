@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import throttle from 'lodash.throttle';
 
 import {
   fetchBooks,
@@ -21,21 +22,19 @@ import {
 
 import { bookcoverAPI } from '../utils/constants';
 
-import { HiMagnifyingGlass } from 'react-icons/hi2';
-
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
+import ModalHamburger from '../components/ModalHamburger';
 import CardBook from '../components/CardBook';
 import ModalBook from '../components/ModalBook';
 import ModalSearch from '../components/ModalSearch';
 import ModalAlert from '../components/ModalAlert';
 import ModalJumpToTop from '../components/ModalJumpToTop';
-import ModalHamburger from '../components/ModalHamburger';
 import Error from '../components/Error';
 import Selector from '../components/Selector';
-import Searching from '../components/Searching';
 import ModalLoading from '../components/ModalLoading';
 import EmptyState from '../components/EmptyState';
+import Searchbar from '../components/Searchbar';
 
 const HomePage = () => {
   const [newBookSearchInput, setNewBookSearchInput] = useState('');
@@ -47,6 +46,7 @@ const HomePage = () => {
   const [notesInput, setNotesInput] = useState('');
   const [isModalHamburgerVisible, setModalHamburgerVisible] = useState(false);
   const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -90,9 +90,14 @@ const HomePage = () => {
     },
   });
 
-  const handleExistingBookSearch = useCallback((inputValue) => {
-    setExistingSearchBookInput(inputValue);
+  const handleExistingBookSearch = useCallback((event) => {
+    const value = event.target.value;
+    setExistingSearchBookInput(value);
   }, []);
+
+  const handleClearExistingBookSearchInput = useCallback(() => {
+    setExistingSearchBookInput('');
+  });
 
   const handleReOrder = useCallback((selectedOption) => {
     setSelectedSortOption(selectedOption);
@@ -121,6 +126,7 @@ const HomePage = () => {
   }, [newBookSearchInput, booksQuery.data, searchQuery]);
 
   const handleDisplayModalSearch = useCallback(() => {
+    setExistingSearchBookInput('');
     setisModalSearchVisible(true);
   }, []);
 
@@ -204,6 +210,13 @@ const HomePage = () => {
     }
   }, [selectedBook, deleteBookMutation]);
 
+  const handleScroll = useCallback(
+    throttle(() => {
+      setIsScrolled(window.scrollY > 0);
+    }, 300),
+    []
+  );
+
   useEffect(() => {
     if (booksQuery.data) {
       let sortedData = [...booksQuery.data];
@@ -231,6 +244,15 @@ const HomePage = () => {
     }
   }, [booksQuery.data, selectedSortOption, queryClient]);
 
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleScroll]);
+
   const filteredBooks = useMemo(() => {
     return booksQuery.data?.filter((book) =>
       book.title
@@ -253,20 +275,16 @@ const HomePage = () => {
           displayModalHamburger={handleDisplayModalHamburger}
           displayModalSearch={handleDisplayModalSearch}
           savedBooksExist={booksQuery.data && booksQuery.data.length > 0}
-          existingBookSearchInputExists={existingBookSearchInput !== ''}
         />
 
         <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
-          <div
-            className={`items-center flex p-1 border-2 w-full h-[48px] border-primary  text-textOnLight  bg-primary sm:rounded-3xl rounded-md `}
-          >
-            <HiMagnifyingGlass />
-            <input
-              className='border-none focus:outline-none pl-3 w-full bg-primary placeholder-primaryFocus'
-              placeholder='Search existing books by title'
-              onChange={(e) => handleExistingBookSearch(e.target.value)}
-            />
-          </div>
+          <Searchbar
+            value={existingBookSearchInput}
+            onChange={handleExistingBookSearch}
+            onClear={handleClearExistingBookSearchInput}
+            isModalSearchVisible={isModalSearchVisible}
+          />
+
           <Selector onChange={(e) => handleReOrder(e.target.value)} />
         </div>
 
@@ -319,9 +337,14 @@ const HomePage = () => {
               ))
             : booksQuery.isFetched &&
               booksQuery.data &&
-              booksQuery.data.length !== 0 &&
               existingBookSearchInput !== '' && (
-                <Error alert='No matching books found' />
+                <Error
+                  alert={
+                    booksQuery.data.length === 0
+                      ? `You haven't added any books yet.`
+                      : 'No matching books found.'
+                  }
+                />
               )}
         </div>
         {booksQuery.data && booksQuery.data.length === 0 && <EmptyState />}
@@ -339,7 +362,7 @@ const HomePage = () => {
           value={notesInput}
           onChange={(event) => setNotesInput(event.target.value)}
           onClickDelete={handleDisplayAlertModal}
-          cancel={handleCloseNotesModal}
+          close={handleCloseNotesModal}
           save={handleSaveNotes}
         />
       )}
@@ -353,7 +376,7 @@ const HomePage = () => {
       )}
       {isModalSearchVisible && (
         <ModalSearch
-          cancel={handleCloseModalSearch}
+          close={handleCloseModalSearch}
           value={newBookSearchInput}
           onChange={(e) => handleChangingNewBookSearchInput(e.target.value)}
           search={handleNewBookSearch}
@@ -364,7 +387,7 @@ const HomePage = () => {
         />
       )}
       {booksQuery.isLoading && !booksQuery.data && <ModalLoading />}
-      <ModalJumpToTop onClick={scrollToTopOfPage} />
+      {isScrolled && <ModalJumpToTop onClick={scrollToTopOfPage} />}
     </div>
   );
 };

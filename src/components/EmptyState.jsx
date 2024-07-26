@@ -9,7 +9,7 @@ const EmptyState = (props) => {
       <div className='flex flex-col justify-center items-center'>
         <FaWorm className='size-20 mb-3' alt='Empty state icon' />
         <h2 className='text-xl font-semibold'>Nothing here, but me</h2>
-        <p>Click on the + button to add your first book</p>
+        <p>Click on the 'add book' button to get started.</p>
       </div>
     </div>
   );

@@ -25,17 +25,17 @@ describe('Modal Search', () => {
     expect(mockOnClick).toHaveBeenCalled();
   });
 
-  test('renders a cancel button to cancel displaying the modal', () => {
+  test('renders a close button to close displaying the modal', () => {
     render(
       <ModalSearch
-        cancel={mockOnClick}
+        close={mockOnClick}
       />
     );
 
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    expect(cancelButton).toBeInTheDocument();
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    expect(closeButton).toBeInTheDocument();
 
-    fireEvent.click(cancelButton);
+    fireEvent.click(closeButton);
     expect(mockOnClick).toHaveBeenCalled();
   });
 

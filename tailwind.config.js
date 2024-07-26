@@ -34,23 +34,14 @@ module.exports = {
           '0%': { transform: 'translateY(-100%)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
-        'slide-nav-text-in-from-left': {
-          '0%': { transform: 'translateX(3.5rem)' },
-          '100%': { transform: 'translateX(-1.5rem)' },
-        },
-        'slide-nav-text-out-right': {
-          '0%': { transform: 'translateX(1.5rem)' },
-          '100%': { transform: 'translateX(3.5rem)' },
-        },
       },
       animation: {
         'slide-in-from-right':
-          'slide-modal-in-from-right 0.5s ease-out forwards',
-        'slide-in-from-left': 'slide-modal-in-from-left 0.5s ease-out forwards',
+          'slide-modal-in-from-right 0.25s ease-out forwards',
+        'slide-in-from-left':
+          'slide-modal-in-from-left 0.25s ease-out forwards',
         'slide-down-from-top':
-          'slide-modal-down-from-top 0.5s ease-out forwards',
-        'nav-expand': 'slide-nav-text-out-right 0.25s ease-out forwards',
-        'nav-hide': 'slide-nav-text-in-from-left 0.25s ease-out forwards',
+          'slide-modal-down-from-top 0.25s ease-out forwards',
       },
       screens: {
         sm: '576px',

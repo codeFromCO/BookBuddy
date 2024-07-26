@@ -30,7 +30,7 @@ describe('Modal Book', () => {
     expect(screen.getByText(/Sample Note/i)).toBeInTheDocument();
   });
 
-  test('displays cancel, save and delete buttons which can be clicked', () => {
+  test('displays close, save and delete buttons which can be clicked', () => {
     render(
       <ModalBook
         title='Sample Title'
@@ -42,8 +42,8 @@ describe('Modal Book', () => {
       />
     );
 
-    const cancelButton = screen.getByRole('button', { name: 'Cancel' });
-    expect(cancelButton).toBeInTheDocument();
+    const closeButton = screen.getByRole('button', { name: 'Close' });
+    expect(closeButton).toBeInTheDocument();
 
     const saveButton = screen.getByRole('button', { name: 'Save' });
     expect(saveButton).toBeInTheDocument();

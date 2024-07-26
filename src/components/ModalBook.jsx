@@ -26,7 +26,7 @@ const ModalBook = (props) => {
       ></textarea>
       <hr className='w-full border border-primaryOnWhite my-3' />
       <div className='flex justify-end space-x-3'>
-        <Button name='Cancel' tertiary='true' onClick={props.cancel} />
+        <Button name='Close' tertiary='true' onClick={props.close} />
         <Button name='Save' onClick={props.save} />
       </div>
     </div>

@@ -16,16 +16,14 @@ const Header = (props) => {
       </h1>
 
       <button
-        className={`w-10 h-10 bg-buttonDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
+        className={`space-x-1 h-10 sm:p-3 w-10 sm:w-auto bg-buttonDark text-textOnDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
           !props.savedBooksExist && 'animate-pulse hover:animate-none'
-        } ${
-          !props.savedBooksExist && props.existingBookSearchInputExists
-            ? 'bg-textOnError'
-            : ''
         } `}
         onClick={props.displayModalSearch}
+        aria-label='Add book'
       >
         <IoMdAdd size='1.5em' className='text-textOnDark' />
+        <h2 className='sm:flex hidden'>add book</h2>
       </button>
     </header>
   );

@@ -29,7 +29,7 @@ const ModalSearch = (props) => {
           <Button name='Search' onClick={props.search} />
         </div>
       </div>
-      <div className='h-full mt-3 flex flex-wrap gap-5 content-start overflow-scroll'>
+      <div className='h-full mt-6 flex flex-wrap gap-5 content-start overflow-scroll'>
         {props.books &&
           props.books.map((book, index) => (
             <CardBook
@@ -56,9 +56,9 @@ const ModalSearch = (props) => {
       <div className='flex justify-end space-x-3'>
         <Button
           className='fixed bottom-0 right-0'
-          name='Cancel'
+          name='Close'
           tertiary='true'
-          onClick={props.cancel}
+          onClick={props.close}
         />
       </div>
     </div>
