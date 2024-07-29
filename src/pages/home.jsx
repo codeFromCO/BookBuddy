@@ -22,28 +22,28 @@ import {
 
 import { bookcoverAPI } from '../utils/constants';
 
+import ModalLoading from '../components/ModalLoading';
 import Header from '../components/Header';
 import SideBar from '../components/SideBar';
 import ModalHamburger from '../components/ModalHamburger';
+import Searchbar from '../components/Searchbar';
+import Selector from '../components/Selector';
+import EmptyState from '../components/EmptyState';
 import CardBook from '../components/CardBook';
 import ModalBook from '../components/ModalBook';
 import ModalSearch from '../components/ModalSearch';
 import ModalAlert from '../components/ModalAlert';
 import ModalJumpToTop from '../components/ModalJumpToTop';
 import Error from '../components/Error';
-import Selector from '../components/Selector';
-import ModalLoading from '../components/ModalLoading';
-import EmptyState from '../components/EmptyState';
-import Searchbar from '../components/Searchbar';
 
 const HomePage = () => {
   const [newBookSearchInput, setNewBookSearchInput] = useState('');
   const [existingBookSearchInput, setExistingSearchBookInput] = useState('');
   const [bookAlreadyExists, setBookAlreadyExists] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [notesInput, setNotesInput] = useState('');
   const [isModalSearchVisible, setisModalSearchVisible] = useState(false);
   const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
-  const [notesInput, setNotesInput] = useState('');
   const [isModalHamburgerVisible, setModalHamburgerVisible] = useState(false);
   const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
   const [isScrolled, setIsScrolled] = useState(false);
@@ -53,9 +53,6 @@ const HomePage = () => {
   const booksQuery = useQuery({
     queryKey: ['books'],
     queryFn: fetchBooks,
-    onSuccess: (data) => {
-      setSortedBooks(data);
-    },
   });
 
   const searchQuery = useQuery({
@@ -218,33 +215,6 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    if (booksQuery.data) {
-      let sortedData = [...booksQuery.data];
-
-      switch (selectedSortOption) {
-        case 'title':
-          sortAlphabetically(sortedData);
-          break;
-        case 'addedNewOld':
-          sortAddedNewOld(sortedData);
-          break;
-        case 'addedOldNew':
-          sortAddedOldNew(sortedData);
-          break;
-        case 'updatedNewOld':
-          sortUpdatedNewOld(sortedData);
-          break;
-        case 'updatedOldNew':
-          sortUpdatedOldNew(sortedData);
-          break;
-        default:
-          break;
-      }
-      queryClient.setQueryData(['books'], sortedData);
-    }
-  }, [booksQuery.data, selectedSortOption, queryClient]);
-
-  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
     // Clean up the event listener on component unmount
@@ -253,16 +223,42 @@ const HomePage = () => {
     };
   }, [handleScroll]);
 
+  const sortedBooks = useMemo(() => {
+    let sortedData = [...(booksQuery.data || [])];
+
+    switch (selectedSortOption) {
+      case 'title':
+        sortAlphabetically(sortedData);
+        break;
+      case 'addedNewOld':
+        sortAddedNewOld(sortedData);
+        break;
+      case 'addedOldNew':
+        sortAddedOldNew(sortedData);
+        break;
+      case 'updatedNewOld':
+        sortUpdatedNewOld(sortedData);
+        break;
+      case 'updatedOldNew':
+        sortUpdatedOldNew(sortedData);
+        break;
+      default:
+        break;
+    }
+    return sortedData;
+  }, [booksQuery.data, selectedSortOption]);
+
   const filteredBooks = useMemo(() => {
-    return booksQuery.data?.filter((book) =>
+    return sortedBooks.filter((book) =>
       book.title
         .toLowerCase()
         .includes(normalizeString(existingBookSearchInput))
     );
-  }, [booksQuery.data, existingBookSearchInput]);
+  }, [sortedBooks, existingBookSearchInput]);
 
   return (
     <div className='flex flex-row h-screen'>
+      {booksQuery.isLoading && !booksQuery.data && <ModalLoading />}
       <SideBar active='home' />
       <div
         className={`sm:pl-20 px-5 w-full flex flex-col  mb-5 ${
@@ -275,7 +271,6 @@ const HomePage = () => {
           displayModalSearch={handleDisplayModalSearch}
           savedBooksExist={booksQuery.data && booksQuery.data.length > 0}
         />
-
         <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
           <Searchbar
             value={existingBookSearchInput}
@@ -283,23 +278,19 @@ const HomePage = () => {
             onClear={handleClearExistingBookSearchInput}
             isModalSearchVisible={isModalSearchVisible}
           />
-
           <Selector onChange={(e) => handleReOrder(e.target.value)} />
         </div>
-
-        <div className='flex flex-wrap mt-3'>
-          {booksQuery.data &&
-            booksQuery.data?.length > 0 &&
-            !filteredBooks &&
-            booksQuery.data.map((book, index) => (
+        <div className={'mt-5 flex flex-wrap gap-5 justify-normal pb-5'}>
+          {booksQuery.isError ? (
+            <Error alert='Something went wrong' />
+          ) : filteredBooks.length > 0 ? (
+            filteredBooks.map((book) => (
               <CardBook
-                title={book?.title}
-                author={book?.author}
-                key={index}
+                key={book._id}
+                title={book.title}
+                author={book.author}
                 src={
-                  book?.cover_i > 0
-                    ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
-                    : ''
+                  book.cover_i ? `${bookcoverAPI}${book.cover_i}-L.jpg` : null
                 }
                 onClick={() =>
                   handleDisplayNotesModal(
@@ -310,43 +301,20 @@ const HomePage = () => {
                   )
                 }
               />
-            ))}
+            ))
+          ) : (
+            existingBookSearchInput !== '' && (
+              <Error
+                alert={
+                  booksQuery.data.length === 0
+                    ? `You haven't added any books yet.`
+                    : 'No matching books found.'
+                }
+              />
+            )
+          )}
         </div>
-        <div className='mt-3 flex flex-wrap gap-5 justify-normal'>
-          {filteredBooks && filteredBooks.length > 0
-            ? filteredBooks.map((book, index) => (
-                <CardBook
-                  title={book?.title}
-                  author={book?.author}
-                  key={index}
-                  src={
-                    book?.cover_i > 0
-                      ? `${bookcoverAPI}${book?.cover_i}-L.jpg`
-                      : ''
-                  }
-                  onClick={() =>
-                    handleDisplayNotesModal(
-                      book.title,
-                      book.author,
-                      book.notes,
-                      book._id
-                    )
-                  }
-                />
-              ))
-            : booksQuery.isFetched &&
-              booksQuery.data &&
-              existingBookSearchInput !== '' && (
-                <Error
-                  alert={
-                    booksQuery.data.length === 0
-                      ? `You haven't added any books yet.`
-                      : 'No matching books found.'
-                  }
-                />
-              )}
-        </div>
-        {booksQuery.data && booksQuery.data.length === 0 && <EmptyState />}
+        {booksQuery.isFetched && booksQuery.data.length === 0 && <EmptyState />}
       </div>
       {isModalHamburgerVisible && (
         <ModalHamburger
@@ -385,7 +353,6 @@ const HomePage = () => {
           searching={searchQuery.isFetching}
         />
       )}
-      {booksQuery.isLoading && !booksQuery.data && <ModalLoading />}
       {isScrolled && <ModalJumpToTop onClick={scrollToTopOfPage} />}
     </div>
   );

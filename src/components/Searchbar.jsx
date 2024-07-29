@@ -25,14 +25,3 @@ const Searchbar = (props) => {
 };
 
 export default Searchbar;
-
-// <div
-//             className={`items-center flex p-1 border-2 w-full h-[48px] border-primary  text-textOnLight  bg-primary sm:rounded-3xl rounded-md `}
-//             >
-//             <HiMagnifyingGlass />
-//             <input
-//               className='border-none focus:outline-none pl-3 w-full bg-primary placeholder-primaryFocus'
-//               placeholder='Search existing books by title'
-//               onChange={(e) => handleExistingBookSearch(e.target.value)}
-//             />
-//           </div>

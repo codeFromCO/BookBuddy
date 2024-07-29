@@ -38,7 +38,7 @@ const CardBook = (props) => {
           />
         ) : (
           <div
-            className={`bg-primary border-l-8 border-black h-64 text-center p-6 ${
+            className={`bg-primary border-l-8 border-black sm:h-64 min-h-fit h-48 sm:text-center p-6 ${
               props.modalSearch && !props.alreadyExists
                 ? 'hover:outline hover:outline-4 hover:outline-blue-500'
                 : ''
@@ -49,8 +49,10 @@ const CardBook = (props) => {
             }`}
             onClick={props.alreadyExists ? null : props.onClick}
           >
-            <h2 className='font-bold'>{props.title}</h2>
-            <h3>{props.author}</h3>
+            <h2 className='break-words font-bold sm:text-base text-sm'>
+              {props.title}
+            </h2>
+            <h3 className='break-words sm:text-base text-xs'>{props.author}</h3>
           </div>
         )}
       </div>
@@ -59,7 +61,3 @@ const CardBook = (props) => {
 };
 
 export default CardBook;
-
-
-
-// py-2 pr-4

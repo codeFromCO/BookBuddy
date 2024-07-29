@@ -23,10 +23,6 @@ bookController.addBook = async (req, res, next) => {
 
     return next();
   } catch (err) {
-    // check for duplication key
-    // if (err.code === 11000) {
-    //   return res.status(409).json({ message: 'Book already exists' });
-    // }
     return next({
       log: 'Error on bookController.addBook',
       message: { error: err },

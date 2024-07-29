@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-// TO-DO add added data, last updated date
-
 const bookSchema = new Schema({
   title: {
     type: String,
