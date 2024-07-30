@@ -306,7 +306,7 @@ const HomePage = () => {
             existingBookSearchInput !== '' && (
               <Error
                 alert={
-                  booksQuery.data.length === 0
+                  booksQuery.data?.length === 0
                     ? `You haven't added any books yet.`
                     : 'No matching books found.'
                 }
@@ -314,7 +314,7 @@ const HomePage = () => {
             )
           )}
         </div>
-        {booksQuery.isFetched && booksQuery.data.length === 0 && <EmptyState />}
+        {booksQuery.isFetched && booksQuery.data?.length === 0 && <EmptyState />}
       </div>
       {isModalHamburgerVisible && (
         <ModalHamburger

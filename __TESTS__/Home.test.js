@@ -23,9 +23,6 @@ jest.mock(
 );
 jest.mock('../src/components/SideBar', () => () => <div>SideBar</div>);
 jest.mock('../src/components/Selector', () => () => <div>Selector</div>);
-jest.mock('../src/components/ModalJumpToTop', () => () => (
-  <div data-testid='modal-jump'>ModalJumpToTop</div>
-));
 jest.mock('../src/components/ModalLoading', () => () => (
   <div data-testid='modal-loading'>ModalLoading</div>
 ));
@@ -106,18 +103,17 @@ describe('Home Page', () => {
     cleanup(); // unmounts components
   });
 
-  test('renders the default components (Header, Sidebar, search input, Selector and ModalJump) on the home page', () => {
+  test('renders the default components (Header, Sidebar, search input and Selector) on the home page', () => {
     // render HomePage component
     renderHomePage();
 
-    // assert that the modal displays the header, sidebar, search input and jump button
+    // assert that the modal displays the header, sidebar, and search input
     expect(screen.getByTestId(/Header/i)).toBeInTheDocument();
     expect(screen.getByText(/SideBar/i)).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(/Search existing books by title/i)
     ).toBeInTheDocument();
     expect(screen.getByText(/selector/i)).toBeInTheDocument();
-    expect(screen.getByTestId(/modal-jump/i)).toBeInTheDocument();
   });
 
   test(`does not render ModalBook, ModalSearch and ModalHamburger by default`, async () => {
@@ -273,9 +269,7 @@ describe('Home Page', () => {
 
     // assert that an error will appear in the document
     expect(
-      await screen.findByText(
-        /No matching books found/i
-      )
+      await screen.findByText(/No matching books found/i)
     ).toBeInTheDocument();
 
     // assert that no CardBooks will appear in the document
