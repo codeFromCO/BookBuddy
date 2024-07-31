@@ -3,7 +3,6 @@ import { bookSearchAPI, API_URL } from '../utils/constants';
 // fetch existing books
 export const fetchBooks = async () => {
   try {
-    console.log('IT WAS CALLED')
     const response = await fetch(`${API_URL}/findAll`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
