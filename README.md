@@ -1,9 +1,29 @@
-# bookBuddy
+# BookBuddy
+
+Welcome to BookBuddy! This project is designed to help you efficiently manage your personal library with a primary focus on note-taking. 
+
+## Key features:
+
+### Personal library management
+
+- Build and maintain your digital library with the ability to add and remove books according to your preferences.
+
+### Note-taking capabilities
+
+- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material. 
+
+### Book search
+
+- Quickly find your books by title and sort by various criteria.
+
+### Responsive design 
+
+- Enjoy a seamless experience on both desktop and mobile devices.
 
 ## Getting started:
 
 1. Ensure that Node.js and npm are installed globally on your machine.
-2. Clone this repo to your local machine.
+2. Clone this repository to your local machine.
 3. Navigate to the project directory.
 4. Set up environment variables by creating a '.env' file and adding configurations for the PORT and MONGODB_URI.
 
@@ -12,39 +32,25 @@ PORT=<your-port-number>
 MONGODB_URI=<your-mongodb-uri>
 ```
 
-5. Run 'npm install' to install necessary dependencies.
+5. Install the necessary dependencies by running:
 
 ```
 npm install
 ```
 
-6. Run 'npm run dev' to get started in development mode.
+6. Start the development server with: 
 
 ```
 npm run dev
 ```
 
-7. Run 'npm run test' to test out changes.
+7. Run tests using: 
 
 ```
 npm run test
 ```
 
-## Key features:
-
-### Book search
-
-- Quickly find your books by title and sort by various criteria
-
-### Personal library management
-
-- Build and maintain your digital library with the ability to add and remove books according to your preferences
-
-### Note-taking capabilities
-
-- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material
-
-## Built using:
+## Built with:
 
 ![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![react](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
@@ -60,4 +66,8 @@ npm run test
 
 ## Acknowledgements
 
-This project uses data from the [Open Library API](https://openlibrary.org/developers/api).
+[Open Library API](https://openlibrary.org/developers/api).
+
+## License
+
+[MIT](./LICENSE)
