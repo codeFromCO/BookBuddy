@@ -50,6 +50,17 @@ npm run dev
 npm run test
 ```
 
+## Planned features:
+
+### Stats 
+
+- Track your reading progress 
+- View analytics 
+
+### Settings 
+
+- Customize oyur experience 
+
 ## Built with:
 
 ![javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
