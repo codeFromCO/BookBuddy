@@ -1,7 +1,7 @@
 {
   "name": "bookbuddy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Build and maintain your digital library",
   "main": "index.js",
   "scripts": {
     "test": "jest --config ./jest.config.json --verbose",
