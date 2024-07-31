@@ -34,7 +34,7 @@ npm run test
 
 ### Book search
 
-- Quickly find books by title and sort by various critera
+- Quickly find your books by title and sort by various criteria
 
 ### Personal library management
 
