@@ -1,4 +1,4 @@
-const Book = require('../models/bookModel');
+import Book from '../models/bookModel.js';
 
 const bookController = {};
 
@@ -127,4 +127,4 @@ bookController.deleteBook = async (req, res, next) => {
   }
 };
 
-module.exports = bookController;
+export default bookController;

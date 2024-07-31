@@ -4,7 +4,7 @@ import { IoStatsChartSharp } from 'react-icons/io5';
 import { GiOpenBook } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 
-export default function SideBar(props) {
+const SideBar = (props) => {
   const [showSidebarNames, setShowSidebarNames] = useState(false);
 
   return (
@@ -79,3 +79,5 @@ export default function SideBar(props) {
     </div>
   );
 }
+
+export default SideBar 

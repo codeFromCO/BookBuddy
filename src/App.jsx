@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import HomePage from './pages/home';
-import ErrorPage from './pages/error';
+import HomePage from './pages/home.jsx';
+import ErrorPage from './pages/error.jsx';
 
 const App = () => {
   return (

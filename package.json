@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Build and maintain your digital library",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "jest --config ./jest.config.json --verbose",
     "test:watch": "npm run test -- --watch",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MdDelete } from 'react-icons/md';
-import Button from './Button';
+import Button from './Button.jsx';
 
 const ModalBook = (props) => {
   return (

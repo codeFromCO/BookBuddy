@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from './Button';
-import CardBook from './CardBook';
-import Error from './Error';
-import Searching from './Searching';
+import Button from './Button.jsx';
+import CardBook from './CardBook.jsx';
+import Error from './Error.jsx';
+import Searching from './Searching.jsx';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 
-import { bookcoverAPI } from '../utils/constants';
+import { bookcoverAPI } from '../utils/constants.js';
 
 const ModalSearch = (props) => {
   return (

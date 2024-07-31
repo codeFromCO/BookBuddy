@@ -8,7 +8,7 @@ import {
   addBook,
   updateBookNotes,
   deleteBook,
-} from '../api/api';
+} from '../api/api.js';
 
 import {
   normalizeString,
@@ -18,23 +18,23 @@ import {
   sortUpdatedNewOld,
   sortUpdatedOldNew,
   scrollToTopOfPage,
-} from '../utils/functions';
+} from '../utils/functions.js';
 
-import { bookcoverAPI } from '../utils/constants';
+import { bookcoverAPI } from '../utils/constants.js';
 
-import ModalLoading from '../components/ModalLoading';
-import Header from '../components/Header';
-import SideBar from '../components/SideBar';
-import ModalHamburger from '../components/ModalHamburger';
-import Searchbar from '../components/Searchbar';
-import Selector from '../components/Selector';
-import EmptyState from '../components/EmptyState';
-import CardBook from '../components/CardBook';
-import ModalBook from '../components/ModalBook';
-import ModalSearch from '../components/ModalSearch';
-import ModalAlert from '../components/ModalAlert';
-import ModalJumpToTop from '../components/ModalJumpToTop';
-import Error from '../components/Error';
+import ModalLoading from '../components/ModalLoading.jsx';
+import Header from '../components/Header.jsx';
+import SideBar from '../components/SideBar.jsx';
+import ModalHamburger from '../components/ModalHamburger.jsx';
+import Searchbar from '../components/Searchbar.jsx';
+import Selector from '../components/Selector.jsx';
+import EmptyState from '../components/EmptyState.jsx';
+import CardBook from '../components/CardBook.jsx';
+import ModalBook from '../components/ModalBook.jsx';
+import ModalSearch from '../components/ModalSearch.jsx';
+import ModalAlert from '../components/ModalAlert.jsx';
+import ModalJumpToTop from '../components/ModalJumpToTop.jsx';
+import Error from '../components/Error.jsx';
 
 const HomePage = () => {
   const [newBookSearchInput, setNewBookSearchInput] = useState('');

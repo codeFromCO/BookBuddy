@@ -1,14 +1,21 @@
 // import modules
-const express = require('express');
-const path = require('path');
-require('dotenv').config();
-const mongoose = require('mongoose');
+import express from 'express';
+import path from 'path';
+import 'dotenv/config'
+import mongoose from 'mongoose';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// require('dotenv').config();
 
 // import controllers
-const bookController = require('./controllers/bookController');
+import bookController from './controllers/bookController.js';
 
 // create instance of express app
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // parse incoming requests
 app.use(express.json());
@@ -92,4 +99,4 @@ app.listen(process.env.PORT || 3000, () => {
   console.log(`Listening on PORT ${process.env.PORT}`);
 });
 
-module.exports = app;
+export default app;

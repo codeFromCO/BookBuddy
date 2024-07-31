@@ -1,4 +1,4 @@
-import { bookSearchAPI, API_URL } from '../utils/constants';
+import { bookSearchAPI, API_URL } from '../utils/constants.js';
 
 // fetch existing books
 export const fetchBooks = async () => {
