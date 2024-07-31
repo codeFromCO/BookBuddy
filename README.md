@@ -1,6 +1,6 @@
 # BookBuddy
 
-Welcome to BookBuddy! This project is designed to help you efficiently manage your personal library with a primary focus on note-taking. 
+Welcome to BookBuddy! This project is designed to help you manage your personal library.
 
 ## Key features:
 
