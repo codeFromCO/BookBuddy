@@ -65,7 +65,6 @@ const HomePage = () => {
     mutationFn: addBook,
     onSuccess: () => {
       queryClient.invalidateQueries(['books']);
-      queryClient.invalidateQueries(['searchBooksByInput']);
       setNewBookSearchInput('');
     },
   });
