@@ -53,12 +53,18 @@ const HomePage = () => {
   const booksQuery = useQuery({
     queryKey: ['books'],
     queryFn: fetchBooks,
+    onError: (error) => {
+      console.error('Error fetching books:', error);
+    },
   });
 
   const searchQuery = useQuery({
     queryKey: ['searchBooksByInput', newBookSearchInput, booksQuery.data],
     queryFn: () => searchBooksByInput(newBookSearchInput, booksQuery?.data),
     enabled: false, // disabled automatically running
+    onError: (error) => {
+      console.error('Error searching books:', error);
+    },
   });
 
   const addBookMutation = useMutation({
@@ -66,6 +72,9 @@ const HomePage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['books']);
       setNewBookSearchInput('');
+    },
+    onError: (error) => {
+      console.error('Error adding book:', error);
     },
   });
 
@@ -76,6 +85,9 @@ const HomePage = () => {
       setSelectedBook(null);
       setNotesInput('');
     },
+    onError: (error) => {
+      console.error('Error updating book notes:', error);
+    },
   });
 
   const deleteBookMutation = useMutation({
@@ -83,6 +95,9 @@ const HomePage = () => {
     onSuccess: () => {
       queryClient.invalidateQueries(['books']);
       setSelectedBook(null);
+    },
+    onError: (error) => {
+      console.error('Error deleting book:', error);
     },
   });
 
@@ -93,7 +108,7 @@ const HomePage = () => {
 
   const handleClearExistingBookSearchInput = useCallback(() => {
     setExistingSearchBookInput('');
-  });
+  }, []);
 
   const handleReOrder = useCallback((selectedOption) => {
     setSelectedSortOption(selectedOption);
@@ -313,7 +328,9 @@ const HomePage = () => {
             )
           )}
         </div>
-        {booksQuery.isFetched && booksQuery.data?.length === 0 && <EmptyState />}
+        {booksQuery.isFetched && booksQuery.data?.length === 0 && (
+          <EmptyState />
+        )}
       </div>
       {isModalHamburgerVisible && (
         <ModalHamburger
