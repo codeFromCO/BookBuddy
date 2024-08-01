@@ -8,12 +8,15 @@ export const fetchBooks = async () => {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const jsonData = await response.json();
-
     // handle error
     if (!response.ok) {
-      throw new Error('Failed to fetch books');
+      const errorData = await response.json();
+      throw new Error(
+        `Failed to fetch books:  ${response.status} - ${errorData.message}`
+      );
     }
+
+    const jsonData = await response.json();
 
     // handle event that request was successful but there are no saved books
     if (!jsonData.data || jsonData.data.length === 0) {
@@ -22,6 +25,7 @@ export const fetchBooks = async () => {
 
     return jsonData.data;
   } catch (error) {
+    console.error(error);
     throw new Error('Error fetching books');
   }
 };
@@ -33,20 +37,22 @@ export const searchBooksByInput = async (input, existingBooks) => {
 
     const response = await fetch(bookSearchAPI(searchString));
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Error searching books:  ${response.status} - ${errorData.message}`
+      );
+    }
+
     const allData = await response.json();
 
     // books data is returned in docs property
     const docs = allData.docs;
 
-    // create object to check for title of existing book
-    const existingBooksLookup = {};
-
-    //
-    if (existingBooks) {
-      for (let i = 0; i < existingBooks.length; i++) {
-        existingBooksLookup[existingBooks[i].title] = existingBooks[i].author;
-      }
-    }
+    const existingBooksLookup = existingBooks.reduce((acc, book) => {
+      acc[book.title] = book.author;
+      return acc;
+    }, {});
 
     // check through docs array until find 6 elements that contain author_name and title OR docs array is empty; add these to a new array to return
     const arrayToReturn = docs
@@ -59,6 +65,7 @@ export const searchBooksByInput = async (input, existingBooks) => {
 
     return arrayToReturn;
   } catch (error) {
+    console.error(error);
     throw new Error('Error searching books');
   }
 };
@@ -74,8 +81,11 @@ export const addBook = async (book) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(`${response.status}: ${errorData.message}`);
+      throw new Error(
+        `Error adding book:  ${response.status} - ${errorData.message}`
+      );
     }
+
     const jsonData = await response.json();
 
     return jsonData;
@@ -93,9 +103,17 @@ export const updateBookNotes = async ({ _id, notes }) => {
       body: JSON.stringify({ _id, notes }),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Error updating book notes:  ${response.status} - ${errorData.message}`
+      );
+    }
+
     const jsonData = await response.json();
     return jsonData;
   } catch (error) {
+    console.error(error);
     throw new Error('Error updating book notes');
   }
 };
@@ -109,9 +127,17 @@ export const deleteBook = async ({ _id }) => {
       body: JSON.stringify({ _id }),
     });
 
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        `Error deleting book:  ${response.status} - ${errorData.message}`
+      );
+    }
+
     const jsonData = await response.json();
     return jsonData.data;
   } catch (error) {
+    console.error(error);
     throw new Error('Error deleting book');
   }
 };
