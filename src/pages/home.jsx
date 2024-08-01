@@ -109,6 +109,10 @@ const HomePage = () => {
   const handleClearExistingBookSearchInput = useCallback(() => {
     setExistingSearchBookInput('');
   }, []);
+  
+  const handleClearNewBookSearchInput = useCallback(() => {
+    setNewBookSearchInput('');
+  }, []);
 
   const handleReOrder = useCallback((selectedOption) => {
     setSelectedSortOption(selectedOption);
@@ -367,6 +371,7 @@ const HomePage = () => {
           bookExists={bookAlreadyExists}
           onClick={handleAddBook}
           searching={searchQuery.isFetching}
+          onClear={handleClearNewBookSearchInput}
         />
       )}
       {isScrolled && <ModalJumpToTop onClick={scrollToTopOfPage} />}

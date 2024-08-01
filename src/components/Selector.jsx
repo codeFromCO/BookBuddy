@@ -12,10 +12,10 @@ const Selector = (props) => {
           Sort by
         </option>
         <option value='title'>Title</option>
-        <option value='addedNewOld'>Date added (newest - oldest)</option>
-        <option value='addedOldNew'>Date added (oldest - newest)</option>
-        <option value='updatedNewOld'>Date updated (newest - oldest)</option>
-        <option value='updatedOldNew'>Date updated (oldest - newest)</option>
+        <option value='addedNewOld'>Date added (new - old)</option>
+        <option value='addedOldNew'>Date added (old - new)</option>
+        <option value='updatedNewOld'>Date updated (new - old)</option>
+        <option value='updatedOldNew'>Date updated (old - new)</option>
       </select>
     </div>
   );

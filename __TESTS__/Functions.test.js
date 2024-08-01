@@ -81,7 +81,7 @@ test('sortAlphabetically sorts an array by title', () => {
   ]);
 });
 
-test('sortAddedNewOld sorts an array from newest to oldest in terms of date added', () => {
+test('sortAddedNewOld sorts an array from new to old in terms of date added', () => {
   const books = [...mockBooks];
   sortAddedNewOld(books);
   expect(books).toEqual([
@@ -118,7 +118,7 @@ test('sortAddedNewOld sorts an array from newest to oldest in terms of date adde
   ]);
 });
 
-test('sortAddedOldNew sorts an array from oldest to newest in terms of date added', () => {
+test('sortAddedOldNew sorts an array from old to new in terms of date added', () => {
   const books = [...mockBooks];
   sortAddedOldNew(books);
   expect(books).toEqual([
@@ -155,7 +155,7 @@ test('sortAddedOldNew sorts an array from oldest to newest in terms of date adde
   ]);
 });
 
-test('sortUpdatedOldNew sorts an array from oldest to newest in terms of date updated', () => {
+test('sortUpdatedOldNew sorts an array from old to new in terms of date updated', () => {
   const books = [...mockBooks];
   sortUpdatedOldNew(books);
   expect(books).toEqual([
@@ -192,7 +192,7 @@ test('sortUpdatedOldNew sorts an array from oldest to newest in terms of date up
   ]);
 });
 
-test('sortUpdatedNewOld sorts an array from newest to oldest in terms of date updated', () => {
+test('sortUpdatedNewOld sorts an array from new to old in terms of date updated', () => {
   const books = [...mockBooks];
   sortUpdatedNewOld(books);
   expect(books).toEqual([

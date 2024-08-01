@@ -3,7 +3,7 @@ import Button from './Button.jsx';
 import CardBook from './CardBook.jsx';
 import Error from './Error.jsx';
 import Searching from './Searching.jsx';
-import { HiMagnifyingGlass } from 'react-icons/hi2';
+import Searchbar from './Searchbar.jsx';
 
 import { bookcoverAPI } from '../utils/constants.js';
 
@@ -15,21 +15,16 @@ const ModalSearch = (props) => {
           <h2 className='font-bold text-2xl mb-3'>Add book</h2>
         </div>
         <div className='flex space-x-3'>
-          <div
-            className={`items-center flex p-1 w-full border-2 border-primaryOnWhite  text-textOnLight bg-primaryOnWhite rounded-3xl`}
-          >
-            <HiMagnifyingGlass />
-            <input
-              className='border-none focus:outline-none pl-3 w-full bg-primaryOnWhite placeholder-primaryFocus'
-              placeholder='Search for a book title'
-              value={props.value}
-              onChange={props.onChange}
-            />
-          </div>
+          <Searchbar
+            value={props.value}
+            onChange={props.onChange}
+            onClear={props.onClear}
+            modal={true}
+          />
           <Button name='Search' onClick={props.search} />
         </div>
       </div>
-      <div className='h-full mt-6 flex flex-wrap gap-5 content-start overflow-scroll'>
+      <div className='relative h-full mt-6 flex flex-wrap gap-5 content-start overflow-scroll'>
         {props.books &&
           props.books.map((book, index) => (
             <CardBook
