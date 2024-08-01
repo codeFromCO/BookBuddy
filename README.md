@@ -59,7 +59,7 @@ npm run test
 
 ### Settings 
 
-- Customize oyur experience 
+- Customize your experience 
 
 ## Built with:
 
