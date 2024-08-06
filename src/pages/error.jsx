@@ -26,16 +26,16 @@ const ErrorPage = (props) => {
             <FaWorm className='size-14' />
           </div>
           <div className='flex flex-col text-center'>
-            <div className='text-xl font-bold'>
+            <h2 className='text-xl font-bold'>
               {props.errorType === '404'
                 ? '404 page not found'
                 : 'Under construction'}
-            </div>
-            <div className='text-sm mt-2'>
+            </h2>
+            <p className='text-sm mt-2'>
               {props.errorType === '404'
                 ? `There's nothing to see here.`
                 : 'Stayed tuned for upcoming features.'}
-            </div>
+            </p>
           </div>
         </div>
       </div>
