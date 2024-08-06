@@ -109,7 +109,7 @@ const HomePage = () => {
   const handleClearExistingBookSearchInput = useCallback(() => {
     setExistingSearchBookInput('');
   }, []);
-  
+
   const handleClearNewBookSearchInput = useCallback(() => {
     setNewBookSearchInput('');
   }, []);
@@ -287,7 +287,6 @@ const HomePage = () => {
           title='BookBuddy'
           displayModalHamburger={handleDisplayModalHamburger}
           displayModalSearch={handleDisplayModalSearch}
-          savedBooksExist={booksQuery.data && booksQuery.data.length > 0}
         />
         <div className='mt-5 mb-0 space-x-0 space-y-3 sm:flex sm:space-x-3 sm:space-y-0'>
           <Searchbar

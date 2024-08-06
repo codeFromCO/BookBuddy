@@ -16,9 +16,7 @@ const Header = (props) => {
       </h1>
 
       <button
-        className={`space-x-1 h-10 sm:p-3 w-10 sm:w-auto bg-buttonDark text-textOnDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md ${
-          !props.savedBooksExist && 'animate-pulse hover:animate-none'
-        } `}
+        className={`space-x-1 h-10 sm:p-3 w-10 sm:w-auto bg-buttonDark text-textOnDark hover:bg-buttonDarkFocus flex items-center justify-center rounded-md`}
         onClick={props.displayModalSearch}
         aria-label='Add book'
       >
