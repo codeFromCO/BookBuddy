@@ -8,7 +8,15 @@ const App = () => {
     <div>
       <Routes>
         <Route path='/' element={<HomePage />}></Route>
-        <Route path='*' element={<ErrorPage />}></Route>
+        <Route
+          path='/stats'
+          element={<ErrorPage errorType='construction' active='stats'/>}
+        ></Route>
+        <Route
+          path='/settings'
+          element={<ErrorPage construction errorType='construction' active='settings' />}
+        ></Route>
+        <Route path='*' element={<ErrorPage errorType='404' />}></Route>
       </Routes>
     </div>
   );
