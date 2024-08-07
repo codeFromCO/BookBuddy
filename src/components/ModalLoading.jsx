@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaWorm } from 'react-icons/fa6';
 
-const ModalLoading = (props) => {
+const ModalLoading = () => {
   return (
     <div className='fixed inset-0 flex flex-col items-center justify-center bg-background z-30'>
       <FaWorm className='size-10 m-3 animate-bounce' />

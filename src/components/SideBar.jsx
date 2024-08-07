@@ -4,7 +4,7 @@ import { IoStatsChartSharp } from 'react-icons/io5';
 import { GiOpenBook } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 
-const SideBar = (props) => {
+const SideBar = ({ active }) => {
   const [showSidebarNames, setShowSidebarNames] = useState(false);
 
   return (
@@ -19,9 +19,7 @@ const SideBar = (props) => {
         <Link
           to='/'
           className={`${
-            props.active === 'home'
-              ? 'bg-primaryFocus'
-              : 'hover:bg-primaryFocus'
+            active === 'home' ? 'bg-primaryFocus' : 'hover:bg-primaryFocus'
           }  p-3 space-x-2 h-10 flex items-center rounded-md`}
           aria-label='Home'
         >
@@ -29,7 +27,7 @@ const SideBar = (props) => {
           {showSidebarNames && (
             <div
               className={`text-sm 
-          ${props.active === 'home' ? 'font-bold' : ''} `}
+          ${active === 'home' ? 'font-bold' : ''} `}
             >
               Home
             </div>
@@ -38,9 +36,7 @@ const SideBar = (props) => {
         <Link
           to='/stats'
           className={`${
-            props.active === 'stats'
-              ? 'bg-primaryFocus'
-              : 'hover:bg-primaryFocus'
+            active === 'stats' ? 'bg-primaryFocus' : 'hover:bg-primaryFocus'
           }  p-3 space-x-2 h-10 flex items-center rounded-md`}
           aria-label='Stats'
         >
@@ -48,7 +44,7 @@ const SideBar = (props) => {
           {showSidebarNames && (
             <div
               className={`text-sm 
-          ${props.active === 'stats' ? 'font-bold' : ''} `}
+          ${active === 'stats' ? 'font-bold' : ''} `}
             >
               Stats
             </div>
@@ -57,9 +53,7 @@ const SideBar = (props) => {
         <Link
           to='/settings'
           className={`${
-            props.active === 'settings'
-              ? 'bg-primaryFocus'
-              : 'hover:bg-primaryFocus'
+            active === 'settings' ? 'bg-primaryFocus' : 'hover:bg-primaryFocus'
           }  p-3 space-x-2 h-10 flex items-center justify-center rounded-md`}
           aria-label='Settings'
         >
@@ -67,7 +61,7 @@ const SideBar = (props) => {
           {showSidebarNames && (
             <div
               className={`text-sm 
-          ${props.active === 'settings' ? 'font-bold' : ''} `}
+          ${active === 'settings' ? 'font-bold' : ''} `}
             >
               Settings
             </div>

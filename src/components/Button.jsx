@@ -1,20 +1,20 @@
 import React from 'react';
 
-const Button = (props) => {
+const Button = ({ onClick, wide, tertiary, name }) => {
   return (
     <button
-      onClick={props.onClick}
+      onClick={onClick}
       className={`flex justify-center items-center h-[48px] p-3 ${
-        props.wide ? '' : 'w-[96px]'
+        wide ? '' : 'w-[96px]'
       } rounded-md font-semibold ${
-        props.tertiary
+        tertiary
           ? 'text-textOnLight hover:bg-buttonLightFocus'
           : 'text-textOnDark bg-buttonDark hover:bg-buttonDarkFocus'
       }`}
-      aria-label={props.name}
-      title={props.name}
+      aria-label={name}
+      title={name}
     >
-      {props.name}
+      {name}
     </button>
   );
 };

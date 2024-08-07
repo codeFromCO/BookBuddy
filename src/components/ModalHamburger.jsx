@@ -3,21 +3,21 @@ import { Link } from 'react-router-dom';
 import { IoMdAdd } from 'react-icons/io';
 import { MdOutlineNavigateNext } from 'react-icons/md';
 
-const ModalHamburger = (props) => {
+const ModalHamburger = ({ active, hideModalHamburger }) => {
   const [displayHomeArrow, setDisplayHomeArrow] = useState(false);
   const [displayStatsArrow, setDisplayStatsArrow] = useState(false);
   const [displaySettingsArrow, setDisplaySettingsArrow] = useState(false);
 
   const handleLinkClick = (page) => {
-    if (props.active === page) {
-      props.hideModalHamburger();
+    if (active === page) {
+      hideModalHamburger();
     }
   };
 
   return (
     <div className='fixed h-screen w-full  bg-background space-y-3 text-2xl p-5 z-40 animate-slide-in-from-left'>
       <div className='flex justify-end'>
-        <button onClick={props.hideModalHamburger}>
+        <button onClick={hideModalHamburger}>
           <IoMdAdd className='size-8 rotate-45' />
         </button>
       </div>
@@ -29,7 +29,7 @@ const ModalHamburger = (props) => {
             aria-label='Home'
             onMouseOver={() => setDisplayHomeArrow(true)}
             onMouseOut={() => setDisplayHomeArrow(false)}
-            className={`${props.active === 'home' ? 'font-bold' : ''}`}
+            className={`${active === 'home' ? 'font-bold' : ''}`}
           >
             Home
           </Link>
@@ -42,7 +42,7 @@ const ModalHamburger = (props) => {
             aria-label='Stats'
             onMouseOver={() => setDisplayStatsArrow(true)}
             onMouseOut={() => setDisplayStatsArrow(false)}
-            className={`${props.active === 'stats' ? 'font-bold' : ''}`}
+            className={`${active === 'stats' ? 'font-bold' : ''}`}
           >
             Stats
           </Link>
@@ -55,7 +55,7 @@ const ModalHamburger = (props) => {
             aria-label='Settings'
             onMouseOver={() => setDisplaySettingsArrow(true)}
             onMouseOut={() => setDisplaySettingsArrow(false)}
-            className={`${props.active === 'settings' ? 'font-bold' : ''}`}
+            className={`${active === 'settings' ? 'font-bold' : ''}`}
           >
             Settings
           </Link>

@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Selector = (props) => {
+const Selector = ({ onChange }) => {
   return (
     <div className='flex h-[48px]'>
       <select
         className={`h-full rounded-md p-3 hover:cursor-pointer focus:outline-none w-full sm:w-fit`}
         defaultValue={'DEFAULT'}
-        onChange={props.onChange}
+        onChange={onChange}
       >
         <option value='DEFAULT' disabled>
           Sort by
