@@ -6,6 +6,7 @@ const Searchbar = ({
   value,
   modal,
   isModalSearchVisible,
+  isModalBookVisible,
   onChange,
   onClear,
 }) => {
@@ -27,7 +28,7 @@ const Searchbar = ({
         }
         value={value}
         onChange={onChange}
-        disabled={isModalSearchVisible}
+        disabled={isModalSearchVisible || isModalBookVisible}
       />
       {value !== '' && (
         <button className='w-5 h-5' onClick={onClear}>

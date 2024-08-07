@@ -43,6 +43,7 @@ const HomePage = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [notesInput, setNotesInput] = useState('');
   const [isModalSearchVisible, setisModalSearchVisible] = useState(false);
+  const [isModalBookVisible, setIsModalBookVisible] = useState(false);
   const [isModalAlertVisible, setisModalAlertVisible] = useState(false);
   const [isModalHamburgerVisible, setModalHamburgerVisible] = useState(false);
   const [selectedSortOption, setSelectedSortOption] = useState('DEFAULT');
@@ -151,20 +152,22 @@ const HomePage = () => {
     setNewBookSearchInput('');
   }, []);
 
-  const handleDisplayNotesModal = useCallback(
+  const handleDisplayModalBook = useCallback(
     (title, author_name, notes, _id) => {
       setSelectedBook({ title, author: author_name, notes, _id });
       setNotesInput(notes);
       setisModalSearchVisible(false);
       setNewBookSearchInput('');
+      setIsModalBookVisible(true)
     },
     []
   );
 
-  const handleCloseNotesModal = useCallback(() => {
+  const handleCloseModalBook = useCallback(() => {
     setSelectedBook(null);
     setNotesInput('');
     setisModalAlertVisible(false);
+    setIsModalBookVisible(false)
   }, []);
 
   const handleDisplayAlertModal = useCallback(() => {
@@ -294,6 +297,7 @@ const HomePage = () => {
             onChange={handleExistingBookSearch}
             onClear={handleClearExistingBookSearchInput}
             isModalSearchVisible={isModalSearchVisible}
+            isModalBookVisible={isModalBookVisible}
           />
           <Selector onChange={(e) => handleReOrder(e.target.value)} />
         </div>
@@ -310,7 +314,7 @@ const HomePage = () => {
                   book.cover_i ? `${bookcoverAPI}${book.cover_i}-L.jpg` : null
                 }
                 onClick={() =>
-                  handleDisplayNotesModal(
+                  handleDisplayModalBook(
                     book.title,
                     book.author,
                     book.notes,
@@ -348,7 +352,7 @@ const HomePage = () => {
           value={notesInput}
           onChange={(event) => setNotesInput(event.target.value)}
           onClickDelete={handleDisplayAlertModal}
-          close={handleCloseNotesModal}
+          close={handleCloseModalBook}
           save={handleSaveNotes}
         />
       )}
