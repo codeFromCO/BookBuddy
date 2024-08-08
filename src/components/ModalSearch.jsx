@@ -5,7 +5,7 @@ import Error from './Error.jsx';
 import Searching from './Searching.jsx';
 import Searchbar from './Searchbar.jsx';
 
-import { bookcoverAPI } from '../utils/constants.js';
+import { bookcoverAPI } from '../library/constants.js';
 
 const ModalSearch = ({
   value,

@@ -5,7 +5,7 @@ import {
   sortAddedOldNew,
   sortUpdatedNewOld,
   sortUpdatedOldNew,
-} from '../src/utils/functions';
+} from '../src/library/utils';
 
 const mockBooks = [
   {

@@ -18,9 +18,9 @@ import {
   sortUpdatedNewOld,
   sortUpdatedOldNew,
   scrollToTopOfPage,
-} from '../utils/functions.js';
+} from '../library/utils.js';
 
-import { bookcoverAPI } from '../utils/constants.js';
+import { bookcoverAPI } from '../library/constants.js';
 
 import ModalLoading from '../components/ModalLoading.jsx';
 import Header from '../components/Header.jsx';
@@ -158,7 +158,7 @@ const HomePage = () => {
       setNotesInput(notes);
       setisModalSearchVisible(false);
       setNewBookSearchInput('');
-      setIsModalBookVisible(true)
+      setIsModalBookVisible(true);
     },
     []
   );
@@ -167,7 +167,7 @@ const HomePage = () => {
     setSelectedBook(null);
     setNotesInput('');
     setisModalAlertVisible(false);
-    setIsModalBookVisible(false)
+    setIsModalBookVisible(false);
   }, []);
 
   const handleDisplayAlertModal = useCallback(() => {
