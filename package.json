@@ -1,7 +1,7 @@
 {
   "name": "bookbuddy",
   "version": "1.0.0",
-  "description": "Build and maintain your digital library",
+  "description": "Build and maintain your digital library. This project is part of my portfolio.",
   "main": "index.js",
   "type": "module",
   "scripts": {
