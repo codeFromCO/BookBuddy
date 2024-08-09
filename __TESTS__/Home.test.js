@@ -222,10 +222,10 @@ describe('Home Page', () => {
     // simulate a click of the book
     fireEvent.click(screen.getByText(/Book 1 - Author 1/i));
 
-    // wait for the modal to appear in the document
+    // wait for the ModalBook to appear in the document
     await screen.findByTestId('modal-book');
 
-    // assert that the search modal is no longer displayed in the document
+    // assert that the ModalSearch is no longer displayed in the document
     expect(screen.queryByTestId('modal-search')).not.toBeInTheDocument();
   });
 
