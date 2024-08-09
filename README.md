@@ -1,6 +1,6 @@
 # BookBuddy
 
-Welcome to BookBuddy - a personal library management tool. 
+Welcome to BookBuddy - a personal library management tool.
 This project is part of my portfolio.
 
 ## Key features:
@@ -11,13 +11,13 @@ This project is part of my portfolio.
 
 ### Note-taking capabilities
 
-- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material. 
+- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material.
 
 ### Book search
 
 - Quickly find your books by title and sort by various criteria.
 
-### Responsive design 
+### Responsive design
 
 - Enjoy a seamless experience on both desktop and mobile devices.
 
@@ -39,13 +39,13 @@ MONGODB_URI=<your-mongodb-uri>
 npm install
 ```
 
-6. Start the development server with: 
+6. Start the development server with:
 
 ```
 npm run dev
 ```
 
-7. Run tests using: 
+7. Run tests using:
 
 ```
 npm run test
@@ -53,14 +53,14 @@ npm run test
 
 ## Planned features:
 
-### Stats 
+### Stats
 
-- Track your reading progress 
-- View analytics 
+- Track your reading progress
+- View analytics
 
-### Settings 
+### Settings
 
-- Customize your experience 
+- Customize your experience
 
 ## Built with:
 
@@ -75,10 +75,12 @@ npm run test
 ![css](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![tailwindcss](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![webpack](https://img.shields.io/badge/Webpack-8DD6F9?style=for-the-badge&logo=Webpack&logoColor=white)
+![jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
+![postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white)
 
 ## Acknowledgements
 
-[Open Library API](https://openlibrary.org/developers/api).
+[Open Library API](https://openlibrary.org/developers/api)
 
 ## License
 
