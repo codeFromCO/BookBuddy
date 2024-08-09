@@ -1,6 +1,6 @@
 # BookBuddy
 
-Welcome to BookBuddy - your personal library management tool. 
+Welcome to BookBuddy - a personal library management tool. 
 This project is part of my portfolio.
 
 ## Key features:
