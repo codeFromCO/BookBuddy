@@ -238,7 +238,7 @@ const HomePage = () => {
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
 
-    // Clean up the event listener on component unmount
+    // clean up the event listener on component unmount
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
