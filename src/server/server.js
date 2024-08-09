@@ -6,8 +6,6 @@ import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-// require('dotenv').config();
-
 // import controllers
 import bookController from './controllers/bookController.js';
 
