@@ -12,6 +12,7 @@ import bookController from './controllers/bookController.js';
 // create instance of express app
 const app = express();
 
+// resolve __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -43,6 +44,7 @@ app.get('/api/book/findAll', bookController.findBooks, (req, res, next) => {
   });
 });
 
+// handle finding a book
 app.put('/api/book/findOne', bookController.findBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully found',
@@ -50,14 +52,14 @@ app.put('/api/book/findOne', bookController.findBook, (req, res, next) => {
   });
 });
 
-// handle adding book
+// handle adding a book
 app.post('/api/book/add', bookController.addBook, (req, res, next) => {
   return res.status(201).json({
     message: 'Book successfully added',
   });
 });
 
-// handle updating notes for book
+// handle updating notes for a book
 app.patch('/api/book/update', bookController.updateBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully updated',
@@ -65,7 +67,7 @@ app.patch('/api/book/update', bookController.updateBook, (req, res, next) => {
   });
 });
 
-// handle deleting book
+// handle deleting a book
 app.delete('/api/book/delete', bookController.deleteBook, (req, res, next) => {
   return res.status(200).json({
     message: 'Book successfully deleted',
@@ -81,7 +83,6 @@ app.use((err, req, res, next) => {
   };
   const errObj = Object.assign({}, defaultErr, err);
 
-  // Log the error
   console.error('Error:', errObj.log);
 
   return res.status(errObj.status).json({ error: errObj.message });
