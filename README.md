@@ -9,9 +9,13 @@ This project is part of my portfolio.
 
 - Build and maintain your digital library with the ability to add and remove books according to your preferences.
 
+<img src="https://github.com/codeFromCO/BookBuddy-assets/blob/main/assets/AddingInitialBook_DESKTOP.gif" alt="adding the initial book" width="500"/>
+
 ### Note-taking capabilities
 
 - Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material.
+  
+<img src="https://github.com/codeFromCO/BookBuddy-assets/blob/main/assets/EditingNotes_DESKTOP.gif" alt="editing a books notes" width="500"/>
 
 ### Book search
 
@@ -20,6 +24,8 @@ This project is part of my portfolio.
 ### Responsive design
 
 - Enjoy a seamless experience on both desktop and mobile devices.
+
+<img src="https://github.com/codeFromCO/BookBuddy-assets/blob/main/assets/DeletingBook_MOBILE.gif" alt="deleting a book" width="250"/>
 
 ## Getting started:
 
