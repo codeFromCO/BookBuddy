@@ -13,7 +13,7 @@ This project is part of my portfolio.
 
 ### Note-taking capabilities
 
-- Capture your thoughts and favorite quotes directly within the application, allowing you to revist your reading material.
+- Capture your thoughts and favorite quotes directly within the application, allowing you to revisit your reading material.
   
 <img src="https://github.com/codeFromCO/BookBuddy-assets/blob/main/assets/EditingNotes_DESKTOP.gif" alt="editing a books notes" width="500"/>
 
